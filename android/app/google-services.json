@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "718903259227",
+    "project_id": "thrillfit-e1100",
+    "storage_bucket": "thrillfit-e1100.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:718903259227:android:2daa5e2120a70ac8aacf7e",
+        "android_client_info": {
+          "package_name": "com.thrill.fit.thrill_fit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCN2YngiVZXhHtWv4QiHmtFRk17EQ-n0iU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
