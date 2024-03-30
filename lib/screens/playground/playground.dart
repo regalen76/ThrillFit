@@ -95,8 +95,8 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
             NeoPopTiltedButton(
               color: Colors.white60,
               onTapUp: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => TestDataPage()));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => TestDataPage()));
               },
               child: const Padding(
                 padding: EdgeInsets.symmetric(
