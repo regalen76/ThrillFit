@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:thrill_fit/screens/challenges/challenges_page.dart';
-import 'package:thrill_fit/screens/feeds/feeds_page.dart';
-import 'package:thrill_fit/screens/my_workout_plan/my_workout_plan_page.dart';
+import 'package:thrill_fit/screens/challenges/challenges_page_view.dart';
+import 'package:thrill_fit/screens/feeds/feeds_page_view.dart';
+import 'package:thrill_fit/screens/my_workout_plan/my_workout_plan_page_view.dart';
 
 class NavigatorPage extends StatefulWidget {
   const NavigatorPage({super.key});

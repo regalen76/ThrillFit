@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:thrill_fit/screens/profile/profile_page.dart';
+import 'package:thrill_fit/screens/profile/profile_page_view.dart';
 
 class FeedsPage extends StatefulWidget {
   const FeedsPage({super.key});
