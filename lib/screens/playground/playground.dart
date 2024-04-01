@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:neopop/widgets/buttons/neopop_tilted_button/neopop_tilted_button.dart';
@@ -6,6 +9,9 @@ import 'package:thrill_fit/screens/playground/test_data_page.dart';
 import 'package:thrill_fit/screens/playground/test_list_data.dart';
 import 'package:thrill_fit/services/auth.dart';
 import 'package:thrill_fit/services/tester_repo.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class PlaygroundPage extends StatefulWidget {
   const PlaygroundPage({super.key});
@@ -15,7 +21,67 @@ class PlaygroundPage extends StatefulWidget {
 }
 
 class _PlaygroundPageState extends State<PlaygroundPage> {
+  bool isLoading = true;
+
   final User? user = Auth().currentUser;
+  final storageRef = FirebaseStorage.instance
+      .ref()
+      .child('profle-image/' + Auth().currentUser!.uid + '.png');
+  String? imageUrl;
+
+  @override
+  void initState() {
+    super.initState();
+    loadImage();
+  }
+
+  Future<void> loadImage() async {
+    print(storageRef.fullPath);
+    var temp = await storageRef.getDownloadURL();
+    setState(() {
+      imageUrl = temp;
+      isLoading = false;
+    });
+  }
+
+  File? _imgFile;
+
+  void takeSnapshot() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? img = await picker.pickImage(
+        source: ImageSource.gallery // alternatively, use ImageSource.gallery
+        );
+    if (img == null) return;
+
+    final theRef =
+        FirebaseStorage.instance.ref().child('profile-image/${user!.uid}.png');
+
+    UploadTask uploadTask = theRef.putFile(File(img.path));
+
+    uploadTask.snapshotEvents.listen((TaskSnapshot taskSnapshot) {
+      switch (taskSnapshot.state) {
+        case TaskState.running:
+          final progress =
+              100.0 * (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes);
+          print("Upload is $progress% complete.");
+          break;
+        case TaskState.paused:
+          print("Upload is paused.");
+          break;
+        case TaskState.canceled:
+          print("Upload was canceled");
+          break;
+        case TaskState.error:
+          // Handle unsuccessful uploads
+          break;
+        case TaskState.success:
+          // Handle successful uploads on complete
+          print("Success");
+          // ...
+          break;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +89,10 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
       appBar: AppBar(
         title: const Text('Playground'),
       ),
+      // body:
+      // isLoading
+      //     ? Center(child: Text('wait'))
+      //     :
       body: Container(
         height: double.infinity,
         width: double.infinity,
@@ -95,8 +165,8 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
             NeoPopTiltedButton(
               color: Colors.white60,
               onTapUp: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => TestDataPage()));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => TestDataPage()));
               },
               child: const Padding(
                 padding: EdgeInsets.symmetric(
@@ -114,6 +184,28 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
                 ),
               ),
             ),
+            NeoPopTiltedButton(
+              color: Colors.white60,
+              onTapUp: () {
+                takeSnapshot();
+              },
+              child: const Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 80.0,
+                  vertical: 15,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Upload image",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            // Image.network(imageUrl!)
           ],
         ),
       ),

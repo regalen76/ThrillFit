@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:thrill_fit/services/auth.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -23,8 +24,16 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
-      ),
+          title: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          IconButton(
+            icon: Icon(MdiIcons.accountCircle, color: Colors.white, size: 48.0),
+            tooltip: 'Profile',
+            onPressed: () {},
+          )
+        ],
+      )),
       body: Container(
         height: double.infinity,
         width: double.infinity,
