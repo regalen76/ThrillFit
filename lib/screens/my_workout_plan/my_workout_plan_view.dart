@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class MyWorkoutPlanPage extends StatefulWidget {
-  const MyWorkoutPlanPage({super.key});
+class MyWorkoutPlanView extends StatefulWidget {
+  const MyWorkoutPlanView({super.key});
 
   @override
-  State<MyWorkoutPlanPage> createState() => _MyWorkoutPlanPageState();
+  State<MyWorkoutPlanView> createState() => _MyWorkoutPlanViewState();
 }
 
-class _MyWorkoutPlanPageState extends State<MyWorkoutPlanPage> {
+class _MyWorkoutPlanViewState extends State<MyWorkoutPlanView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

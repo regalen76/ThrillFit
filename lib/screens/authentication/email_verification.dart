@@ -4,7 +4,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:thrill_fit/screens/navigator.dart';
+import 'package:thrill_fit/screens/navigator_view.dart';
 import 'package:thrill_fit/services/auth.dart';
 
 class EmailVerifPage extends StatefulWidget {
@@ -96,7 +96,7 @@ class EmailVerifPageState extends State<EmailVerifPage> {
 
   @override
   Widget build(BuildContext context) => isEmailVerified
-      ? const NavigatorPage()
+      ? const NavigatorView()
       : Scaffold(
           appBar: AppBar(
             title: const Text('Email Verify'),
