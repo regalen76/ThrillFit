@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:thrill_fit/screens/challenges/challenges_page_view.dart';
-import 'package:thrill_fit/screens/feeds/feeds_page_view.dart';
-import 'package:thrill_fit/screens/my_workout_plan/my_workout_plan_page_view.dart';
+import 'package:thrill_fit/screens/challenges/challenges_view.dart';
+import 'package:thrill_fit/screens/feeds/feeds_view.dart';
+import 'package:thrill_fit/screens/my_workout_plan/my_workout_plan_view.dart';
 
-class NavigatorPage extends StatefulWidget {
-  const NavigatorPage({super.key});
+class NavigatorView extends StatefulWidget {
+  const NavigatorView({super.key});
 
   @override
-  State<NavigatorPage> createState() => _NavigatorPageState();
+  State<NavigatorView> createState() => _NavigatorViewState();
 }
 
-class _NavigatorPageState extends State<NavigatorPage> {
+class _NavigatorViewState extends State<NavigatorView> {
   int _currentTabIndex = 1;
 
   final List<Widget> _screens = const [
-    FeedsPage(),
-    MyWorkoutPlanPage(),
-    ChallengesPage()
+    FeedsView(),
+    MyWorkoutPlanView(),
+    ChallengesView()
   ];
 
   @override
