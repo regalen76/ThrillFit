@@ -24,9 +24,6 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
   bool isLoading = true;
 
   final User? user = Auth().currentUser;
-  final storageRef = FirebaseStorage.instance
-      .ref()
-      .child('profle-image/' + Auth().currentUser!.uid + '.png');
   String? imageUrl;
 
   @override
@@ -36,6 +33,8 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
   }
 
   Future<void> loadImage() async {
+    var storageRef =
+        FirebaseStorage.instance.ref().child('profile-image/${user!.uid}.png');
     print(storageRef.fullPath);
     var temp = await storageRef.getDownloadURL();
     setState(() {
@@ -77,9 +76,19 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
         case TaskState.success:
           // Handle successful uploads on complete
           print("Success");
+          checkDownloadUrl(theRef);
           // ...
           break;
       }
+    });
+  }
+
+  void checkDownloadUrl(Reference theRef) async {
+    print(theRef.fullPath);
+    var temp = await theRef.getDownloadURL();
+    print(temp);
+    setState(() {
+      imageUrl = temp;
     });
   }
 
@@ -205,6 +214,9 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
                 ),
               ),
             ),
+            isLoading
+                ? const Center(child: Text('No Image'))
+                : Image.network(imageUrl!)
             // Image.network(imageUrl!)
           ],
         ),
