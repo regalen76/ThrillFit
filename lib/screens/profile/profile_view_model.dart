@@ -5,10 +5,10 @@ import 'package:thrill_fit/services/auth.dart';
 
 class ProfileViewModel extends BaseViewModel {
   User? user = Auth().currentUser;
-  String? profilePictureUrl;
+  String profilePictureUrl = '';
 
   User? get getUser => user;
-  String? get getProfilePictureUrl => profilePictureUrl;
+  String get getProfilePictureUrl => profilePictureUrl;
 
   void initState() {
     fetchProfilePictureUrl();
@@ -17,7 +17,29 @@ class ProfileViewModel extends BaseViewModel {
   Future<void> fetchProfilePictureUrl() async {
     var storageRef =
         FirebaseStorage.instance.ref().child('profile-image/${user!.uid}.png');
-    profilePictureUrl = await storageRef.getDownloadURL();
+
+    setBusy(true);
+
+    try {
+      profilePictureUrl = await storageRef.getDownloadURL();
+    } catch (e) {
+      (e as FirebaseException).code == 'object-not-found'
+          ? fetchDefaultProfilePictureUrl()
+          : print('Error fetching profile picture image');
+    }
+
+    setBusy(false);
+    notifyListeners();
+  }
+
+  Future<void> fetchDefaultProfilePictureUrl() async {
+    var storageRef = FirebaseStorage.instance.ref().child('default-avatar.png');
+
+    try {
+      profilePictureUrl = await storageRef.getDownloadURL();
+    } catch (e) {
+      print('error fetching default avatar');
+    }
     notifyListeners();
   }
 
