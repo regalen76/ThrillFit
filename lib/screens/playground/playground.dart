@@ -1,14 +1,10 @@
-import 'dart:ffi';
-
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:neopop/widgets/buttons/neopop_tilted_button/neopop_tilted_button.dart';
 import 'package:thrill_fit/screens/playground/test_data_page.dart';
-import 'package:thrill_fit/screens/playground/test_list_data.dart';
 import 'package:thrill_fit/services/auth.dart';
-import 'package:thrill_fit/services/tester_repo.dart';
+import 'package:thrill_fit/repository/tester_repo.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
