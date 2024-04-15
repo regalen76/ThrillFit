@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
@@ -33,12 +34,10 @@ class ProfileView extends StatelessWidget {
                   child: Consumer<UserModel>(
                     builder: (context, data, _) {
                       return Scaffold(
-                          appBar: AppBar(
-                            title: const Text('Profile'),
-                          ),
+                          appBar: AppBar(),
                           body: SingleChildScrollView(
                             child: SizedBox(
-                              height: MediaQuery.of(context).size.height,
+                              height: MediaQuery.of(context).size.height + 94.1,
                               width: MediaQuery.of(context).size.width,
                               child: Column(
                                 children: <Widget>[
@@ -91,10 +90,24 @@ class ProfileView extends StatelessWidget {
                                       children: [
                                         Expanded(
                                           child: Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.grey, width: 3),
-                                            ),
+                                            decoration: const BoxDecoration(
+                                                border: Border(
+                                                  top: BorderSide(
+                                                      color: Colors.grey,
+                                                      width: 3), // Top border
+                                                  left: BorderSide(
+                                                      color: Colors.grey,
+                                                      width: 3), // Left border
+                                                  bottom: BorderSide(
+                                                      color: Colors.grey,
+                                                      width:
+                                                          3), // Bottom border
+                                                ),
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(10),
+                                                    bottomLeft:
+                                                        Radius.circular(10))),
                                             child: SizedBox(
                                                 height: 100,
                                                 child: Column(
@@ -121,9 +134,18 @@ class ProfileView extends StatelessWidget {
                                         ),
                                         Expanded(
                                           child: Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.grey, width: 3),
+                                            decoration: const BoxDecoration(
+                                              border: Border(
+                                                top: BorderSide(
+                                                    color: Colors.grey,
+                                                    width: 3), // Top border
+                                                left: BorderSide(
+                                                    color: Colors.grey,
+                                                    width: 3), // Left border
+                                                bottom: BorderSide(
+                                                    color: Colors.grey,
+                                                    width: 3), // Bottom border
+                                              ),
                                             ),
                                             child: Container(
                                               height: 100,
@@ -153,10 +175,26 @@ class ProfileView extends StatelessWidget {
                                         ),
                                         Expanded(
                                           child: Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.grey, width: 3),
-                                            ),
+                                            decoration: const BoxDecoration(
+                                                border: Border(
+                                                    top: BorderSide(
+                                                        color: Colors.grey,
+                                                        width: 3), // Top border
+                                                    left: BorderSide(
+                                                        color: Colors.grey,
+                                                        width: 3),
+                                                    bottom: BorderSide(
+                                                        color: Colors.grey,
+                                                        width:
+                                                            3), // Bottom border
+                                                    right: BorderSide(
+                                                        color: Colors.grey,
+                                                        width: 3)),
+                                                borderRadius: BorderRadius.only(
+                                                    topRight:
+                                                        Radius.circular(10),
+                                                    bottomRight:
+                                                        Radius.circular(10))),
                                             child: SizedBox(
                                               height: 100,
                                               child: Column(
@@ -330,14 +368,138 @@ class ProfileView extends StatelessWidget {
                                                               FontWeight.bold)),
                                                 ],
                                               ),
+                                              const Divider(
+                                                color: Colors.grey,
+                                                thickness: 1,
+                                              ),
+                                              InkWell(
+                                                onTapUp: (_) {
+                                                  showModalBottomSheet(
+                                                    context: context,
+                                                    shape:
+                                                        const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(20),
+                                                        topRight:
+                                                            Radius.circular(20),
+                                                      ),
+                                                    ),
+                                                    builder: ((context) {
+                                                      return SizedBox(
+                                                        height: 300,
+                                                        child: Center(
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              const Center(
+                                                                child: Text(
+                                                                  'Are you sure you want to logout?',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          24),
+                                                                ),
+                                                              ),
+                                                              Container(
+                                                                  margin:
+                                                                      const EdgeInsets
+                                                                          .only(
+                                                                          top:
+                                                                              40),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Expanded(
+                                                                        child:
+                                                                            Center(
+                                                                          child:
+                                                                              Material(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(20),
+                                                                            child:
+                                                                                InkWell(
+                                                                              borderRadius: BorderRadius.circular(20),
+                                                                              onTapUp: (_) {
+                                                                                model.signOut();
+                                                                                Navigator.pop(context);
+                                                                                Navigator.pop(context);
+                                                                              },
+                                                                              child: const SizedBox(
+                                                                                height: 80,
+                                                                                width: 170,
+                                                                                child: Center(
+                                                                                  child: Text('Yes'),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      Expanded(
+                                                                        child:
+                                                                            Center(
+                                                                          child:
+                                                                              Material(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(20),
+                                                                            child:
+                                                                                InkWell(
+                                                                              borderRadius: BorderRadius.circular(20),
+                                                                              onTapUp: (_) {
+                                                                                Navigator.pop(context);
+                                                                              },
+                                                                              child: const SizedBox(
+                                                                                height: 80,
+                                                                                width: 170,
+                                                                                child: Center(
+                                                                                  child: Text('No'),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  )),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      );
+                                                    }),
+                                                  );
+                                                },
+                                                child: Container(
+                                                  margin: const EdgeInsets.only(
+                                                      top: 10, bottom: 10),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Icon(
+                                                        MdiIcons.logout,
+                                                        size: 30,
+                                                        color: Colors.red,
+                                                      ),
+                                                      const Text('Sign Out',
+                                                          style: TextStyle(
+                                                              fontSize: 22,
+                                                              color: Colors.red,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              const Divider(
+                                                color: Colors.grey,
+                                                thickness: 1,
+                                              ),
                                             ],
                                           ))),
-                                  ElevatedButton(
-                                      onPressed: () {
-                                        model.signOut();
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text('Sign Out')),
                                 ],
                               ),
                             ),
