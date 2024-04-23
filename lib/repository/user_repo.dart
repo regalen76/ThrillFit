@@ -41,4 +41,36 @@ class UserRepo {
 
     return streamData;
   }
+
+  Future<UserModel> getUserDataOnce() async {
+    try {
+      return await userCollection.doc(uid).get().then(
+        (DocumentSnapshot doc) {
+          return UserModel.fromJson(doc.data() as Map<String, dynamic>);
+        },
+        onError: (e) {
+          logger.e("Error getting user data: $e");
+          throw Exception('Error getting user data: $e');
+        },
+      );
+    } catch (e) {
+      throw Exception('Error getting user data: $e');
+    }
+  }
+
+  Future updateUserData(String name, String phone, String gender, int height,
+      int weight, int age) async {
+    try {
+      await userCollection.doc(uid).set({
+        'name': name,
+        'phone': phone,
+        'gender': gender,
+        'height': height,
+        'weight': weight,
+        'age': age
+      }, SetOptions(merge: true));
+    } catch (e) {
+      throw Exception('Error update user data: $e');
+    }
+  }
 }

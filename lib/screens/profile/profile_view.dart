@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
@@ -15,6 +14,7 @@ class ProfileView extends StatelessWidget {
     return ViewModelBuilder.reactive(
         viewModelBuilder: () => ProfileViewModel(),
         onViewModelReady: (model) => model.initState(),
+        onDispose: (model) => model.disposeAll(),
         builder: (context, model, _) {
           return model.isBusy
               ? const Center(child: CircularProgressIndicator())
@@ -37,13 +37,12 @@ class ProfileView extends StatelessWidget {
                           appBar: AppBar(),
                           body: SingleChildScrollView(
                             child: SizedBox(
-                              height: MediaQuery.of(context).size.height + 94.1,
-                              width: MediaQuery.of(context).size.width,
                               child: Column(
                                 children: <Widget>[
                                   SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.30,
+                                    width: MediaQuery.of(context).size.width,
                                     child: Stack(
                                       alignment: Alignment.center,
                                       children: [
@@ -220,285 +219,441 @@ class ProfileView extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  Expanded(
+                                  SizedBox(
                                       child: Container(
                                           margin: const EdgeInsets.only(
                                               left: 20, right: 20, top: 40),
-                                          child: Column(
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  const Text('Name:',
-                                                      style: TextStyle(
-                                                        fontSize: 18,
-                                                      )),
-                                                  Text(data.name,
-                                                      style: const TextStyle(
+                                          child: Form(
+                                            key: model.getFormKey,
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    const Text('Name:',
+                                                        style: TextStyle(
                                                           fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                ],
-                                              ),
-                                              const Divider(
-                                                color: Colors.grey,
-                                                thickness: 1,
-                                                height: 40,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  const Text('Email:',
-                                                      style: TextStyle(
-                                                        fontSize: 18,
-                                                      )),
-                                                  Text(data.email,
-                                                      style: const TextStyle(
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                ],
-                                              ),
-                                              const Divider(
-                                                color: Colors.grey,
-                                                thickness: 1,
-                                                height: 40,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  const Text('Phone:',
-                                                      style: TextStyle(
-                                                        fontSize: 18,
-                                                      )),
-                                                  Text(data.phone,
-                                                      style: const TextStyle(
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                ],
-                                              ),
-                                              const Divider(
-                                                color: Colors.grey,
-                                                thickness: 1,
-                                                height: 40,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  const Text('Gender:',
-                                                      style: TextStyle(
-                                                        fontSize: 18,
-                                                      )),
-                                                  Text(data.gender,
-                                                      style: const TextStyle(
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                ],
-                                              ),
-                                              const Divider(
-                                                color: Colors.grey,
-                                                thickness: 1,
-                                                height: 40,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  const Text('Height:',
-                                                      style: TextStyle(
-                                                        fontSize: 18,
-                                                      )),
-                                                  Text('${data.height}',
-                                                      style: const TextStyle(
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                ],
-                                              ),
-                                              const Divider(
-                                                color: Colors.grey,
-                                                thickness: 1,
-                                                height: 40,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  const Text('Weight:',
-                                                      style: TextStyle(
-                                                        fontSize: 18,
-                                                      )),
-                                                  Text('${data.weight}',
-                                                      style: const TextStyle(
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                ],
-                                              ),
-                                              const Divider(
-                                                color: Colors.grey,
-                                                thickness: 1,
-                                                height: 40,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  const Text('Age:',
-                                                      style: TextStyle(
-                                                        fontSize: 18,
-                                                      )),
-                                                  Text('${data.age}',
-                                                      style: const TextStyle(
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                ],
-                                              ),
-                                              const Divider(
-                                                color: Colors.grey,
-                                                thickness: 1,
-                                              ),
-                                              InkWell(
-                                                onTapUp: (_) {
-                                                  showModalBottomSheet(
-                                                    context: context,
-                                                    shape:
-                                                        const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                        topLeft:
-                                                            Radius.circular(20),
-                                                        topRight:
-                                                            Radius.circular(20),
-                                                      ),
-                                                    ),
-                                                    builder: ((context) {
-                                                      return SizedBox(
-                                                        height: 300,
-                                                        child: Center(
-                                                          child: Column(
+                                                        )),
+                                                    model.getIsEdit
+                                                        ? Expanded(
+                                                            child:
+                                                                TextFormField(
+                                                              enabled: model
+                                                                  .getIsEdit,
+                                                              textAlign:
+                                                                  TextAlign.end,
+                                                              style: const TextStyle(
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                              validator: model
+                                                                  .validateEmpty,
+                                                              controller: model
+                                                                  .getNameField,
+                                                            ),
+                                                          )
+                                                        : Text(data.name,
+                                                            style: const TextStyle(
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold))
+                                                  ],
+                                                ),
+                                                model.getIsEdit
+                                                    ? Container() // Show nothing when true
+                                                    : Column(
+                                                        children: [
+                                                          const Divider(
+                                                            color: Colors.grey,
+                                                            thickness: 1,
+                                                            height: 40,
+                                                          ),
+                                                          Row(
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
-                                                                    .center,
+                                                                    .spaceBetween,
                                                             children: [
-                                                              const Center(
-                                                                child: Text(
-                                                                  'Are you sure you want to logout?',
+                                                              const Text(
+                                                                'Email:',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        18),
+                                                              ),
+                                                              Text(
+                                                                data.email,
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                const Divider(
+                                                  color: Colors.grey,
+                                                  thickness: 1,
+                                                  height: 40,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    const Text('Phone:',
+                                                        style: TextStyle(
+                                                          fontSize: 18,
+                                                        )),
+                                                    model.getIsEdit
+                                                        ? Expanded(
+                                                            child:
+                                                                TextFormField(
+                                                              enabled: model
+                                                                  .getIsEdit,
+                                                              textAlign:
+                                                                  TextAlign.end,
+                                                              style: const TextStyle(
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                              validator: model
+                                                                  .validateEmpty,
+                                                              controller: model
+                                                                  .getPhoneField,
+                                                            ),
+                                                          )
+                                                        : Text(data.phone,
+                                                            style: const TextStyle(
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold))
+                                                  ],
+                                                ),
+                                                const Divider(
+                                                  color: Colors.grey,
+                                                  thickness: 1,
+                                                  height: 40,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    const Text('Gender:',
+                                                        style: TextStyle(
+                                                          fontSize: 18,
+                                                        )),
+                                                    model.getIsEdit
+                                                        ? Expanded(
+                                                            child:
+                                                                TextFormField(
+                                                              enabled: model
+                                                                  .getIsEdit,
+                                                              textAlign:
+                                                                  TextAlign.end,
+                                                              style: const TextStyle(
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                              validator: model
+                                                                  .validateEmpty,
+                                                              controller: model
+                                                                  .genderField,
+                                                            ),
+                                                          )
+                                                        : Text(data.gender,
+                                                            style: const TextStyle(
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold))
+                                                  ],
+                                                ),
+                                                const Divider(
+                                                  color: Colors.grey,
+                                                  thickness: 1,
+                                                  height: 40,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    const Text('Height:',
+                                                        style: TextStyle(
+                                                          fontSize: 18,
+                                                        )),
+                                                    model.getIsEdit
+                                                        ? Expanded(
+                                                            child:
+                                                                TextFormField(
+                                                              enabled: model
+                                                                  .getIsEdit,
+                                                              textAlign:
+                                                                  TextAlign.end,
+                                                              style: const TextStyle(
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                              validator: model
+                                                                  .validateEmpty,
+                                                              controller: model
+                                                                  .getHeightField,
+                                                            ),
+                                                          )
+                                                        : Text('${data.height}',
+                                                            style: const TextStyle(
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold))
+                                                  ],
+                                                ),
+                                                const Divider(
+                                                  color: Colors.grey,
+                                                  thickness: 1,
+                                                  height: 40,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    const Text('Weight:',
+                                                        style: TextStyle(
+                                                          fontSize: 18,
+                                                        )),
+                                                    model.getIsEdit
+                                                        ? Expanded(
+                                                            child:
+                                                                TextFormField(
+                                                              enabled: model
+                                                                  .getIsEdit,
+                                                              textAlign:
+                                                                  TextAlign.end,
+                                                              style: const TextStyle(
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                              controller: model
+                                                                  .getWeightField,
+                                                              validator: model
+                                                                  .validateEmpty,
+                                                            ),
+                                                          )
+                                                        : Text('${data.weight}',
+                                                            style: const TextStyle(
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold))
+                                                  ],
+                                                ),
+                                                const Divider(
+                                                  color: Colors.grey,
+                                                  thickness: 1,
+                                                  height: 40,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    const Text('Age:',
+                                                        style: TextStyle(
+                                                          fontSize: 18,
+                                                        )),
+                                                    model.getIsEdit
+                                                        ? Expanded(
+                                                            child:
+                                                                TextFormField(
+                                                              enabled: model
+                                                                  .getIsEdit,
+                                                              textAlign:
+                                                                  TextAlign.end,
+                                                              style: const TextStyle(
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                              controller: model
+                                                                  .getAgeField,
+                                                              validator: model
+                                                                  .validateEmpty,
+                                                            ),
+                                                          )
+                                                        : Text('${data.age}',
+                                                            style: const TextStyle(
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold))
+                                                  ],
+                                                ),
+                                                const Divider(
+                                                  color: Colors.grey,
+                                                  thickness: 1,
+                                                ),
+                                                model.getIsEdit
+                                                    ? SizedBox(
+                                                        width: 300,
+                                                        child: ElevatedButton(
+                                                            style: ButtonStyle(
+                                                                shape: MaterialStateProperty.all<
+                                                                        OutlinedBorder>(
+                                                                    ContinuousRectangleBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                20.0)))),
+                                                            onPressed: () {
+                                                              model
+                                                                  .saveEditProfile();
+                                                            },
+                                                            child: const Text(
+                                                                'Save')),
+                                                      )
+                                                    : InkWell(
+                                                        onTapUp: (_) {
+                                                          showModalBottomSheet(
+                                                            context: context,
+                                                            shape:
+                                                                const RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        20),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        20),
+                                                              ),
+                                                            ),
+                                                            builder:
+                                                                ((context) {
+                                                              return SizedBox(
+                                                                height: 300,
+                                                                child: Center(
+                                                                  child: Column(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      const Center(
+                                                                        child:
+                                                                            Text(
+                                                                          'Are you sure you want to logout?',
+                                                                          style:
+                                                                              TextStyle(fontSize: 24),
+                                                                        ),
+                                                                      ),
+                                                                      Container(
+                                                                          margin: const EdgeInsets
+                                                                              .only(
+                                                                              top:
+                                                                                  40),
+                                                                          child:
+                                                                              Row(
+                                                                            children: [
+                                                                              Expanded(
+                                                                                child: Center(
+                                                                                  child: Material(
+                                                                                    borderRadius: BorderRadius.circular(20),
+                                                                                    child: InkWell(
+                                                                                      borderRadius: BorderRadius.circular(20),
+                                                                                      onTapUp: (_) {
+                                                                                        model.signOut();
+                                                                                        Navigator.pop(context);
+                                                                                        Navigator.pop(context);
+                                                                                      },
+                                                                                      child: const SizedBox(
+                                                                                        height: 80,
+                                                                                        width: 170,
+                                                                                        child: Center(
+                                                                                          child: Text('Yes'),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              Expanded(
+                                                                                child: Center(
+                                                                                  child: Material(
+                                                                                    borderRadius: BorderRadius.circular(20),
+                                                                                    child: InkWell(
+                                                                                      borderRadius: BorderRadius.circular(20),
+                                                                                      onTapUp: (_) {
+                                                                                        Navigator.pop(context);
+                                                                                      },
+                                                                                      child: const SizedBox(
+                                                                                        height: 80,
+                                                                                        width: 170,
+                                                                                        child: Center(
+                                                                                          child: Text('No'),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          )),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            }),
+                                                          );
+                                                        },
+                                                        child: Container(
+                                                          margin:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  top: 10,
+                                                                  bottom: 10),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Icon(
+                                                                MdiIcons.logout,
+                                                                size: 30,
+                                                                color:
+                                                                    Colors.red,
+                                                              ),
+                                                              const Text(
+                                                                  'Sign Out',
                                                                   style: TextStyle(
                                                                       fontSize:
-                                                                          24),
-                                                                ),
-                                                              ),
-                                                              Container(
-                                                                  margin:
-                                                                      const EdgeInsets
-                                                                          .only(
-                                                                          top:
-                                                                              40),
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Expanded(
-                                                                        child:
-                                                                            Center(
-                                                                          child:
-                                                                              Material(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(20),
-                                                                            child:
-                                                                                InkWell(
-                                                                              borderRadius: BorderRadius.circular(20),
-                                                                              onTapUp: (_) {
-                                                                                model.signOut();
-                                                                                Navigator.pop(context);
-                                                                                Navigator.pop(context);
-                                                                              },
-                                                                              child: const SizedBox(
-                                                                                height: 80,
-                                                                                width: 170,
-                                                                                child: Center(
-                                                                                  child: Text('Yes'),
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      Expanded(
-                                                                        child:
-                                                                            Center(
-                                                                          child:
-                                                                              Material(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(20),
-                                                                            child:
-                                                                                InkWell(
-                                                                              borderRadius: BorderRadius.circular(20),
-                                                                              onTapUp: (_) {
-                                                                                Navigator.pop(context);
-                                                                              },
-                                                                              child: const SizedBox(
-                                                                                height: 80,
-                                                                                width: 170,
-                                                                                child: Center(
-                                                                                  child: Text('No'),
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  )),
+                                                                          22,
+                                                                      color: Colors
+                                                                          .red,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold)),
                                                             ],
                                                           ),
                                                         ),
-                                                      );
-                                                    }),
-                                                  );
-                                                },
-                                                child: Container(
-                                                  margin: const EdgeInsets.only(
-                                                      top: 10, bottom: 10),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Icon(
-                                                        MdiIcons.logout,
-                                                        size: 30,
-                                                        color: Colors.red,
                                                       ),
-                                                      const Text('Sign Out',
-                                                          style: TextStyle(
-                                                              fontSize: 22,
-                                                              color: Colors.red,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold)),
-                                                    ],
-                                                  ),
+                                                const Divider(
+                                                  color: Colors.grey,
+                                                  thickness: 1,
                                                 ),
-                                              ),
-                                              const Divider(
-                                                color: Colors.grey,
-                                                thickness: 1,
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ))),
                                 ],
                               ),
