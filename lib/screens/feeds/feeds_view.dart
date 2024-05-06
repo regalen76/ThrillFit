@@ -1,39 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:thrill_fit/screens/profile/profile_view.dart';
+import 'package:stacked/stacked.dart';
+import 'package:thrill_fit/screens/feeds/feeds_view_model.dart';
+import 'package:firebase_pagination/firebase_pagination.dart';
 
-class FeedsView extends StatefulWidget {
+class FeedsView extends StatelessWidget {
   const FeedsView({super.key});
 
   @override
-  State<FeedsView> createState() => _FeedsViewState();
-}
-
-class _FeedsViewState extends State<FeedsView> {
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Feeds'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => const ProfileView()));
-            },
-            icon: Icon(
-              MdiIcons.accountCircle,
-              color: Colors.white,
-            ),
-            iconSize: 40,
-          )
-        ],
-      ),
-      body: Center(
-        child: Text('Ini Feeds Page'),
-      ),
-    );
+    return ViewModelBuilder.reactive(
+        viewModelBuilder: () => FeedsViewModel(),
+        builder: (context, model, _) {
+          return model.isBusy
+              ? const Center(child: CircularProgressIndicator())
+              : Scaffold(
+                  appBar: AppBar(),
+                  body: FirestorePagination(
+                      query: model.getPostsQuery,
+                      viewType: ViewType.list,
+                      itemBuilder: (context, dataSnapshot, index) {
+                        final Map<String, dynamic>? data =
+                            dataSnapshot.data() as Map<String, dynamic>?;
+
+                        if (data == null) return Container();
+
+                        return Column(
+                          children: [
+                            Text(data['body']),
+                            Divider(
+                              height: 350,
+                            ),
+                            Text(data['timestamp'].toString())
+                          ],
+                        );
+                      }),
+                );
+        });
   }
 }
