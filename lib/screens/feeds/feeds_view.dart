@@ -1,9 +1,11 @@
+import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/screens/feeds/feeds_view_model.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:thrill_fit/shared/media_type.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:video_player/video_player.dart';
 
 class FeedsView extends StatelessWidget {
   const FeedsView({super.key});
@@ -138,25 +140,25 @@ class FeedsView extends StatelessWidget {
                                                       final content = postData
                                                           .content![index];
 
-                                                      if (MediaType()
-                                                          .isImage(content)) {
-                                                        return FutureBuilder(
-                                                            future: model
-                                                                .fetchPostImage(
-                                                                    content),
-                                                            builder: (context,
-                                                                snapshot) {
-                                                              if (snapshot
-                                                                      .connectionState ==
-                                                                  ConnectionState
-                                                                      .waiting) {
-                                                                return const Center(
-                                                                    child:
-                                                                        CircularProgressIndicator());
-                                                              } else {
-                                                                return Column(
-                                                                  children: [
-                                                                    Expanded(
+                                                      return Column(
+                                                        children: [
+                                                          if (MediaType()
+                                                              .isImage(content))
+                                                            FutureBuilder(
+                                                                future: model
+                                                                    .fetchContent(
+                                                                        content),
+                                                                builder: (context,
+                                                                    snapshot) {
+                                                                  if (snapshot
+                                                                          .connectionState ==
+                                                                      ConnectionState
+                                                                          .waiting) {
+                                                                    return const Center(
+                                                                        child:
+                                                                            CircularProgressIndicator());
+                                                                  } else {
+                                                                    return Expanded(
                                                                         child:
                                                                             Container(
                                                                       decoration: BoxDecoration(
@@ -164,33 +166,71 @@ class FeedsView extends StatelessWidget {
                                                                               20),
                                                                           image:
                                                                               DecorationImage(image: NetworkImage(snapshot.data!))),
-                                                                    )),
-                                                                    postData.content!.length !=
-                                                                            1
-                                                                        ? Container(
-                                                                            width:
-                                                                                MediaQuery.of(context).size.width * 0.80,
-                                                                            margin:
-                                                                                const EdgeInsets.only(top: 10),
-                                                                            child: Center(
-                                                                                child: DotsIndicator(
-                                                                              dotsCount: postData.content!.length,
-                                                                              position: index,
-                                                                              decorator: const DotsDecorator(
-                                                                                color: Colors.white, // Inactive color
-                                                                                activeColor: Colors.lightBlue,
-                                                                              ),
-                                                                            )),
-                                                                          )
-                                                                        : Container()
-                                                                  ],
-                                                                );
-                                                              }
-                                                            });
-                                                      } else if (MediaType()
-                                                          .isVideo(content)) {}
-                                                      throw Exception(
-                                                          "Unsupported Content");
+                                                                    ));
+                                                                  }
+                                                                }),
+                                                          if (MediaType()
+                                                              .isVideo(content))
+                                                            FutureBuilder(
+                                                                future: model
+                                                                    .fetchContent(
+                                                                        content),
+                                                                builder: (context,
+                                                                    snapshot) {
+                                                                  if (snapshot
+                                                                          .connectionState ==
+                                                                      ConnectionState
+                                                                          .waiting) {
+                                                                    return const Center(
+                                                                        child:
+                                                                            CircularProgressIndicator());
+                                                                  } else {
+                                                                    final flickManager =
+                                                                        FlickManager(
+                                                                            videoPlayerController:
+                                                                                VideoPlayerController.networkUrl(Uri.parse(snapshot.data!)));
+
+                                                                    return Expanded(
+                                                                        child: FlickVideoPlayer(
+                                                                            flickManager:
+                                                                                flickManager));
+                                                                  }
+                                                                }),
+                                                          postData.content!
+                                                                      .length !=
+                                                                  1
+                                                              ? Container(
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.80,
+                                                                  margin:
+                                                                      const EdgeInsets
+                                                                          .only(
+                                                                          top:
+                                                                              10),
+                                                                  child: Center(
+                                                                      child:
+                                                                          DotsIndicator(
+                                                                    dotsCount: postData
+                                                                        .content!
+                                                                        .length,
+                                                                    position:
+                                                                        index,
+                                                                    decorator:
+                                                                        const DotsDecorator(
+                                                                      color: Colors
+                                                                          .white, // Inactive color
+                                                                      activeColor:
+                                                                          Colors
+                                                                              .lightBlue,
+                                                                    ),
+                                                                  )),
+                                                                )
+                                                              : Container()
+                                                        ],
+                                                      );
                                                     })), //content
                                           ],
                                         ),

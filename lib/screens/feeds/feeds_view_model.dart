@@ -8,7 +8,6 @@ import 'package:thrill_fit/models/user_model.dart';
 import 'package:thrill_fit/repository/feeds_repo.dart';
 import 'package:thrill_fit/repository/user_repo.dart';
 import 'package:thrill_fit/services/auth.dart';
-import 'dart:developer';
 
 class FeedsViewModel extends BaseViewModel {
   Logger logger = Logger();
@@ -54,7 +53,7 @@ class FeedsViewModel extends BaseViewModel {
     }
   }
 
-  Future<String> fetchPostImage(String path) async {
+  Future<String> fetchContent(String path) async {
     var storageRef = FirebaseStorage.instance.ref().child('/feeds/$path');
 
     try {
