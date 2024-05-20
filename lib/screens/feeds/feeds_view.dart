@@ -418,7 +418,21 @@ class FeedsView extends StatelessWidget {
                                             );
                                           }));
                                     },
-                                  )
+                                  ),
+                                  StreamProvider<List<PostCommentsModel>>.value(
+                                      value: model.getPostCommentsStream(
+                                          dataSnapshot.id),
+                                      initialData: const [],
+                                      child: Consumer<List<PostCommentsModel>>(
+                                          builder: (context, snapshot, _) {
+                                        if (snapshot.isNotEmpty) {
+                                          return Text(
+                                              '${snapshot.length} comments');
+                                        } else {
+                                          return const SizedBox();
+                                        }
+                                      }))
+             
                                 ],
                               ))
                             ],
