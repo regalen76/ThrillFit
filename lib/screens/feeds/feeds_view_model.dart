@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
+import 'package:thrill_fit/models/post_comments_model.dart';
 import 'package:thrill_fit/models/post_model.dart';
 import 'package:thrill_fit/models/user_model.dart';
 import 'package:thrill_fit/repository/feeds_repo.dart';
@@ -41,6 +42,10 @@ class FeedsViewModel extends BaseViewModel {
     return data.name;
   }
 
+  Future<List<PostCommentsModel>> getPostComments(String postId) async {
+    return FeedsRepo(uid: user!.uid).getComments(postId);
+  }
+
   Future<String> fetchProfilePictureUrl(String uid) async {
     var storageRef =
         FirebaseStorage.instance.ref().child('profile-image/$uid.png');
@@ -62,5 +67,10 @@ class FeedsViewModel extends BaseViewModel {
       logger.e("Failed to fetch post image, the error: $e");
       throw Exception("Failed to get post image");
     }
+  }
+
+  Future addComments(String comments, String postId, String userId) async {
+    return FeedsRepo(uid: user!.uid)
+        .createCommentsData(comments, postId, userId);
   }
 }

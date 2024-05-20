@@ -7,7 +7,6 @@ part 'post_model.g.dart';
 @JsonSerializable()
 class PostModel {
   final String author;
-  final List<String>? comments;
   final List<String>? content;
   final String body;
   @TimestampConverter()
@@ -17,7 +16,6 @@ class PostModel {
 
   PostModel(
       {required this.author,
-      required this.comments,
       required this.content,
       required this.body,
       required this.timestamp,
