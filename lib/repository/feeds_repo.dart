@@ -37,9 +37,9 @@ class FeedsRepo {
     }
   }
 
-  Stream<List<PostCommentsModel>> get getCommentsStream {
+  Stream<List<PostCommentsModel>> getCommentsStream(String postId) {
     return postCommentsCollection
-        .where('uid', isEqualTo: uid)
+        .where('post_id', isEqualTo: postId)
         .snapshots()
         .map((snap) {
       return snap.docs.map((doc) {

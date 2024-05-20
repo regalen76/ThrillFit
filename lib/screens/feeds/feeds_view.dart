@@ -1,7 +1,9 @@
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
+import 'package:thrill_fit/models/post_comments_model.dart';
 import 'package:thrill_fit/screens/feeds/feeds_view_model.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:thrill_fit/shared/media_type.dart';
@@ -281,108 +283,100 @@ class FeedsView extends StatelessWidget {
                                                     ),
                                                   ),
                                                   Expanded(
-                                                    child: FutureBuilder(
-                                                      future:
-                                                          model.getPostComments(
-                                                              dataSnapshot.id),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot
-                                                                .connectionState ==
-                                                            ConnectionState
-                                                                .waiting) {
+                                                      child: StreamProvider<
+                                                          List<
+                                                              PostCommentsModel>>.value(
+                                                    value: model
+                                                        .getPostCommentsStream(
+                                                            dataSnapshot.id),
+                                                    initialData: const [],
+                                                    child: Consumer<
+                                                        List<
+                                                            PostCommentsModel>>(
+                                                      builder: (context,
+                                                          snapshot, _) {
+                                                        if (snapshot.isEmpty) {
                                                           return const Center(
-                                                              child:
-                                                                  CircularProgressIndicator());
+                                                              child: Text(
+                                                                  "No comments yet"));
                                                         } else {
-                                                          if (snapshot
-                                                              .data!.isEmpty) {
-                                                            return const Center(
-                                                                child: Text(
-                                                                    "No comments yet"));
-                                                          } else {
-                                                            return ListView
-                                                                .builder(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .only(
-                                                                      left: 10,
-                                                                      bottom:
-                                                                          10,
-                                                                      right:
-                                                                          10),
-                                                              itemCount: snapshot
-                                                                  .data!
-                                                                  .length, // Replace with your actual item count
-                                                              itemBuilder:
-                                                                  (context,
-                                                                      index) {
-                                                                return FutureBuilder(
-                                                                    future: model.getUserName(
-                                                                        postData
-                                                                            .author),
-                                                                    builder:
-                                                                        (context,
-                                                                            snapshot2) {
-                                                                      if (snapshot2
-                                                                              .connectionState ==
-                                                                          ConnectionState
-                                                                              .waiting) {
-                                                                        return const Center(
-                                                                            child:
-                                                                                CircularProgressIndicator());
-                                                                      } else if (snapshot2
-                                                                              .connectionState ==
-                                                                          ConnectionState
-                                                                              .done) {
-                                                                        return ListTile(
-                                                                          leading:
-                                                                              SizedBox(
-                                                                            height:
-                                                                                40,
-                                                                            width:
-                                                                                40,
-                                                                            child: FutureBuilder(
-                                                                                future: model.fetchProfilePictureUrl(snapshot.data![index].user),
-                                                                                builder: (context, snapshot3) {
-                                                                                  if (snapshot3.connectionState == ConnectionState.waiting) {
-                                                                                    return const CircleAvatar(
-                                                                                      radius: (82),
-                                                                                      backgroundColor: Colors.black,
-                                                                                      child: CircularProgressIndicator(),
-                                                                                    );
-                                                                                  } else if (snapshot3.connectionState == ConnectionState.done) {
-                                                                                    return CircleAvatar(
-                                                                                      radius: (82),
-                                                                                      backgroundColor: Colors.transparent,
-                                                                                      backgroundImage: NetworkImage(snapshot3.data!),
-                                                                                    );
-                                                                                  } else {
-                                                                                    return const CircleAvatar(
-                                                                                      radius: (82),
-                                                                                      backgroundColor: Colors.black,
-                                                                                      child: CircularProgressIndicator(),
-                                                                                    );
-                                                                                  }
-                                                                                }),
-                                                                          ),
-                                                                          title:
-                                                                              Text(snapshot2.data!),
-                                                                          subtitle: Text(snapshot
-                                                                              .data![index]
-                                                                              .comments),
-                                                                        );
-                                                                      } else {
-                                                                        return const CircularProgressIndicator();
-                                                                      }
-                                                                    });
-                                                              },
-                                                            );
-                                                          }
+                                                          return ListView
+                                                              .builder(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                                    left: 10,
+                                                                    bottom: 10,
+                                                                    right: 10),
+                                                            itemCount: snapshot
+                                                                .length, // Replace with your actual item count
+                                                            itemBuilder:
+                                                                (context,
+                                                                    index) {
+                                                              return FutureBuilder(
+                                                                  future: model
+                                                                      .getUserName(
+                                                                          postData
+                                                                              .author),
+                                                                  builder: (context,
+                                                                      snapshot2) {
+                                                                    if (snapshot2
+                                                                            .connectionState ==
+                                                                        ConnectionState
+                                                                            .waiting) {
+                                                                      return const Center(
+                                                                          child:
+                                                                              CircularProgressIndicator());
+                                                                    } else if (snapshot2
+                                                                            .connectionState ==
+                                                                        ConnectionState
+                                                                            .done) {
+                                                                      return ListTile(
+                                                                        leading:
+                                                                            SizedBox(
+                                                                          height:
+                                                                              40,
+                                                                          width:
+                                                                              40,
+                                                                          child: FutureBuilder(
+                                                                              future: model.fetchProfilePictureUrl(snapshot[index].user),
+                                                                              builder: (context, snapshot3) {
+                                                                                if (snapshot3.connectionState == ConnectionState.waiting) {
+                                                                                  return const CircleAvatar(
+                                                                                    radius: (82),
+                                                                                    backgroundColor: Colors.black,
+                                                                                    child: CircularProgressIndicator(),
+                                                                                  );
+                                                                                } else if (snapshot3.connectionState == ConnectionState.done) {
+                                                                                  return CircleAvatar(
+                                                                                    radius: (82),
+                                                                                    backgroundColor: Colors.transparent,
+                                                                                    backgroundImage: NetworkImage(snapshot3.data!),
+                                                                                  );
+                                                                                } else {
+                                                                                  return const CircleAvatar(
+                                                                                    radius: (82),
+                                                                                    backgroundColor: Colors.black,
+                                                                                    child: CircularProgressIndicator(),
+                                                                                  );
+                                                                                }
+                                                                              }),
+                                                                        ),
+                                                                        title: Text(
+                                                                            snapshot2.data!),
+                                                                        subtitle:
+                                                                            Text(snapshot[index].comments),
+                                                                      );
+                                                                    } else {
+                                                                      return const CircularProgressIndicator();
+                                                                    }
+                                                                  });
+                                                            },
+                                                          );
                                                         }
                                                       },
                                                     ),
-                                                  ),
+                                                  )),
                                                   Container(
                                                     padding:
                                                         const EdgeInsets.all(

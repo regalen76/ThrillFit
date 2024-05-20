@@ -46,6 +46,10 @@ class FeedsViewModel extends BaseViewModel {
     return FeedsRepo(uid: user!.uid).getComments(postId);
   }
 
+  Stream<List<PostCommentsModel>> getPostCommentsStream(String postId) {
+    return FeedsRepo(uid: user!.uid).getCommentsStream(postId);
+  }
+
   Future<String> fetchProfilePictureUrl(String uid) async {
     var storageRef =
         FirebaseStorage.instance.ref().child('profile-image/$uid.png');
