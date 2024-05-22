@@ -55,6 +55,7 @@ dependencies:
   dots_indicator: ^3.0.0
   video_player: ^2.8.6
   flick_video_player: ^0.8.0
+  gesture_x_detector: ^1.1.1
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:thrill_fit/models/post_comments_model.dart';
+import 'package:thrill_fit/models/post_likes_model.dart';
 import 'package:uuid/uuid.dart';
 
 class FeedsRepo {
@@ -12,6 +13,9 @@ class FeedsRepo {
 
   final CollectionReference postCommentsCollection =
       FirebaseFirestore.instance.collection('post_comments');
+
+  final CollectionReference postLikesCollection =
+      FirebaseFirestore.instance.collection('post_likes');
 
   Query<Object?> get getPostsQuery {
     return postsCollection.orderBy('timestamp');
@@ -51,9 +55,52 @@ class FeedsRepo {
     });
   }
 
+  Stream<List<PostLikesModel>> getLikesStream(String postId) {
+    return postLikesCollection
+        .where('post_id', isEqualTo: postId)
+        .snapshots()
+        .map((snap) {
+      return snap.docs.map((doc) {
+        return PostLikesModel(
+            user: doc.get('user') ?? '', postId: doc.get('post_id') ?? '');
+      }).toList();
+    });
+  }
+
+  Stream<List<PostLikesModel>> getLikesStreamFromUser(
+      String postId, String userId) {
+    return postLikesCollection
+        .where('post_id', isEqualTo: postId)
+        .where('user', isEqualTo: userId)
+        .snapshots()
+        .map((snap) {
+      return snap.docs.map((doc) {
+        return PostLikesModel(
+            user: doc.get('user') ?? '', postId: doc.get('post_id') ?? '');
+      }).toList();
+    });
+  }
+
   Future createCommentsData(String comments, String postId, String user) async {
     return await postCommentsCollection.doc(const Uuid().v4()).set(
         PostCommentsModel(comments: comments, postId: postId, user: user)
             .toJson());
+  }
+
+  Future createLikesData(String postId, String user) async {
+    return await postLikesCollection
+        .doc(const Uuid().v4())
+        .set(PostLikesModel(postId: postId, user: user).toJson());
+  }
+
+  Future deleteLikesData(String postId, String userId) async {
+    QuerySnapshot querySnapshot = await postLikesCollection
+        .where('post_id', isEqualTo: postId)
+        .where('user', isEqualTo: userId)
+        .get();
+
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      await postLikesCollection.doc(doc.id).delete();
+    }
   }
 }

@@ -1,9 +1,11 @@
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
+import 'package:gesture_x_detector/gesture_x_detector.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/post_comments_model.dart';
+import 'package:thrill_fit/models/post_likes_model.dart';
 import 'package:thrill_fit/screens/feeds/feeds_view_model.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:thrill_fit/shared/media_type.dart';
@@ -240,13 +242,322 @@ class FeedsView extends StatelessWidget {
                               SizedBox(
                                   child: Row(
                                 children: [
-                                  IconButton(
-                                    icon: Icon(
-                                      MdiIcons.heartOutline,
-                                      size: 25,
-                                    ),
-                                    onPressed: () {},
-                                  ),
+                                  StreamProvider<List<PostLikesModel>>.value(
+                                      value: model.getPostLikesStreamFromUser(
+                                          dataSnapshot.id),
+                                      initialData: const [],
+                                      child: Consumer<List<PostLikesModel>>(
+                                        builder: (context, snapshot, _) {
+                                          if (snapshot.isEmpty) {
+                                            return XGestureDetector(
+                                              onTap: (event) {
+                                                model.likePost(
+                                                    model.getUser!.uid,
+                                                    dataSnapshot.id);
+                                              },
+                                              longPressTimeConsider: 500,
+                                              onLongPress: (event) {
+                                                showModalBottomSheet(
+                                                    context: context,
+                                                    shape:
+                                                        const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(20),
+                                                        topRight:
+                                                            Radius.circular(20),
+                                                      ),
+                                                    ),
+                                                    builder: ((context) {
+                                                      return SizedBox(
+                                                          height: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .height *
+                                                              0.7,
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
+                                                          child: Column(
+                                                              children: [
+                                                                Container(
+                                                                  margin:
+                                                                      const EdgeInsets
+                                                                          .only(
+                                                                          top:
+                                                                              10),
+                                                                  child:
+                                                                      const Text(
+                                                                    'Likes',
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        fontSize:
+                                                                            18),
+                                                                  ),
+                                                                ),
+                                                                Expanded(
+                                                                    child: StreamProvider<
+                                                                        List<
+                                                                            PostLikesModel>>.value(
+                                                                  value: model
+                                                                      .getPostLikesStream(
+                                                                          dataSnapshot
+                                                                              .id),
+                                                                  initialData: const [],
+                                                                  child: Consumer<
+                                                                      List<
+                                                                          PostLikesModel>>(
+                                                                    builder:
+                                                                        (context,
+                                                                            snapshot,
+                                                                            _) {
+                                                                      if (snapshot
+                                                                          .isEmpty) {
+                                                                        return const Center(
+                                                                            child:
+                                                                                Text("No likes yet"));
+                                                                      } else {
+                                                                        return ListView
+                                                                            .builder(
+                                                                          padding: const EdgeInsets
+                                                                              .only(
+                                                                              left: 10,
+                                                                              bottom: 10,
+                                                                              right: 10),
+                                                                          itemCount:
+                                                                              snapshot.length, // Replace with your actual item count
+                                                                          itemBuilder:
+                                                                              (context, index) {
+                                                                            return FutureBuilder(
+                                                                                future: model.getUserName(postData.author),
+                                                                                builder: (context, snapshot2) {
+                                                                                  if (snapshot2.connectionState == ConnectionState.waiting) {
+                                                                                    return const Center(child: CircularProgressIndicator());
+                                                                                  } else if (snapshot2.connectionState == ConnectionState.done) {
+                                                                                    return ListTile(
+                                                                                      leading: SizedBox(
+                                                                                        height: 40,
+                                                                                        width: 40,
+                                                                                        child: FutureBuilder(
+                                                                                            future: model.fetchProfilePictureUrl(snapshot[index].user),
+                                                                                            builder: (context, snapshot3) {
+                                                                                              if (snapshot3.connectionState == ConnectionState.waiting) {
+                                                                                                return const CircleAvatar(
+                                                                                                  radius: (82),
+                                                                                                  backgroundColor: Colors.black,
+                                                                                                  child: CircularProgressIndicator(),
+                                                                                                );
+                                                                                              } else if (snapshot3.connectionState == ConnectionState.done) {
+                                                                                                return CircleAvatar(
+                                                                                                  radius: (82),
+                                                                                                  backgroundColor: Colors.transparent,
+                                                                                                  backgroundImage: NetworkImage(snapshot3.data!),
+                                                                                                );
+                                                                                              } else {
+                                                                                                return const CircleAvatar(
+                                                                                                  radius: (82),
+                                                                                                  backgroundColor: Colors.black,
+                                                                                                  child: CircularProgressIndicator(),
+                                                                                                );
+                                                                                              }
+                                                                                            }),
+                                                                                      ),
+                                                                                      title: Text(snapshot2.data!),
+                                                                                    );
+                                                                                  } else {
+                                                                                    return const CircularProgressIndicator();
+                                                                                  }
+                                                                                });
+                                                                          },
+                                                                        );
+                                                                      }
+                                                                    },
+                                                                  ),
+                                                                )),
+                                                              ]));
+                                                    }));
+                                              },
+                                              child: Container(
+                                                  margin: const EdgeInsets.only(
+                                                      left: 10),
+                                                  child: InkWell(
+                                                    onTap: () {},
+                                                    child: Icon(
+                                                      MdiIcons.heartOutline,
+                                                      size: 25,
+                                                    ),
+                                                  )),
+                                            );
+                                          } else {
+                                            return XGestureDetector(
+                                              longPressTimeConsider: 500,
+                                              onLongPress: (event) {
+                                                showModalBottomSheet(
+                                                    context: context,
+                                                    shape:
+                                                        const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(20),
+                                                        topRight:
+                                                            Radius.circular(20),
+                                                      ),
+                                                    ),
+                                                    builder: ((context) {
+                                                      return SizedBox(
+                                                          height: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .height *
+                                                              0.7,
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
+                                                          child: Column(
+                                                              children: [
+                                                                Container(
+                                                                  margin:
+                                                                      const EdgeInsets
+                                                                          .only(
+                                                                          top:
+                                                                              10),
+                                                                  child:
+                                                                      const Text(
+                                                                    'Likes',
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        fontSize:
+                                                                            18),
+                                                                  ),
+                                                                ),
+                                                                Expanded(
+                                                                    child: StreamProvider<
+                                                                        List<
+                                                                            PostLikesModel>>.value(
+                                                                  value: model
+                                                                      .getPostLikesStream(
+                                                                          dataSnapshot
+                                                                              .id),
+                                                                  initialData: const [],
+                                                                  child: Consumer<
+                                                                      List<
+                                                                          PostLikesModel>>(
+                                                                    builder:
+                                                                        (context,
+                                                                            snapshot,
+                                                                            _) {
+                                                                      if (snapshot
+                                                                          .isEmpty) {
+                                                                        return const Center(
+                                                                            child:
+                                                                                Text("No likes yet"));
+                                                                      } else {
+                                                                        return ListView
+                                                                            .builder(
+                                                                          padding: const EdgeInsets
+                                                                              .only(
+                                                                              left: 10,
+                                                                              bottom: 10,
+                                                                              right: 10),
+                                                                          itemCount:
+                                                                              snapshot.length, // Replace with your actual item count
+                                                                          itemBuilder:
+                                                                              (context, index) {
+                                                                            return FutureBuilder(
+                                                                                future: model.getUserName(postData.author),
+                                                                                builder: (context, snapshot2) {
+                                                                                  if (snapshot2.connectionState == ConnectionState.waiting) {
+                                                                                    return const Center(child: CircularProgressIndicator());
+                                                                                  } else if (snapshot2.connectionState == ConnectionState.done) {
+                                                                                    return ListTile(
+                                                                                      leading: SizedBox(
+                                                                                        height: 40,
+                                                                                        width: 40,
+                                                                                        child: FutureBuilder(
+                                                                                            future: model.fetchProfilePictureUrl(snapshot[index].user),
+                                                                                            builder: (context, snapshot3) {
+                                                                                              if (snapshot3.connectionState == ConnectionState.waiting) {
+                                                                                                return const CircleAvatar(
+                                                                                                  radius: (82),
+                                                                                                  backgroundColor: Colors.black,
+                                                                                                  child: CircularProgressIndicator(),
+                                                                                                );
+                                                                                              } else if (snapshot3.connectionState == ConnectionState.done) {
+                                                                                                return CircleAvatar(
+                                                                                                  radius: (82),
+                                                                                                  backgroundColor: Colors.transparent,
+                                                                                                  backgroundImage: NetworkImage(snapshot3.data!),
+                                                                                                );
+                                                                                              } else {
+                                                                                                return const CircleAvatar(
+                                                                                                  radius: (82),
+                                                                                                  backgroundColor: Colors.black,
+                                                                                                  child: CircularProgressIndicator(),
+                                                                                                );
+                                                                                              }
+                                                                                            }),
+                                                                                      ),
+                                                                                      title: Text(snapshot2.data!),
+                                                                                    );
+                                                                                  } else {
+                                                                                    return const CircularProgressIndicator();
+                                                                                  }
+                                                                                });
+                                                                          },
+                                                                        );
+                                                                      }
+                                                                    },
+                                                                  ),
+                                                                )),
+                                                              ]));
+                                                    }));
+                                              },
+                                              onTap: (event) {
+                                                model.unlikePost(
+                                                    model.getUser!.uid,
+                                                    dataSnapshot.id);
+                                              },
+                                              child: Container(
+                                                margin: const EdgeInsets.only(
+                                                    left: 10),
+                                                child: InkWell(
+                                                  onTap: () {},
+                                                  child: Icon(
+                                                    MdiIcons.heart,
+                                                    color: Colors.pink,
+                                                    size: 25,
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        },
+                                      )),
+                                  StreamProvider<List<PostLikesModel>>.value(
+                                      value: model
+                                          .getPostLikesStream(dataSnapshot.id),
+                                      initialData: const [],
+                                      child: Consumer<List<PostLikesModel>>(
+                                          builder: (context, snapshot, _) {
+                                        if (snapshot.isNotEmpty) {
+                                          return Container(
+                                            margin:
+                                                const EdgeInsets.only(left: 10),
+                                            child: Text(
+                                                '${snapshot.length} likes'),
+                                          );
+                                        } else {
+                                          return const SizedBox();
+                                        }
+                                      })),
                                   IconButton(
                                     icon: Icon(MdiIcons.messageTextOutline,
                                         size: 25),
@@ -432,7 +743,6 @@ class FeedsView extends StatelessWidget {
                                           return const SizedBox();
                                         }
                                       }))
-             
                                 ],
                               ))
                             ],

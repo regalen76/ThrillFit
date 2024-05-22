@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/post_comments_model.dart';
+import 'package:thrill_fit/models/post_likes_model.dart';
 import 'package:thrill_fit/models/post_model.dart';
 import 'package:thrill_fit/models/user_model.dart';
 import 'package:thrill_fit/repository/feeds_repo.dart';
@@ -50,6 +51,14 @@ class FeedsViewModel extends BaseViewModel {
     return FeedsRepo(uid: user!.uid).getCommentsStream(postId);
   }
 
+  Stream<List<PostLikesModel>> getPostLikesStream(String postId) {
+    return FeedsRepo(uid: user!.uid).getLikesStream(postId);
+  }
+
+  Stream<List<PostLikesModel>> getPostLikesStreamFromUser(String postId) {
+    return FeedsRepo(uid: user!.uid).getLikesStreamFromUser(postId, user!.uid);
+  }
+
   Future<String> fetchProfilePictureUrl(String uid) async {
     var storageRef =
         FirebaseStorage.instance.ref().child('profile-image/$uid.png');
@@ -76,5 +85,13 @@ class FeedsViewModel extends BaseViewModel {
   Future addComments(String comments, String postId, String userId) async {
     return FeedsRepo(uid: user!.uid)
         .createCommentsData(comments, postId, userId);
+  }
+
+  Future likePost(String userId, String postId) async {
+    return FeedsRepo(uid: user!.uid).createLikesData(postId, userId);
+  }
+
+  Future unlikePost(String userId, String postId) async {
+    return FeedsRepo(uid: user!.uid).deleteLikesData(postId, userId);
   }
 }
