@@ -37,7 +37,72 @@ class _LandingPageState extends State<LandingPage> {
                   ),
                   child: LayoutBuilder(builder: (context, constraint) {
                     Widget icon = Icon(
-                      MdiIcons.google,
+                      MdiIcons.dumbbell,
+                      color: Colors.white60,
+                      size: constraint.biggest.width -
+                          (constraint.biggest.width * 0.2),
+                      semanticLabel: 'Text to announce in accessibility modes',
+                    );
+
+                    icon = icon
+                        .animate(onPlay: (controller) => controller.repeat())
+                        .shimmer(duration: 2000.ms, color: Colors.black)
+                        .animate() // this wraps the previous Animate in another Animate
+                        .fadeIn(duration: 2000.ms, curve: Curves.easeOutQuad)
+                        .slide();
+
+                    return icon;
+                  })),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 45.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'THRILL FIT',
+                    style: pageTitleStyle,
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 45.0, vertical: 10.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Welcome to THRILL FIT, your ultimate fitness companion designed to help you reach your body goals effectively. Whether you\'re aiming to build muscle, lose weight, or enhance your overall fitness, our app makes it simple and enjoyable.',
+                    style: pageInfoStyle,
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+    PageModel(
+      widget: Container(
+        alignment: Alignment.center,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          color: background,
+          border: Border.all(
+            width: 0.0,
+            color: background,
+          ),
+        ),
+        child: SingleChildScrollView(
+          controller: ScrollController(),
+          child: Column(
+            children: [
+              Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 45.0,
+                    vertical: 90.0,
+                  ),
+                  child: LayoutBuilder(builder: (context, constraint) {
+                    Widget icon = Icon(
+                      MdiIcons.weightLifter,
                       color: Colors.white60,
                       size: constraint.biggest.width -
                           (constraint.biggest.width * 0.2),
@@ -48,10 +113,7 @@ class _LandingPageState extends State<LandingPage> {
                         .animate(onPlay: (controller) => controller.repeat())
                         .shimmer(duration: 2000.ms, colors: [
                           Colors.white60,
-                          const Color(0xfff73c01),
-                          const Color(0xfff7bb0a),
-                          const Color(0xff4aaa4d),
-                          const Color(0xff1772cb),
+                          Colors.black,
                           Colors.white60
                         ])
                         .animate() // this wraps the previous Animate in another Animate
@@ -65,7 +127,7 @@ class _LandingPageState extends State<LandingPage> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'SECURED BACKUP',
+                    'WORKOUT PLANS',
                     style: pageTitleStyle,
                     textAlign: TextAlign.left,
                   ),
@@ -76,7 +138,7 @@ class _LandingPageState extends State<LandingPage> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Keep your files in closed safe so you can\'t lose them. Consider TrueNAS.',
+                    'Say goodbye to generic workout routines! With THRILL FIT, you can easily create personalized workout plans tailored to your specific goals and fitness level. Whether you\'re a beginner or a seasoned gym-goer, our app provides you with expert guidance every step of the way.',
                     style: pageInfoStyle,
                     textAlign: TextAlign.left,
                   ),
@@ -109,7 +171,7 @@ class _LandingPageState extends State<LandingPage> {
                   ),
                   child: LayoutBuilder(builder: (context, constraint) {
                     Widget icon = Icon(
-                      MdiIcons.twitter,
+                      MdiIcons.gymnastics,
                       color: Colors.white60,
                       size: constraint.biggest.width -
                           (constraint.biggest.width * 0.2),
@@ -118,8 +180,7 @@ class _LandingPageState extends State<LandingPage> {
 
                     icon = icon
                         .animate(onPlay: (controller) => controller.repeat())
-                        .shimmer(
-                            duration: 2000.ms, color: const Color(0xFF80DDFF))
+                        .shimmer(duration: 2000.ms, color: Colors.black)
                         .animate() // this wraps the previous Animate in another Animate
                         .fadeIn(duration: 2000.ms, curve: Curves.easeOutQuad)
                         .slide();
@@ -131,7 +192,7 @@ class _LandingPageState extends State<LandingPage> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'SECURED BACKUP',
+                    'COMMUNITY',
                     style: pageTitleStyle,
                     textAlign: TextAlign.left,
                   ),
@@ -142,73 +203,7 @@ class _LandingPageState extends State<LandingPage> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Keep your files in closed safe so you can\'t lose them. Consider TrueNAS.',
-                    style: pageInfoStyle,
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    ),
-    PageModel(
-      widget: Container(
-        alignment: Alignment.center,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          color: background,
-          border: Border.all(
-            width: 0.0,
-            color: background,
-          ),
-        ),
-        child: SingleChildScrollView(
-          controller: ScrollController(),
-          child: Column(
-            children: [
-              Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 45.0,
-                    vertical: 90.0,
-                  ),
-                  child: LayoutBuilder(builder: (context, constraint) {
-                    Widget icon = Icon(
-                      MdiIcons.facebook,
-                      color: Colors.white60,
-                      size: constraint.biggest.width -
-                          (constraint.biggest.width * 0.2),
-                      semanticLabel: 'Text to announce in accessibility modes',
-                    );
-
-                    icon = icon
-                        .animate(onPlay: (controller) => controller.repeat())
-                        .shimmer(
-                        duration: 2000.ms, color: const Color(0xFF176bff))
-                        .animate() // this wraps the previous Animate in another Animate
-                        .fadeIn(duration: 2000.ms, curve: Curves.easeOutQuad)
-                        .slide();
-
-                    return icon;
-                  })),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 45.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'SECURED BACKUP',
-                    style: pageTitleStyle,
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 45.0, vertical: 10.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Keep your files in closed safe so you can\'t lose them. Consider TrueNAS.',
+                    'Join our vibrant community of fitness enthusiasts on the Feeds page! Here, you can share your workout activities, milestones, and progress photos with fellow users. But that\'s not all – you can also inspire others by sharing the workout plans you\'ve created and the results you\'ve achieved.',
                     style: pageInfoStyle,
                     textAlign: TextAlign.left,
                   ),
@@ -258,7 +253,8 @@ class _LandingPageState extends State<LandingPage> {
       child: InkWell(
         borderRadius: defaultProceedButtonBorderRadius,
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPage()));
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => const LoginPage()));
         },
         child: const Padding(
           padding: defaultProceedButtonPadding,
