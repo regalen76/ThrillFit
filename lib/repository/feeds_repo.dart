@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:thrill_fit/models/post_comments_model.dart';
 import 'package:thrill_fit/models/post_likes_model.dart';
+import 'package:thrill_fit/models/post_model.dart';
 import 'package:uuid/uuid.dart';
 
 class FeedsRepo {
@@ -18,7 +19,7 @@ class FeedsRepo {
       FirebaseFirestore.instance.collection('post_likes');
 
   Query<Object?> get getPostsQuery {
-    return postsCollection.orderBy('timestamp');
+    return postsCollection.orderBy('timestamp', descending: true);
   }
 
   Future<List<PostCommentsModel>> getComments(String postId) async {
@@ -79,6 +80,16 @@ class FeedsRepo {
             user: doc.get('user') ?? '', postId: doc.get('post_id') ?? '');
       }).toList();
     });
+  }
+
+  Future createPostData(String body, List<String> content) async {
+    return await postsCollection.doc(const Uuid().v4()).set(PostModel(
+            author: uid,
+            content: content,
+            body: body,
+            timestamp: DateTime.now(),
+            workoutPlan: null)
+        .toJson());
   }
 
   Future createCommentsData(String comments, String postId, String user) async {
