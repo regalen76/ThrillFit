@@ -22,6 +22,12 @@ class FeedsRepo {
     return postsCollection.orderBy('timestamp', descending: true);
   }
 
+  Query<Object?> get getPostsQueryProfile {
+    return postsCollection
+        .where('author', isEqualTo: uid)
+        .orderBy('timestamp', descending: true);
+  }
+
   Future<List<PostCommentsModel>> getComments(String postId) async {
     try {
       QuerySnapshot snapshot = await postCommentsCollection
