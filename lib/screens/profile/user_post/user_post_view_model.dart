@@ -1,6 +1,6 @@
 import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
 
-class ProfileViewModel extends BaseViewModel {
+class UserPostViewModel extends BaseViewModel {
   Logger logger = Logger();
 }
