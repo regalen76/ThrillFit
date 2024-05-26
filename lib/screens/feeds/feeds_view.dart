@@ -9,6 +9,7 @@ import 'package:thrill_fit/models/post_likes_model.dart';
 import 'package:thrill_fit/screens/feeds/feeds_view_model.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:thrill_fit/screens/feeds_create/feeds_create.dart';
+import 'package:thrill_fit/screens/profile/profile_view.dart';
 import 'package:thrill_fit/shared/media_type.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:video_player/video_player.dart';
@@ -24,7 +25,25 @@ class FeedsView extends StatelessWidget {
           return model.isBusy
               ? const Center(child: CircularProgressIndicator())
               : Scaffold(
-                  appBar: AppBar(),
+                  appBar: AppBar(
+                    title: const Text('Feeds'),
+                    actions: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const ProfileView()));
+                        },
+                        icon: Icon(
+                          MdiIcons.accountCircle,
+                          color: Colors.white,
+                        ),
+                        iconSize: 40,
+                      )
+                    ],
+                  ),
                   body: Stack(
                     children: [
                       SizedBox(
