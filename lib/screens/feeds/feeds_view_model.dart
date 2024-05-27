@@ -39,8 +39,8 @@ class FeedsViewModel extends BaseViewModel {
   }
 
   Future<String> getUserName(String uid) async {
-    UserModel data = await UserRepo(uid: uid).getUserDataOnce();
-    return data.name;
+    UserModel? data = await UserRepo(uid: uid).getUserDataOnce();
+    return data!.name;
   }
 
   Future<List<PostCommentsModel>> getPostComments(String postId) async {

@@ -60,13 +60,15 @@ class ProfileDataViewModel extends BaseViewModel {
   }
 
   Future<void> setFieldData() async {
-    UserModel userTemp = await UserRepo(uid: user!.uid).getUserDataOnce();
-    nameField.text = userTemp.name;
-    phoneField.text = userTemp.phone;
-    genderField.text = userTemp.gender;
-    heightField.text = userTemp.height.toString();
-    weightField.text = userTemp.weight.toString();
-    ageField.text = userTemp.age.toString();
+    UserModel? userTemp = await UserRepo(uid: user!.uid).getUserDataOnce();
+    if (userTemp != null) {
+      nameField.text = userTemp.name;
+      phoneField.text = userTemp.phone;
+      genderField.text = userTemp.gender;
+      heightField.text = userTemp.height.toString();
+      weightField.text = userTemp.weight.toString();
+      ageField.text = userTemp.age.toString();
+    }
   }
 
   Future<void> fetchProfilePictureUrl() async {

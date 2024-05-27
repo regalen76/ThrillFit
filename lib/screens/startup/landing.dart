@@ -270,12 +270,18 @@ class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Welcome To Thrill Fit',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+          brightness: Brightness.dark,
+          fontFamily: 'Poppins',
+          scaffoldBackgroundColor: background,
+          appBarTheme: const AppBarTheme(backgroundColor: background)),
+      darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          fontFamily: 'Poppins',
+          scaffoldBackgroundColor: background,
+          appBarTheme: const AppBarTheme(backgroundColor: background)),
+      themeMode: ThemeMode.dark,
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Onboarding(
           pages: onboardingPagesList,

@@ -42,11 +42,15 @@ class UserRepo {
     return streamData;
   }
 
-  Future<UserModel> getUserDataOnce() async {
+  Future<UserModel?> getUserDataOnce() async {
     try {
       return await userCollection.doc(uid).get().then(
         (DocumentSnapshot doc) {
-          return UserModel.fromJson(doc.data() as Map<String, dynamic>);
+          if (doc.exists) {
+            return UserModel.fromJson(doc.data() as Map<String, dynamic>);
+          } else {
+            return null;
+          }
         },
         onError: (e) {
           logger.e("Error getting user data: $e");
