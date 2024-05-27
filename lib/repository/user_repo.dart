@@ -77,4 +77,12 @@ class UserRepo {
       throw Exception('Error update user data: $e');
     }
   }
+
+  Future createUserData(UserModel userModel) async {
+    try {
+      await userCollection.doc(uid).set(userModel.toJson());
+    } catch (e) {
+      throw Exception('Error create user data: $e');
+    }
+  }
 }

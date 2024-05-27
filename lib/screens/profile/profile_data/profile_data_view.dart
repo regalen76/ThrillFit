@@ -1,9 +1,11 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/user_model.dart';
 import 'package:thrill_fit/repository/user_repo.dart';
+import 'package:thrill_fit/screens/authentication/login_register_page.dart';
 import 'package:thrill_fit/screens/profile/profile_data/profile_data_view_model.dart';
 
 class ProfileDataView extends StatelessWidget {
@@ -279,11 +281,15 @@ class ProfileDataView extends StatelessWidget {
                                                       ),
                                                     ],
                                                   ),
-                                            const Divider(
-                                              color: Colors.grey,
-                                              thickness: 1,
-                                              height: 40,
-                                            ),
+                                            !model.getIsEdit
+                                                ? const Divider(
+                                                    color: Colors.grey,
+                                                    thickness: 1,
+                                                    height: 40,
+                                                  )
+                                                : const SizedBox(
+                                                    height: 10,
+                                                  ),
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
@@ -300,6 +306,9 @@ class ProfileDataView extends StatelessWidget {
                                                               model.getIsEdit,
                                                           textAlign:
                                                               TextAlign.end,
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .number,
                                                           style: const TextStyle(
                                                               fontSize: 18,
                                                               fontWeight:
@@ -319,11 +328,15 @@ class ProfileDataView extends StatelessWidget {
                                                                     .bold))
                                               ],
                                             ),
-                                            const Divider(
-                                              color: Colors.grey,
-                                              thickness: 1,
-                                              height: 40,
-                                            ),
+                                            !model.getIsEdit
+                                                ? const Divider(
+                                                    color: Colors.grey,
+                                                    thickness: 1,
+                                                    height: 40,
+                                                  )
+                                                : const SizedBox(
+                                                    height: 10,
+                                                  ),
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
@@ -335,20 +348,96 @@ class ProfileDataView extends StatelessWidget {
                                                     )),
                                                 model.getIsEdit
                                                     ? Expanded(
-                                                        child: TextFormField(
-                                                          enabled:
-                                                              model.getIsEdit,
-                                                          textAlign:
-                                                              TextAlign.end,
-                                                          style: const TextStyle(
-                                                              fontSize: 18,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                          validator: model
-                                                              .validateEmpty,
-                                                          controller:
-                                                              model.genderField,
+                                                        child:
+                                                            DropdownButtonFormField2<
+                                                                String>(
+                                                          isExpanded: true,
+                                                          alignment: Alignment
+                                                              .centerRight,
+                                                          decoration:
+                                                              const InputDecoration(
+                                                            contentPadding:
+                                                                EdgeInsets
+                                                                    .symmetric(
+                                                                        vertical:
+                                                                            16),
+                                                          ),
+                                                          hint: const Text(
+                                                            'Select Your Gender',
+                                                            style: TextStyle(
+                                                                fontSize: 14),
+                                                          ),
+                                                          items: model
+                                                              .getGenderItems
+                                                              .map((item) =>
+                                                                  DropdownMenuItem<
+                                                                      String>(
+                                                                    value: item,
+                                                                    child:
+                                                                        Container(
+                                                                      alignment:
+                                                                          Alignment
+                                                                              .centerRight,
+                                                                      child:
+                                                                          Text(
+                                                                        item,
+                                                                        style: const TextStyle(
+                                                                            fontSize:
+                                                                                18,
+                                                                            fontWeight:
+                                                                                FontWeight.bold),
+                                                                      ),
+                                                                    ),
+                                                                  ))
+                                                              .toList(),
+                                                          validator: (value) {
+                                                            if (value == null) {
+                                                              return 'Please select gender.';
+                                                            }
+                                                            return null;
+                                                          },
+                                                          onChanged: (value) {
+                                                            if (value != null) {
+                                                              model
+                                                                  .changeGender(
+                                                                      value);
+                                                            }
+                                                          },
+                                                          buttonStyleData:
+                                                              const ButtonStyleData(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    right: 8),
+                                                          ),
+                                                          iconStyleData:
+                                                              const IconStyleData(
+                                                            icon: Icon(
+                                                              Icons
+                                                                  .arrow_drop_down,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            iconSize: 24,
+                                                          ),
+                                                          dropdownStyleData:
+                                                              DropdownStyleData(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          15),
+                                                            ),
+                                                          ),
+                                                          menuItemStyleData:
+                                                              const MenuItemStyleData(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        16),
+                                                          ),
+                                                          value: model
+                                                              .getSelectedGender,
                                                         ),
                                                       )
                                                     : Text(data.gender,
@@ -359,11 +448,15 @@ class ProfileDataView extends StatelessWidget {
                                                                     .bold))
                                               ],
                                             ),
-                                            const Divider(
-                                              color: Colors.grey,
-                                              thickness: 1,
-                                              height: 40,
-                                            ),
+                                            !model.getIsEdit
+                                                ? const Divider(
+                                                    color: Colors.grey,
+                                                    thickness: 1,
+                                                    height: 40,
+                                                  )
+                                                : const SizedBox(
+                                                    height: 10,
+                                                  ),
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
@@ -380,6 +473,9 @@ class ProfileDataView extends StatelessWidget {
                                                               model.getIsEdit,
                                                           textAlign:
                                                               TextAlign.end,
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .number,
                                                           style: const TextStyle(
                                                               fontSize: 18,
                                                               fontWeight:
@@ -399,11 +495,15 @@ class ProfileDataView extends StatelessWidget {
                                                                     .bold))
                                               ],
                                             ),
-                                            const Divider(
-                                              color: Colors.grey,
-                                              thickness: 1,
-                                              height: 40,
-                                            ),
+                                            !model.getIsEdit
+                                                ? const Divider(
+                                                    color: Colors.grey,
+                                                    thickness: 1,
+                                                    height: 40,
+                                                  )
+                                                : const SizedBox(
+                                                    height: 10,
+                                                  ),
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
@@ -420,6 +520,9 @@ class ProfileDataView extends StatelessWidget {
                                                               model.getIsEdit,
                                                           textAlign:
                                                               TextAlign.end,
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .number,
                                                           style: const TextStyle(
                                                               fontSize: 18,
                                                               fontWeight:
@@ -439,11 +542,15 @@ class ProfileDataView extends StatelessWidget {
                                                                     .bold))
                                               ],
                                             ),
-                                            const Divider(
-                                              color: Colors.grey,
-                                              thickness: 1,
-                                              height: 40,
-                                            ),
+                                            !model.getIsEdit
+                                                ? const Divider(
+                                                    color: Colors.grey,
+                                                    thickness: 1,
+                                                    height: 40,
+                                                  )
+                                                : const SizedBox(
+                                                    height: 10,
+                                                  ),
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
@@ -460,6 +567,9 @@ class ProfileDataView extends StatelessWidget {
                                                               model.getIsEdit,
                                                           textAlign:
                                                               TextAlign.end,
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .number,
                                                           style: const TextStyle(
                                                               fontSize: 18,
                                                               fontWeight:
@@ -479,12 +589,21 @@ class ProfileDataView extends StatelessWidget {
                                                                     .bold))
                                               ],
                                             ),
-                                            const Divider(
-                                              color: Colors.grey,
-                                              thickness: 1,
-                                            ),
+                                            !model.getIsEdit
+                                                ? const Divider(
+                                                    color: Colors.grey,
+                                                    thickness: 1,
+                                                    height: 40,
+                                                  )
+                                                : const SizedBox(
+                                                    height: 10,
+                                                  ),
                                             model.getIsEdit
-                                                ? SizedBox(
+                                                ? Container(
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            top: 15,
+                                                            bottom: 35),
                                                     width: 300,
                                                     child: ElevatedButton(
                                                         style: ButtonStyle(
@@ -573,7 +692,7 @@ class ProfileDataView extends StatelessWidget {
                                                                                 child: InkWell(
                                                                                   borderRadius: BorderRadius.circular(20),
                                                                                   onTapUp: (_) {
-                                                                                    Navigator.pop(context);
+                                                                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => const LoginPage()));
                                                                                   },
                                                                                   child: const SizedBox(
                                                                                     height: 80,
@@ -622,10 +741,11 @@ class ProfileDataView extends StatelessWidget {
                                                       ),
                                                     ),
                                                   ),
-                                            const Divider(
-                                              color: Colors.grey,
-                                              thickness: 1,
-                                            ),
+                                            if (!model.getIsEdit)
+                                              const Divider(
+                                                color: Colors.grey,
+                                                thickness: 1,
+                                              ),
                                           ],
                                         ),
                                       ))),

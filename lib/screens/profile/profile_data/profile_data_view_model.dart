@@ -24,10 +24,14 @@ class ProfileDataViewModel extends BaseViewModel {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController nameField = TextEditingController();
   TextEditingController phoneField = TextEditingController();
-  TextEditingController genderField = TextEditingController();
   TextEditingController heightField = TextEditingController();
   TextEditingController weightField = TextEditingController();
   TextEditingController ageField = TextEditingController();
+  final List<String> genderItems = [
+    'Male',
+    'Female',
+  ];
+  String? selectedGender;
 
   User? get getUser => user;
   String get getProfilePictureUrl => profilePictureUrl;
@@ -38,10 +42,11 @@ class ProfileDataViewModel extends BaseViewModel {
   GlobalKey<FormState> get getFormKey => formKey;
   TextEditingController get getNameField => nameField;
   TextEditingController get getPhoneField => phoneField;
-  TextEditingController get getGenderField => genderField;
   TextEditingController get getHeightField => heightField;
   TextEditingController get getWeightField => weightField;
   TextEditingController get getAgeField => ageField;
+  List<String> get getGenderItems => genderItems;
+  String? get getSelectedGender => selectedGender;
 
   Future<void> initState() async {
     setBusy(true);
@@ -53,10 +58,14 @@ class ProfileDataViewModel extends BaseViewModel {
   void disposeAll() {
     nameField.dispose();
     phoneField.dispose();
-    genderField.dispose();
     heightField.dispose();
     weightField.dispose();
     ageField.dispose();
+  }
+
+  void changeGender(String selectedGenderValue) {
+    selectedGender = selectedGenderValue;
+    notifyListeners();
   }
 
   Future<void> setFieldData() async {
@@ -64,7 +73,7 @@ class ProfileDataViewModel extends BaseViewModel {
     if (userTemp != null) {
       nameField.text = userTemp.name;
       phoneField.text = userTemp.phone;
-      genderField.text = userTemp.gender;
+      selectedGender = userTemp.gender;
       heightField.text = userTemp.height.toString();
       weightField.text = userTemp.weight.toString();
       ageField.text = userTemp.age.toString();
@@ -78,9 +87,7 @@ class ProfileDataViewModel extends BaseViewModel {
     try {
       profilePictureUrl = await storageRef.getDownloadURL();
     } catch (e) {
-      (e as FirebaseException).code == 'object-not-found'
-          ? await fetchDefaultProfilePictureUrl()
-          : logger.e("Failed to fetch profile picture, the error: $e");
+      logger.e("Failed to fetch profile picture, the error: $e");
     }
 
     notifyListeners();
@@ -160,7 +167,7 @@ class ProfileDataViewModel extends BaseViewModel {
       await UserRepo(uid: user!.uid).updateUserData(
           nameField.text,
           phoneField.text,
-          genderField.text,
+          selectedGender!,
           int.parse(heightField.text),
           int.parse(weightField.text),
           int.parse(ageField.text));
