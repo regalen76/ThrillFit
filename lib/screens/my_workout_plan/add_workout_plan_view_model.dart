@@ -20,6 +20,15 @@ class AddWorkoutPlanViewModel extends BaseViewModel {
   final PageController _pageController = PageController();
   PageController get pageController => _pageController;
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> get formKey => _formKey;
+
+  bool _isValidNextPage = false;
+  bool get isValidNextPage => _isValidNextPage;
+
+  bool _isValidSelectedType = false;
+  bool get isValidSelectedType => _isValidSelectedType;
+
   void initialize() async {
     setBusy(true);
     _goalTypes = [
@@ -68,5 +77,47 @@ class AddWorkoutPlanViewModel extends BaseViewModel {
       }
     }
     notifyListeners();
+  }
+
+  String? checkForm(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Field can`t be empty';
+    }
+    return null;
+  }
+
+  void validateInput() {
+    if (_formKey.currentState!.validate()) {
+      _isValidNextPage = true;
+    } else {
+      _isValidNextPage = false;
+    }
+
+    if (_totalTypeSelected != 0) {
+      _isValidSelectedType = true;
+    } else {
+      _isValidSelectedType = false;
+    }
+
+    notifyListeners();
+  }
+
+  String buildErrorMessage() {
+    var message = '';
+    int i = 0;
+
+    if (!_isValidNextPage) {
+      i++;
+      message += '$i) Title must be filled.';
+    }
+    if (!_isValidSelectedType) {
+      i++;
+      if (i > 1) {
+        message += '\n';
+      }
+      message += '$i) Please select at least one goal type.';
+    }
+
+    return message;
   }
 }

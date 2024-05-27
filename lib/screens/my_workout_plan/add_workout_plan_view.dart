@@ -1,11 +1,10 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:expandable_page_view/expandable_page_view.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/models.dart';
 import 'package:thrill_fit/screens/my_workout_plan/add_workout_plan_view_model.dart';
+import 'package:thrill_fit/screens/my_workout_plan/training_set_list_view.dart';
 
 class AddWorkoutPlanView extends StatelessWidget {
   const AddWorkoutPlanView({super.key});
@@ -18,7 +17,7 @@ class AddWorkoutPlanView extends StatelessWidget {
         builder: (context, vm, child) {
           return Scaffold(
             appBar: AppBar(
-                title: const Text('My Workout Plan'),
+                title: const Text('Add Workout Plan'),
                 backgroundColor: Colors.black,
                 automaticallyImplyLeading: false),
             body: vm.isBusy
@@ -36,148 +35,203 @@ class AddWorkoutPlanView extends StatelessWidget {
                 : Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 24, vertical: 12),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: SingleChildScrollView(
-                              child: Column(children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 12),
-                              child: TextFormField(
-                                cursorColor: Colors.white,
-                                decoration: const InputDecoration(
-                                    labelText: 'Workout Plan Title',
-                                    labelStyle: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12.0)),
-                                      borderSide: BorderSide(
-                                          width: 1, color: Colors.blue),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12.0)),
-                                      borderSide: BorderSide(
-                                          width: 2, color: Colors.blue),
-                                    )),
+                    child: Form(
+                      key: vm.formKey,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: SingleChildScrollView(
+                                child: Column(children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 12),
+                                child: TextFormField(
+                                  cursorColor: Colors.white,
+                                  decoration: const InputDecoration(
+                                      labelText: 'Workout Plan Title',
+                                      labelStyle: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12.0)),
+                                        borderSide: BorderSide(
+                                            width: 1, color: Colors.blue),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12.0)),
+                                        borderSide: BorderSide(
+                                            width: 2, color: Colors.blue),
+                                      )),
+                                  validator: vm.checkForm,
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 24),
-                              child: TextFormField(
-                                cursorColor: Colors.white,
-                                decoration: const InputDecoration(
-                                    labelText: 'Description',
-                                    labelStyle: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12.0)),
-                                      borderSide: BorderSide(
-                                          width: 1, color: Colors.blue),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12.0)),
-                                      borderSide: BorderSide(
-                                          width: 2, color: Colors.blue),
-                                    )),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 24),
+                                child: TextFormField(
+                                  cursorColor: Colors.white,
+                                  decoration: const InputDecoration(
+                                      labelText: 'Description',
+                                      labelStyle: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12.0)),
+                                        borderSide: BorderSide(
+                                            width: 1, color: Colors.blue),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12.0)),
+                                        borderSide: BorderSide(
+                                            width: 2, color: Colors.blue),
+                                      )),
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 30),
-                              child: ExpandablePageView.builder(
-                                controller: vm.pageController,
-                                scrollDirection: Axis.horizontal,
-                                itemCount: vm.carouselCount,
-                                onPageChanged: (position) {
-                                  vm.changePageIndex(position);
-                                },
-                                itemBuilder: (context, index) {
-                                  var start = index * 4;
-                                  var end = start + 4;
-                                  return carouselPage(
-                                      vm,
-                                      vm.selectedList.sublist(start,
-                                          end.clamp(0, vm.goalTypes.length)));
-                                },
+                              const Padding(
+                                padding: EdgeInsets.only(top: 30),
+                                child: Center(
+                                  child: Text(
+                                    'Goal Types',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 24),
-                              child: DotsIndicator(
-                                dotsCount: vm.carouselCount,
-                                position: vm.pageIndex,
-                                onTap: (position) {
-                                  vm.changePageIndex(position);
-                                  vm.animateToPage(position);
-                                },
-                                decorator: const DotsDecorator(
-                                    size: Size(14, 14),
-                                    activeSize: Size(12, 12),
-                                    color: Colors.blue, // Inactive color
-                                    activeColor: Colors.grey,
-                                    spacing:
-                                        EdgeInsets.symmetric(horizontal: 12)),
-                              ),
-                            )
-                          ])),
-                        ),
-                        Column(children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 12, bottom: 12),
-                            child: Center(
-                              child: Text(
-                                "${vm.totalTypeSelected} type(s) selected",
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Expanded(flex: 1, child: Container()),
-                              Expanded(
-                                flex: 2,
-                                child: TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
+                              Padding(
+                                padding: const EdgeInsets.only(top: 16),
+                                child: ExpandablePageView.builder(
+                                  controller: vm.pageController,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: vm.carouselCount,
+                                  onPageChanged: (position) {
+                                    vm.changePageIndex(position);
                                   },
-                                  style: TextButton.styleFrom(
-                                    backgroundColor:
-                                        Colors.red, // Background Color
-                                  ),
-                                  child: Text(
-                                    'Cancel',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
+                                  itemBuilder: (context, index) {
+                                    var start = index * 4;
+                                    var end = start + 4;
+                                    return carouselPage(
+                                        vm,
+                                        vm.selectedList.sublist(start,
+                                            end.clamp(0, vm.goalTypes.length)));
+                                  },
                                 ),
                               ),
-                              Expanded(flex: 1, child: Container()),
-                              Expanded(
-                                flex: 2,
-                                child: TextButton(
-                                  onPressed: () {},
-                                  style: TextButton.styleFrom(
-                                    fixedSize: Size.fromRadius(10),
-                                    backgroundColor:
-                                        Colors.blue, // Background Color
-                                  ),
-                                  child: Text(
-                                    'Next',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 24),
+                                child: DotsIndicator(
+                                  dotsCount: vm.carouselCount,
+                                  position: vm.pageIndex,
+                                  onTap: (position) {
+                                    vm.changePageIndex(position);
+                                    vm.animateToPage(position);
+                                  },
+                                  decorator: const DotsDecorator(
+                                      size: Size(14, 14),
+                                      activeSize: Size(12, 12),
+                                      color: Colors.blue, // Inactive color
+                                      activeColor: Colors.grey,
+                                      spacing:
+                                          EdgeInsets.symmetric(horizontal: 12)),
                                 ),
-                              ),
-                              Expanded(flex: 1, child: Container()),
-                            ],
+                              )
+                            ])),
                           ),
-                        ]),
-                      ],
+                          Column(children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 12, bottom: 6),
+                              child: Center(
+                                child: Text(
+                                  "${vm.totalTypeSelected} type(s) selected",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 12),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(flex: 1, child: Container()),
+                                  Expanded(
+                                    flex: 2,
+                                    child: TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      style: TextButton.styleFrom(
+                                        backgroundColor:
+                                            Colors.red, // Background Color
+                                      ),
+                                      child: const Text(
+                                        'Back',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(flex: 1, child: Container()),
+                                  Expanded(
+                                    flex: 2,
+                                    child: TextButton(
+                                      onPressed: () {
+                                        vm.validateInput();
+
+                                        if (vm.isValidNextPage &&
+                                            vm.isValidSelectedType) {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (BuildContext
+                                                          context) =>
+                                                      const TrainingSetListView()));
+                                        } else {
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext ctx) {
+                                                return AlertDialog(
+                                                  backgroundColor:
+                                                      Colors.grey.shade700,
+                                                  title: const Text(
+                                                      'Error Validation'),
+                                                  content: Text(
+                                                      vm.buildErrorMessage()),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                      child:
+                                                          const Text('Close'),
+                                                    ),
+                                                  ],
+                                                );
+                                              });
+                                        }
+                                      },
+                                      style: TextButton.styleFrom(
+                                        fixedSize: const Size.fromRadius(10),
+                                        backgroundColor:
+                                            Colors.blue, // Background Color
+                                      ),
+                                      child: const Text(
+                                        'Next',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(flex: 1, child: Container()),
+                                ],
+                              ),
+                            ),
+                          ]),
+                        ],
+                      ),
                     ),
                   ),
           );
@@ -191,6 +245,8 @@ class AddWorkoutPlanView extends StatelessWidget {
     for (int i = 0; i < selectedList.length; i++) {
       if (selectedList[i].type != null && selectedList[i].type!.isNotEmpty) {
         typeItems.add(InkWell(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
           onTap: () => vm.changeSelectedValue(selectedList[i].type!),
           child: Container(
               height: 160,
@@ -202,7 +258,7 @@ class AddWorkoutPlanView extends StatelessWidget {
                           : Colors.transparent,
                       width: 6),
                   borderRadius: BorderRadius.circular(8),
-                  color: const Color.fromARGB(255, 251, 255, 2)),
+                  color: Colors.lime),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
