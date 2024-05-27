@@ -13,36 +13,35 @@ class TrainingSetListView extends StatelessWidget {
         onViewModelReady: (vm) => vm.initialize(),
         builder: (context, vm, child) {
           return Scaffold(
-              appBar: AppBar(
-                title: const Text('Add Workout Plan'),
-                backgroundColor: Colors.black,
-                automaticallyImplyLeading: false,
-                actions: [],
-              ),
-              body: vm.isBusy
-                  ? const Center(
-                      child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircularProgressIndicator(),
-                        Padding(
-                          padding: EdgeInsets.only(top: 8),
-                          child: Text('Loading'),
-                        )
-                      ],
-                    ))
-                  : Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 24, vertical: 12),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: SingleChildScrollView(
+            appBar: AppBar(
+              title: const Text('Add Workout Plan'),
+              backgroundColor: Colors.black,
+              automaticallyImplyLeading: false,
+              actions: [],
+            ),
+            body: vm.isBusy
+                ? const Center(
+                    child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(),
+                      Padding(
+                        padding: EdgeInsets.only(top: 8),
+                        child: Text('Loading'),
+                      )
+                    ],
+                  ))
+                : Column(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 12, right: 12),
+                          child: SingleChildScrollView(
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 12),
                               child: Column(
                                 children: [
-                                  for (int i = 0;
-                                      i < vm.dummyData.length;
-                                      i++) ...[
+                                  for (int i = 0; i < 10; i++) ...[
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 12),
@@ -72,12 +71,11 @@ class TrainingSetListView extends StatelessWidget {
                                                 checkColor: Colors.white,
                                               ),
                                             ),
-                                            title: Text(
-                                              vm.dummyData[i],
-                                              style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
+                                            title: Image(
+                                                height: 110,
+                                                width: 110,
+                                                image: AssetImage(
+                                                    'assets/images/Abs.png')),
                                             subtitle: const Text(
                                               'Test',
                                               style: TextStyle(
@@ -119,56 +117,62 @@ class TrainingSetListView extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Column(
+                        ),
+                      ),
+                      Container(
+                        color: Theme.of(context).colorScheme.background,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              bottom: 24, top: 12, left: 12, right: 12),
+                          child: Column(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 12),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Expanded(flex: 1, child: Container()),
-                                    Expanded(
-                                      flex: 2,
-                                      child: TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        style: TextButton.styleFrom(
-                                          backgroundColor:
-                                              Colors.red, // Background Color
-                                        ),
-                                        child: const Text(
-                                          'Back',
-                                          style: TextStyle(color: Colors.white),
-                                        ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(flex: 1, child: Container()),
+                                  Expanded(
+                                    flex: 2,
+                                    child: TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      style: TextButton.styleFrom(
+                                        backgroundColor:
+                                            Colors.red, // Background Color
+                                      ),
+                                      child: const Text(
+                                        'Back',
+                                        style: TextStyle(color: Colors.white),
                                       ),
                                     ),
-                                    Expanded(flex: 1, child: Container()),
-                                    Expanded(
-                                      flex: 2,
-                                      child: TextButton(
-                                        onPressed: () {},
-                                        style: TextButton.styleFrom(
-                                          fixedSize: const Size.fromRadius(10),
-                                          backgroundColor:
-                                              Colors.blue, // Background Color
-                                        ),
-                                        child: const Text(
-                                          'Next',
-                                          style: TextStyle(color: Colors.white),
-                                        ),
+                                  ),
+                                  Expanded(flex: 1, child: Container()),
+                                  Expanded(
+                                    flex: 2,
+                                    child: TextButton(
+                                      onPressed: () {},
+                                      style: TextButton.styleFrom(
+                                        fixedSize: const Size.fromRadius(10),
+                                        backgroundColor:
+                                            Colors.blue, // Background Color
+                                      ),
+                                      child: const Text(
+                                        'Next',
+                                        style: TextStyle(color: Colors.white),
                                       ),
                                     ),
-                                    Expanded(flex: 1, child: Container()),
-                                  ],
-                                ),
+                                  ),
+                                  Expanded(flex: 1, child: Container()),
+                                ],
                               ),
                             ],
-                          )
-                        ],
-                      ),
-                    ));
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+          );
         });
   }
 }

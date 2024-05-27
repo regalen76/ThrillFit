@@ -32,18 +32,17 @@ class AddWorkoutPlanView extends StatelessWidget {
                       )
                     ],
                   ))
-                : Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 24, vertical: 12),
-                    child: Form(
-                      key: vm.formKey,
-                      child: Column(
-                        children: [
-                          Expanded(
+                : Form(
+                    key: vm.formKey,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 12, right: 12),
                             child: SingleChildScrollView(
                                 child: Column(children: [
                               Padding(
-                                padding: const EdgeInsets.only(top: 12),
+                                padding: const EdgeInsets.only(top: 24),
                                 child: TextFormField(
                                   cursorColor: Colors.white,
                                   decoration: const InputDecoration(
@@ -139,21 +138,24 @@ class AddWorkoutPlanView extends StatelessWidget {
                               )
                             ])),
                           ),
-                          Column(children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 12, bottom: 6),
-                              child: Center(
-                                child: Text(
-                                  "${vm.totalTypeSelected} type(s) selected",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
+                        ),
+                        Container(
+                          color: Theme.of(context).colorScheme.background,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                bottom: 24, top: 12, left: 12, right: 12),
+                            child: Column(children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 6),
+                                child: Center(
+                                  child: Text(
+                                    "${vm.totalTypeSelected} type(s) selected",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 12),
-                              child: Row(
+                              Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
@@ -228,10 +230,10 @@ class AddWorkoutPlanView extends StatelessWidget {
                                   Expanded(flex: 1, child: Container()),
                                 ],
                               ),
-                            ),
-                          ]),
-                        ],
-                      ),
+                            ]),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
           );
