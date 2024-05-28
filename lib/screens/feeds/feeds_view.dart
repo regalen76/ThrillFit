@@ -394,10 +394,17 @@ class FeedsView extends StatelessWidget {
                                                                                                       child: CircularProgressIndicator(),
                                                                                                     );
                                                                                                   } else if (snapshot3.connectionState == ConnectionState.done) {
-                                                                                                    return CircleAvatar(
-                                                                                                      radius: (82),
-                                                                                                      backgroundColor: Colors.transparent,
-                                                                                                      backgroundImage: NetworkImage(snapshot3.data!),
+                                                                                                    return GestureDetector(
+                                                                                                      onTap: () {
+                                                                                                        if (snapshot[index].user != model.getUser!.uid) {
+                                                                                                          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => GuestProfileView(uid: snapshot[index].user)));
+                                                                                                        }
+                                                                                                      },
+                                                                                                      child: CircleAvatar(
+                                                                                                        radius: (82),
+                                                                                                        backgroundColor: Colors.transparent,
+                                                                                                        backgroundImage: NetworkImage(snapshot3.data!),
+                                                                                                      ),
                                                                                                     );
                                                                                                   } else {
                                                                                                     return const CircleAvatar(
@@ -522,10 +529,19 @@ class FeedsView extends StatelessWidget {
                                                                                                       child: CircularProgressIndicator(),
                                                                                                     );
                                                                                                   } else if (snapshot3.connectionState == ConnectionState.done) {
-                                                                                                    return CircleAvatar(
-                                                                                                      radius: (82),
-                                                                                                      backgroundColor: Colors.transparent,
-                                                                                                      backgroundImage: NetworkImage(snapshot3.data!),
+                                                                                                    return GestureDetector(
+                                                                                                      onTap: () {
+                                                                                                        if (snapshot[index].user == model.getUser!.uid) {
+                                                                                                          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => const ProfileView()));
+                                                                                                        } else {
+                                                                                                          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => GuestProfileView(uid: snapshot[index].user)));
+                                                                                                        }
+                                                                                                      },
+                                                                                                      child: CircleAvatar(
+                                                                                                        radius: (82),
+                                                                                                        backgroundColor: Colors.transparent,
+                                                                                                        backgroundImage: NetworkImage(snapshot3.data!),
+                                                                                                      ),
                                                                                                     );
                                                                                                   } else {
                                                                                                     return const CircleAvatar(
@@ -696,10 +712,19 @@ class FeedsView extends StatelessWidget {
                                                                                         child: CircularProgressIndicator(),
                                                                                       );
                                                                                     } else if (snapshot3.connectionState == ConnectionState.done) {
-                                                                                      return CircleAvatar(
-                                                                                        radius: (82),
-                                                                                        backgroundColor: Colors.transparent,
-                                                                                        backgroundImage: NetworkImage(snapshot3.data!),
+                                                                                      return GestureDetector(
+                                                                                        onTap: () {
+                                                                                          if (snapshot[index].user == model.getUser!.uid) {
+                                                                                            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => const ProfileView()));
+                                                                                          } else {
+                                                                                            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => GuestProfileView(uid: snapshot[index].user)));
+                                                                                          }
+                                                                                        },
+                                                                                        child: CircleAvatar(
+                                                                                          radius: (82),
+                                                                                          backgroundColor: Colors.transparent,
+                                                                                          backgroundImage: NetworkImage(snapshot3.data!),
+                                                                                        ),
                                                                                       );
                                                                                     } else {
                                                                                       return const CircleAvatar(

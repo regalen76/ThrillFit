@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:thrill_fit/screens/profile/guest_profile/guest_profile_view.dart';
 import 'package:thrill_fit/screens/profile/user_post/user_post_view_model.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:gesture_x_detector/gesture_x_detector.dart';
@@ -354,10 +355,17 @@ class UserPostView extends StatelessWidget {
                                                                                                 child: CircularProgressIndicator(),
                                                                                               );
                                                                                             } else if (snapshot3.connectionState == ConnectionState.done) {
-                                                                                              return CircleAvatar(
-                                                                                                radius: (82),
-                                                                                                backgroundColor: Colors.transparent,
-                                                                                                backgroundImage: NetworkImage(snapshot3.data!),
+                                                                                              return GestureDetector(
+                                                                                                onTap: () {
+                                                                                                  if (snapshot[index].user != model.getUser!.uid) {
+                                                                                                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => GuestProfileView(uid: snapshot[index].user)));
+                                                                                                  }
+                                                                                                },
+                                                                                                child: CircleAvatar(
+                                                                                                  radius: (82),
+                                                                                                  backgroundColor: Colors.transparent,
+                                                                                                  backgroundImage: NetworkImage(snapshot3.data!),
+                                                                                                ),
                                                                                               );
                                                                                             } else {
                                                                                               return const CircleAvatar(
@@ -497,10 +505,17 @@ class UserPostView extends StatelessWidget {
                                                                                                 child: CircularProgressIndicator(),
                                                                                               );
                                                                                             } else if (snapshot3.connectionState == ConnectionState.done) {
-                                                                                              return CircleAvatar(
-                                                                                                radius: (82),
-                                                                                                backgroundColor: Colors.transparent,
-                                                                                                backgroundImage: NetworkImage(snapshot3.data!),
+                                                                                              return GestureDetector(
+                                                                                                onTap: () {
+                                                                                                  if (snapshot[index].user != model.getUser!.uid) {
+                                                                                                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => GuestProfileView(uid: snapshot[index].user)));
+                                                                                                  }
+                                                                                                },
+                                                                                                child: CircleAvatar(
+                                                                                                  radius: (82),
+                                                                                                  backgroundColor: Colors.transparent,
+                                                                                                  backgroundImage: NetworkImage(snapshot3.data!),
+                                                                                                ),
                                                                                               );
                                                                                             } else {
                                                                                               return const CircleAvatar(
@@ -665,10 +680,17 @@ class UserPostView extends StatelessWidget {
                                                                                   child: CircularProgressIndicator(),
                                                                                 );
                                                                               } else if (snapshot3.connectionState == ConnectionState.done) {
-                                                                                return CircleAvatar(
-                                                                                  radius: (82),
-                                                                                  backgroundColor: Colors.transparent,
-                                                                                  backgroundImage: NetworkImage(snapshot3.data!),
+                                                                                return GestureDetector(
+                                                                                  onTap: () {
+                                                                                    if (snapshot[index].user != model.getUser!.uid) {
+                                                                                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => GuestProfileView(uid: snapshot[index].user)));
+                                                                                    }
+                                                                                  },
+                                                                                  child: CircleAvatar(
+                                                                                    radius: (82),
+                                                                                    backgroundColor: Colors.transparent,
+                                                                                    backgroundImage: NetworkImage(snapshot3.data!),
+                                                                                  ),
                                                                                 );
                                                                               } else {
                                                                                 return const CircleAvatar(
