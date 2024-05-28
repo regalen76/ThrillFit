@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/screens/my_workout_plan/training_set_list_view_model.dart';
@@ -41,7 +42,9 @@ class TrainingSetListView extends StatelessWidget {
                               padding: const EdgeInsets.only(top: 12),
                               child: Column(
                                 children: [
-                                  for (int i = 0; i < 10; i++) ...[
+                                  for (int i = 0;
+                                      i < vm.trainingSetsDummy.length;
+                                      i++) ...[
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 12),
@@ -51,6 +54,10 @@ class TrainingSetListView extends StatelessWidget {
                                       }, children: [
                                         TableRow(children: [
                                           ListTile(
+                                            onTap: () {
+                                              vm.changeSelectedValue(
+                                                  vm.trainingSetsDummy[i].id);
+                                            },
                                             tileColor: Colors.lime,
                                             shape: const RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.only(
@@ -60,8 +67,9 @@ class TrainingSetListView extends StatelessWidget {
                                             leading: Transform.scale(
                                               scale: 1.3,
                                               child: Checkbox(
-                                                value: true,
-                                                onChanged: (value) {},
+                                                value: vm.trainingSetsDummy[i]
+                                                    .selected,
+                                                onChanged: null,
                                                 visualDensity:
                                                     const VisualDensity(
                                                         horizontal: -4),
@@ -71,16 +79,26 @@ class TrainingSetListView extends StatelessWidget {
                                                 checkColor: Colors.white,
                                               ),
                                             ),
-                                            title: Image(
-                                                height: 110,
-                                                width: 110,
-                                                image: AssetImage(
-                                                    'assets/images/Abs.png')),
-                                            subtitle: const Text(
-                                              'Test',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
+                                            title: const Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                        right: 4),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [Text('')],
+                                                    ),
+                                                  ),
+                                                ),
+                                                Image(
+                                                    height: 50,
+                                                    width: 50,
+                                                    image: AssetImage(
+                                                        'assets/images/Abs.png'))
+                                              ],
                                             ),
                                           ),
                                           TableCell(

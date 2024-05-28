@@ -42,11 +42,12 @@ class AddWorkoutPlanViewModel extends BaseViewModel {
       'Lower Leg',
       'Abs',
       'Upper Back',
+      'Lower Back'
     ];
 
     _selectedList = [];
     for (int i = 0; i < _goalTypes.length; i++) {
-      _selectedList.add(GoalTypeSelected(type: _goalTypes[i]));
+      _selectedList.add(GoalTypeSelected(id: i, goalTypeName: _goalTypes[i]));
     }
 
     carouselTypePage();
@@ -69,9 +70,9 @@ class AddWorkoutPlanViewModel extends BaseViewModel {
         duration: const Duration(milliseconds: 350), curve: Curves.easeIn);
   }
 
-  void changeSelectedValue(String type) {
+  void changeSelectedValue(int id) {
     for (int i = 0; i < _selectedList.length; i++) {
-      if (_selectedList[i].type == type) {
+      if (_selectedList[i].id == id) {
         _selectedList[i].selected = !_selectedList[i].selected;
         _selectedList[i].selected ? _totalTypeSelected++ : _totalTypeSelected--;
       }

@@ -1,6 +1,12 @@
 class GoalTypeSelected {
-  String? type;
+  int id;
+  String? goalTypeName;
+  List<int>? goalTypeImage;
   bool selected;
 
-  GoalTypeSelected({this.type, this.selected = false});
+  GoalTypeSelected(
+      {required this.id,
+      this.goalTypeName,
+      this.goalTypeImage,
+      this.selected = false});
 }

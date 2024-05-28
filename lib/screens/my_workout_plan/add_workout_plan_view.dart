@@ -245,11 +245,12 @@ class AddWorkoutPlanView extends StatelessWidget {
     List<Widget> typeItems = [];
 
     for (int i = 0; i < selectedList.length; i++) {
-      if (selectedList[i].type != null && selectedList[i].type!.isNotEmpty) {
+      if (selectedList[i].goalTypeName != null &&
+          selectedList[i].goalTypeName!.isNotEmpty) {
         typeItems.add(InkWell(
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
-          onTap: () => vm.changeSelectedValue(selectedList[i].type!),
+          onTap: () => vm.changeSelectedValue(selectedList[i].id),
           child: Container(
               height: 160,
               width: 160,
@@ -268,11 +269,11 @@ class AddWorkoutPlanView extends StatelessWidget {
                       height: 110,
                       width: 110,
                       image: AssetImage(
-                          'assets/images/${selectedList[i].type!}.png')),
+                          'assets/images/${selectedList[i].goalTypeName!}.png')),
                   Padding(
                     padding: const EdgeInsets.only(top: 4, bottom: 4),
                     child: Text(
-                      selectedList[i].type!,
+                      selectedList[i].goalTypeName!,
                       style: const TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold),
                     ),
