@@ -9,6 +9,7 @@ import 'package:thrill_fit/models/post_likes_model.dart';
 import 'package:thrill_fit/screens/feeds/feeds_view_model.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:thrill_fit/screens/feeds_create/feeds_create.dart';
+import 'package:thrill_fit/screens/profile/guest_profile/guest_profile_view.dart';
 import 'package:thrill_fit/screens/profile/profile_view.dart';
 import 'package:thrill_fit/shared/media_type.dart';
 import 'package:dots_indicator/dots_indicator.dart';
@@ -92,15 +93,37 @@ class FeedsView extends StatelessWidget {
                                                                 CircularProgressIndicator(),
                                                           );
                                                         } else {
-                                                          return CircleAvatar(
-                                                            radius: (82),
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            backgroundImage:
-                                                                NetworkImage(
-                                                                    snapshot
-                                                                        .data!),
+                                                          return GestureDetector(
+                                                            onTap: () {
+                                                              if (postData
+                                                                      .author ==
+                                                                  model.getUser!
+                                                                      .uid) {
+                                                                Navigator.push(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                        builder:
+                                                                            (BuildContext context) =>
+                                                                                const ProfileView()));
+                                                              } else {
+                                                                Navigator.push(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                        builder:
+                                                                            (BuildContext context) =>
+                                                                                GuestProfileView(uid: postData.author)));
+                                                              }
+                                                            },
+                                                            child: CircleAvatar(
+                                                              radius: (82),
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              backgroundImage:
+                                                                  NetworkImage(
+                                                                      snapshot
+                                                                          .data!),
+                                                            ),
                                                           );
                                                         }
                                                       })))), //profile image
