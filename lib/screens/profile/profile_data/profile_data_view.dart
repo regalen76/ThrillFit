@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
+import 'package:thrill_fit/models/followers_model.dart';
 import 'package:thrill_fit/models/user_model.dart';
 import 'package:thrill_fit/repository/user_repo.dart';
-import 'package:thrill_fit/screens/authentication/login_register_page.dart';
+import 'package:thrill_fit/screens/profile/followers/followers_view.dart';
+import 'package:thrill_fit/screens/profile/following/following_view.dart';
 import 'package:thrill_fit/screens/profile/profile_data/profile_data_view_model.dart';
 
 class ProfileDataView extends StatelessWidget {
@@ -126,80 +128,164 @@ class ProfileDataView extends StatelessWidget {
                                       ),
                                     ),
                                     Expanded(
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                          border: Border(
-                                            top: BorderSide(
-                                                color: Colors.grey,
-                                                width: 3), // Top border
-                                            left: BorderSide(
-                                                color: Colors.grey,
-                                                width: 3), // Left border
-                                            bottom: BorderSide(
-                                                color: Colors.grey,
-                                                width: 3), // Bottom border
-                                          ),
-                                        ),
+                                      child: InkWell(
+                                        onTapUp: (_) {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          FollowingView(
+                                                            uid: model
+                                                                .getUser!.uid,
+                                                          )));
+                                        },
                                         child: Container(
-                                          height: 100,
-                                          margin: const EdgeInsets.symmetric(
-                                              horizontal: 3),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              const Text(
-                                                'Concecutive Days Of Workout:',
-                                                textAlign: TextAlign.center,
-                                              ),
-                                              Text('${data.concecutiveWorkout}',
+                                          decoration: const BoxDecoration(
+                                            border: Border(
+                                              top: BorderSide(
+                                                  color: Colors.grey,
+                                                  width: 3), // Top border
+                                              left: BorderSide(
+                                                  color: Colors.grey, width: 3),
+                                              bottom: BorderSide(
+                                                  color: Colors.grey,
+                                                  width: 3), // Bottom border
+                                            ),
+                                          ),
+                                          child: SizedBox(
+                                            height: 100,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                const Text(
+                                                  'Following:',
                                                   textAlign: TextAlign.center,
-                                                  style: const TextStyle(
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.bold))
-                                            ],
+                                                ),
+                                                StreamProvider<
+                                                        List<
+                                                            FollowersModel>>.value(
+                                                    value: UserRepo(
+                                                            uid: model
+                                                                .getUser!.uid)
+                                                        .getFollowedStream(
+                                                            model.getUser!.uid),
+                                                    initialData: const [],
+                                                    child: Consumer<
+                                                            List<
+                                                                FollowersModel>>(
+                                                        builder: (context,
+                                                            followersData, _) {
+                                                      if (followersData
+                                                          .isNotEmpty) {
+                                                        return Text(
+                                                            '${followersData.length}',
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: const TextStyle(
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold));
+                                                      } else {
+                                                        return const Text('0',
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: TextStyle(
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold));
+                                                      }
+                                                    })),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
                                     Expanded(
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                            border: Border(
-                                                top: BorderSide(
-                                                    color: Colors.grey,
-                                                    width: 3), // Top border
-                                                left: BorderSide(
-                                                    color: Colors.grey,
-                                                    width: 3),
-                                                bottom: BorderSide(
-                                                    color: Colors.grey,
-                                                    width: 3), // Bottom border
-                                                right: BorderSide(
-                                                    color: Colors.grey,
-                                                    width: 3)),
-                                            borderRadius: BorderRadius.only(
-                                                topRight: Radius.circular(10),
-                                                bottomRight:
-                                                    Radius.circular(10))),
-                                        child: SizedBox(
-                                          height: 100,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              const Text(
-                                                'Followers:',
-                                                textAlign: TextAlign.center,
-                                              ),
-                                              Text('${data.followers}',
+                                      child: InkWell(
+                                        onTapUp: (_) {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          FollowersView(
+                                                            uid: model
+                                                                .getUser!.uid,
+                                                          )));
+                                        },
+                                        child: Container(
+                                          decoration: const BoxDecoration(
+                                              border: Border(
+                                                  top: BorderSide(
+                                                      color: Colors.grey,
+                                                      width: 3), // Top border
+                                                  left: BorderSide(
+                                                      color: Colors.grey,
+                                                      width: 3),
+                                                  bottom: BorderSide(
+                                                      color: Colors.grey,
+                                                      width:
+                                                          3), // Bottom border
+                                                  right: BorderSide(
+                                                      color: Colors.grey,
+                                                      width: 3)),
+                                              borderRadius: BorderRadius.only(
+                                                  topRight: Radius.circular(10),
+                                                  bottomRight:
+                                                      Radius.circular(10))),
+                                          child: SizedBox(
+                                            height: 100,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                const Text(
+                                                  'Followers:',
                                                   textAlign: TextAlign.center,
-                                                  style: const TextStyle(
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.bold))
-                                            ],
+                                                ),
+                                                StreamProvider<
+                                                        List<
+                                                            FollowersModel>>.value(
+                                                    value: UserRepo(
+                                                            uid: model
+                                                                .getUser!.uid)
+                                                        .getFollowersStream(
+                                                            model.getUser!.uid),
+                                                    initialData: const [],
+                                                    child: Consumer<
+                                                            List<
+                                                                FollowersModel>>(
+                                                        builder: (context,
+                                                            followersData, _) {
+                                                      if (followersData
+                                                          .isNotEmpty) {
+                                                        return Text(
+                                                            '${followersData.length}',
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: const TextStyle(
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold));
+                                                      } else {
+                                                        return const Text('0',
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: TextStyle(
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold));
+                                                      }
+                                                    })),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -668,10 +754,11 @@ class ProfileDataView extends StatelessWidget {
                                                                                 borderRadius: BorderRadius.circular(20),
                                                                                 child: InkWell(
                                                                                   borderRadius: BorderRadius.circular(20),
-                                                                                  onTapUp: (_) {
-                                                                                    model.signOut();
-                                                                                    Navigator.pop(context);
-                                                                                    Navigator.pop(context);
+                                                                                  onTapUp: (_) async {
+                                                                                    await model.signOut();
+                                                                                    if (context.mounted) {
+                                                                                      Navigator.popUntil(context, (route) => route.isFirst);
+                                                                                    }
                                                                                   },
                                                                                   child: const SizedBox(
                                                                                     height: 80,
@@ -692,7 +779,7 @@ class ProfileDataView extends StatelessWidget {
                                                                                 child: InkWell(
                                                                                   borderRadius: BorderRadius.circular(20),
                                                                                   onTapUp: (_) {
-                                                                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => const LoginPage()));
+                                                                                    Navigator.pop(context);
                                                                                   },
                                                                                   child: const SizedBox(
                                                                                     height: 80,

@@ -22,6 +22,12 @@ class FeedsRepo {
     return postsCollection.orderBy('timestamp', descending: true);
   }
 
+  Query<Object?> getPostsQueryFollowed(List<String> followed) {
+    return postsCollection
+        .where('author', whereIn: followed)
+        .orderBy('timestamp', descending: true);
+  }
+
   Query<Object?> get getPostsQueryProfile {
     return postsCollection
         .where('author', isEqualTo: uid)

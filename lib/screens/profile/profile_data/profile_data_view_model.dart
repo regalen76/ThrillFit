@@ -104,7 +104,7 @@ class ProfileDataViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void signOut() async {
+  Future<void> signOut() async {
     await Auth().signOut();
   }
 
