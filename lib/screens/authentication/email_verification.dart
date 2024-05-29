@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:thrill_fit/screens/navigator_view.dart';
 import 'package:thrill_fit/services/auth.dart';
+import 'package:thrill_fit/shared/util.dart';
 
 class EmailVerifPage extends StatefulWidget {
   const EmailVerifPage({super.key});
@@ -75,21 +75,12 @@ class EmailVerifPageState extends State<EmailVerifPage> {
         canResendEmail = true;
       });
     } on FirebaseAuthException catch (e) {
-      final snackBar = SnackBar(
-        elevation: 0,
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: Colors.transparent,
-        content: AwesomeSnackbarContent(
-          title: 'Error',
-          message: e.message != null ? e.message! : e.code,
-          contentType: ContentType.failure,
-        ),
-      );
-
-      if (context.mounted) {
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(snackBar);
+      if (mounted) {
+        if (e.message == null) {
+          Util().flashMessageError(context, e.code);
+        } else {
+          Util().flashMessageInfo(context, e.message!);
+        }
       }
     }
   }
@@ -99,41 +90,45 @@ class EmailVerifPageState extends State<EmailVerifPage> {
       ? const NavigatorView()
       : Scaffold(
           appBar: AppBar(
-            title: const Text('Email Verify'),
+            title: const Text('Verification'),
           ),
           body: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'A verification email has been sent to your email',
-                  style: TextStyle(fontSize: 20),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(
-                  height: 24,
+                Container(
+                  margin: const EdgeInsets.only(bottom: 70),
+                  child: const Text(
+                    'A verification email has been sent to your email, check your inbox',
+                    style: TextStyle(fontSize: 22),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
                 if (!canResendEmail) ...[
-                  Text(
-                    resendCounter.toString(),
-                    style: const TextStyle(
-                        fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 24,
-                  ),
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 70),
+                    child: Text(
+                      resendCounter.toString(),
+                      style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue),
+                    ),
+                  )
                 ],
                 ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(50)),
+                        minimumSize: const Size.fromHeight(70),
+                        backgroundColor: Colors.blue),
                     icon: Icon(
                       MdiIcons.email,
                       size: 32,
+                      color: Colors.white,
                     ),
                     label: const Text(
                       'Resent Email',
-                      style: TextStyle(fontSize: 24),
+                      style: TextStyle(fontSize: 24, color: Colors.white),
                     ),
                     onPressed: canResendEmail ? sendVerificationEmail : null),
                 const SizedBox(
@@ -141,14 +136,16 @@ class EmailVerifPageState extends State<EmailVerifPage> {
                 ),
                 ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(50)),
+                        backgroundColor: Colors.deepPurpleAccent,
+                        minimumSize: const Size.fromHeight(70)),
                     icon: Icon(
                       MdiIcons.email,
                       size: 32,
+                      color: Colors.white,
                     ),
                     label: const Text(
                       'Cancel',
-                      style: TextStyle(fontSize: 24),
+                      style: TextStyle(fontSize: 24, color: Colors.white),
                     ),
                     onPressed: () => Auth().signOut())
               ],

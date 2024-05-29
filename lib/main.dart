@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:onboarding/onboarding.dart';
 import 'package:thrill_fit/screens/widget_tree.dart';
 import 'firebase_options.dart';
 
@@ -18,12 +19,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          brightness: Brightness.light,
+          brightness: Brightness.dark,
           fontFamily: 'Poppins',
-          scaffoldBackgroundColor: Colors.black45),
+          scaffoldBackgroundColor: background,
+          appBarTheme: const AppBarTheme(backgroundColor: background)),
       darkTheme: ThemeData(
-        brightness: Brightness.dark,
-      ),
+          brightness: Brightness.dark,
+          fontFamily: 'Poppins',
+          scaffoldBackgroundColor: background,
+          appBarTheme: const AppBarTheme(backgroundColor: background)),
       themeMode: ThemeMode.dark,
       debugShowCheckedModeBanner: false,
       home: const WidgetTree(),

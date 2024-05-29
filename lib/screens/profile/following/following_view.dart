@@ -1,0 +1,123 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stacked/stacked.dart';
+import 'package:thrill_fit/models/followers_model.dart';
+import 'package:thrill_fit/repository/user_repo.dart';
+import 'package:thrill_fit/screens/profile/following/following_view_model.dart';
+import 'package:thrill_fit/screens/profile/guest_profile/guest_profile_view.dart';
+
+class FollowingView extends StatelessWidget {
+  final String uid;
+
+  const FollowingView({super.key, required this.uid});
+
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder.reactive(
+        viewModelBuilder: () => FollowingViewModel(userUid: uid),
+        builder: (context, model, _) {
+          return model.isBusy
+              ? const Center(child: CircularProgressIndicator())
+              : Scaffold(
+                  appBar: AppBar(
+                    title: const Text('Following'),
+                  ),
+                  body: StreamProvider<List<FollowersModel>>.value(
+                    value: UserRepo(uid: model.getUser!.uid)
+                        .getFollowedStream(uid),
+                    initialData: const [],
+                    child: Consumer<List<FollowersModel>>(
+                      builder: (context, snapshot, _) {
+                        if (!snapshot.isNotEmpty) {
+                          return const Center(child: Text("No followers yet"));
+                        } else {
+                          return ListView.builder(
+                            padding: const EdgeInsets.only(
+                                left: 10, bottom: 10, right: 10),
+                            itemCount: snapshot.length,
+                            itemBuilder: (context, index) {
+                              return FutureBuilder(
+                                  future:
+                                      model.getUserName(snapshot[index].follow),
+                                  builder: (context, snapshot2) {
+                                    if (snapshot2.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                    } else if (snapshot2.connectionState ==
+                                        ConnectionState.done) {
+                                      return ListTile(
+                                        leading: SizedBox(
+                                          height: 40,
+                                          width: 40,
+                                          child: FutureBuilder(
+                                              future:
+                                                  model.fetchProfilePictureUrl(
+                                                      snapshot[index].follow),
+                                              builder: (context, snapshot3) {
+                                                if (snapshot3.connectionState ==
+                                                    ConnectionState.waiting) {
+                                                  return const CircleAvatar(
+                                                    radius: (82),
+                                                    backgroundColor:
+                                                        Colors.black,
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  );
+                                                } else if (snapshot3
+                                                        .connectionState ==
+                                                    ConnectionState.done) {
+                                                  return GestureDetector(
+                                                    onTap: () {
+                                                      if (snapshot[index]
+                                                                  .user !=
+                                                              model.getUser!
+                                                                  .uid &&
+                                                          snapshot[index]
+                                                                  .user !=
+                                                              uid) {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    GuestProfileView(
+                                                                        uid: snapshot[index]
+                                                                            .user)));
+                                                      }
+                                                    },
+                                                    child: CircleAvatar(
+                                                      radius: (82),
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      backgroundImage:
+                                                          NetworkImage(
+                                                              snapshot3.data!),
+                                                    ),
+                                                  );
+                                                } else {
+                                                  return const CircleAvatar(
+                                                    radius: (82),
+                                                    backgroundColor:
+                                                        Colors.black,
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  );
+                                                }
+                                              }),
+                                        ),
+                                        title: Text(snapshot2.data!),
+                                      );
+                                    } else {
+                                      return const CircularProgressIndicator();
+                                    }
+                                  });
+                            },
+                          );
+                        }
+                      },
+                    ),
+                  ));
+        });
+  }
+}

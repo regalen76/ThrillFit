@@ -8,7 +8,7 @@ class TesterRepo {
   TesterRepo({required this.uid});
 
   final CollectionReference testerCollection =
-  FirebaseFirestore.instance.collection('tester');
+      FirebaseFirestore.instance.collection('tester');
 
   //create tester collection with uuid as id document with field uid, randString, randInt
   Future createTesterData(String randString, int randInt) async {
@@ -19,9 +19,13 @@ class TesterRepo {
 
   //get tester based by user
   Stream<List<TesterModel>> get testers {
-    return testerCollection.where('uid', isEqualTo: uid).snapshots().map((snap) {
+    return testerCollection
+        .where('uid', isEqualTo: uid)
+        .snapshots()
+        .map((snap) {
       return snap.docs.map((doc) {
-        return TesterModel(uid: doc.get('uid') ?? '',
+        return TesterModel(
+            uid: doc.get('uid') ?? '',
             randString: doc.get('randString') ?? '',
             randInt: doc.get('randInt') ?? '');
       }).toList();
