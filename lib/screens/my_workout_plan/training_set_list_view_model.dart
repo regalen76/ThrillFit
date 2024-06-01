@@ -53,4 +53,16 @@ class TrainingSetListViewModel extends BaseViewModel {
     }
     notifyListeners();
   }
+
+  int countTrainingSetMoves(TrainingSetSelected trainingSet) {
+    int value = 0;
+
+    if (trainingSet.workoutMoves != null) {
+      for (int i = 0; i < trainingSet.workoutMoves!.length; i++) {
+        value++;
+      }
+    }
+
+    return value;
+  }
 }

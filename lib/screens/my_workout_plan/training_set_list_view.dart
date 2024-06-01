@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/screens/my_workout_plan/training_set_list_view_model.dart';
+import 'package:thrill_fit/screens/workout_moves/workout_move_list_view.dart';
 
 class TrainingSetListView extends StatelessWidget {
   const TrainingSetListView({super.key});
@@ -79,21 +79,44 @@ class TrainingSetListView extends StatelessWidget {
                                                 checkColor: Colors.white,
                                               ),
                                             ),
-                                            title: const Row(
+                                            title: Row(
                                               children: [
                                                 Expanded(
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(
-                                                        right: 4),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 4),
                                                     child: Column(
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
                                                               .start,
-                                                      children: [Text('')],
+                                                      children: [
+                                                        Text(
+                                                            vm
+                                                                    .trainingSetsDummy[
+                                                                        i]
+                                                                    .trainingSetName ??
+                                                                '-',
+                                                            style: const TextStyle(
+                                                                fontSize: 16,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
+                                                        Text(
+                                                          'Total moves: ${vm.countTrainingSetMoves(vm.trainingSetsDummy[i])}',
+                                                          style:
+                                                              const TextStyle(
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
                                                 ),
-                                                Image(
+                                                const Image(
                                                     height: 50,
                                                     width: 50,
                                                     image: AssetImage(
@@ -108,7 +131,14 @@ class TrainingSetListView extends StatelessWidget {
                                               splashColor: Colors.transparent,
                                               highlightColor:
                                                   Colors.transparent,
-                                              onTap: () {},
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            const WorkoutMoveListView()));
+                                              },
                                               child: Container(
                                                 decoration: const BoxDecoration(
                                                     color: Colors.black,

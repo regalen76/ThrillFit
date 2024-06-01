@@ -5,6 +5,7 @@ class TrainingSetSelected {
   String? trainingSetName;
   List<int>? imageType;
   List<WorkoutMove>? workoutMoves;
+  bool needEquipment;
   bool selected;
 
   TrainingSetSelected(
@@ -12,5 +13,6 @@ class TrainingSetSelected {
       this.trainingSetName,
       this.imageType,
       this.workoutMoves,
+      this.needEquipment = false,
       this.selected = false});
 }
