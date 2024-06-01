@@ -1,53 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:thrill_fit/services/auth.dart';
+import 'package:stacked/stacked.dart';
+import 'package:thrill_fit/screens/profile/profile_data/profile_data_view.dart';
+import 'package:thrill_fit/screens/profile/profile_view_model.dart';
+import 'package:thrill_fit/screens/profile/user_post/user_post_view.dart';
 
-class ProfileView extends StatefulWidget {
+class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
 
   @override
-  State<ProfileView> createState() => _ProfileViewState();
-}
-
-class _ProfileViewState extends State<ProfileView> {
-  final User? user = Auth().currentUser;
-
-  void signOut() async {
-    await Auth().signOut();
-  }
-
-  Widget userUID() {
-    return Text(user?.email ?? 'Not Signed In');
-  }
-
-  Widget signOutButton() {
-    return ElevatedButton(
-        onPressed: () {
-          signOut();
-          Navigator.pop(context);
-        },
-        child: const Text('Sign Out'));
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile'),
-      ),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            userUID(),
-            signOutButton(),
-          ],
-        ),
-      ),
-    );
+    return ViewModelBuilder.reactive(
+        viewModelBuilder: () => ProfileViewModel(),
+        builder: (context, model, _) {
+          return model.isBusy
+              ? const Center(child: CircularProgressIndicator())
+              : DefaultTabController(
+                  length: 2,
+                  child: Scaffold(
+                    appBar: AppBar(
+                      title: const Text('User'),
+                      bottom: const TabBar(
+                        tabs: [
+                          Tab(
+                            child: Text(
+                              'Profile',
+                              style: TextStyle(fontSize: 19),
+                            ),
+                          ),
+                          Tab(
+                            child: Text(
+                              'Posts',
+                              style: TextStyle(fontSize: 19),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    body: const TabBarView(
+                      children: [
+                        ProfileDataView(),
+                        UserPostView(),
+                      ],
+                    ),
+                  ),
+                );
+        });
   }
 }

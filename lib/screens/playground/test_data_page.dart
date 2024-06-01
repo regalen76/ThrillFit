@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:thrill_fit/models/tester_model.dart';
 import 'package:thrill_fit/screens/playground/test_list_data.dart';
 import 'package:thrill_fit/services/auth.dart';
-import 'package:thrill_fit/services/tester_repo.dart';
+import 'package:thrill_fit/repository/tester_repo.dart';
 
 class TestDataPage extends StatelessWidget {
   TestDataPage({super.key});
