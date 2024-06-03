@@ -14,8 +14,16 @@ class TrainingSetListViewModel extends BaseViewModel {
           id: 0,
           trainingSetName: 'Abs Beginner',
           workoutMoves: [
-            WorkoutMove(moveName: '10 knee-to-elbows'),
-            WorkoutMove(moveName: '10 flutter kicks'),
+            WorkoutMove(
+                moveName: '10 knee-to-elbows',
+                movementImage: 'assets/images/crunches.glb'),
+            WorkoutMove(
+                moveName: '10 flutter kicks',
+                movementImage: 'assets/images/crunches.glb'),
+            WorkoutMove(moveName: '10 scissors'),
+            WorkoutMove(moveName: '10 the hundreds'),
+            WorkoutMove(moveName: '10 reverse crunches'),
+            WorkoutMove(moveName: '10 sitting twists'),
             WorkoutMove(moveName: '10 scissors'),
             WorkoutMove(moveName: '10 the hundreds'),
             WorkoutMove(moveName: '10 reverse crunches'),

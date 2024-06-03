@@ -1,6 +1,6 @@
 class WorkoutMove {
   String? moveName;
-  List<int>? movementImage;
+  String? movementImage;
 
   WorkoutMove({this.moveName, this.movementImage});
 }

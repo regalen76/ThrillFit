@@ -137,7 +137,11 @@ class TrainingSetListView extends StatelessWidget {
                                                     MaterialPageRoute(
                                                         builder: (BuildContext
                                                                 context) =>
-                                                            const WorkoutMoveListView()));
+                                                            WorkoutMoveListView(
+                                                              trainingSetWidget:
+                                                                  vm.trainingSetsDummy[
+                                                                      i],
+                                                            )));
                                               },
                                               child: Container(
                                                 decoration: const BoxDecoration(

@@ -3,7 +3,7 @@ import 'package:thrill_fit/models/models.dart';
 class TrainingSetSelected {
   int id;
   String? trainingSetName;
-  List<int>? imageType;
+  String? imageType;
   List<WorkoutMove>? workoutMoves;
   bool needEquipment;
   bool selected;
