@@ -21,6 +21,7 @@ class FeedsFollowersViewModel extends BaseViewModel {
       FeedsRepo(uid: Auth().currentUser!.uid).getPostsQuery;
 
   User? get getUser => user;
+  List<FollowersModel> get getListOfFollowed => listOfFollowed;
 
   Future<void> initState() async {
     setBusy(true);
