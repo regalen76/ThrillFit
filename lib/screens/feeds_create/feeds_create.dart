@@ -20,12 +20,12 @@ class FeedsCreateView extends StatelessWidget {
               ? const Center(child: CircularProgressIndicator())
               : Scaffold(
                   appBar: AppBar(),
+                  bottomNavigationBar: buttonSection(model, context),
                   body: SizedBox(
                     child: Column(
                       children: [
                         imagePageSection(context, model),
                         commentSection(model),
-                        buttonSection(model, context)
                       ],
                     ),
                   ));

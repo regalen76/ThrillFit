@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:thrill_fit/components/comment_modal_view.dart';
 import 'package:thrill_fit/screens/profile/guest_profile/guest_profile_view.dart';
 import 'package:thrill_fit/screens/profile/user_post/user_post_view_model.dart';
 import 'package:flick_video_player/flick_video_player.dart';
@@ -71,7 +73,7 @@ class UserPostView extends StatelessWidget {
                                                       backgroundColor:
                                                           Colors.transparent,
                                                       backgroundImage:
-                                                          NetworkImage(
+                                                          CachedNetworkImageProvider(
                                                               snapshot.data!),
                                                     );
                                                   }
@@ -79,7 +81,8 @@ class UserPostView extends StatelessWidget {
                                 Align(
                                     alignment: Alignment.topLeft,
                                     child: Container(
-                                      margin: const EdgeInsets.only(left: 10),
+                                      margin: const EdgeInsets.only(
+                                          left: 10, right: 10),
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -117,7 +120,7 @@ class UserPostView extends StatelessWidget {
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width *
-                                                  0.80,
+                                                  0.796,
                                               child: Text(
                                                 postData.body,
                                                 style: const TextStyle(
@@ -127,7 +130,7 @@ class UserPostView extends StatelessWidget {
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width *
-                                                  0.80,
+                                                  0.796,
                                               margin: const EdgeInsets.only(
                                                   top: 15),
                                               height: 250,
@@ -166,7 +169,7 @@ class UserPostView extends StatelessWidget {
                                                                                 20),
                                                                         image: DecorationImage(
                                                                             image:
-                                                                                NetworkImage(snapshot.data!),
+                                                                                CachedNetworkImageProvider(snapshot.data!),
                                                                             fit: BoxFit.contain)),
                                                                   ));
                                                                 }
@@ -336,7 +339,7 @@ class UserPostView extends StatelessWidget {
                                                                             (context,
                                                                                 index) {
                                                                           return FutureBuilder(
-                                                                              future: model.getUserName(postData.author),
+                                                                              future: model.getUserName(snapshot[index].user),
                                                                               builder: (context, snapshot2) {
                                                                                 if (snapshot2.connectionState == ConnectionState.waiting) {
                                                                                   return const Center(child: CircularProgressIndicator());
@@ -364,7 +367,7 @@ class UserPostView extends StatelessWidget {
                                                                                                 child: CircleAvatar(
                                                                                                   radius: (82),
                                                                                                   backgroundColor: Colors.transparent,
-                                                                                                  backgroundImage: NetworkImage(snapshot3.data!),
+                                                                                                  backgroundImage: CachedNetworkImageProvider(snapshot3.data!),
                                                                                                 ),
                                                                                               );
                                                                                             } else {
@@ -486,7 +489,7 @@ class UserPostView extends StatelessWidget {
                                                                             (context,
                                                                                 index) {
                                                                           return FutureBuilder(
-                                                                              future: model.getUserName(postData.author),
+                                                                              future: model.getUserName(snapshot[index].user),
                                                                               builder: (context, snapshot2) {
                                                                                 if (snapshot2.connectionState == ConnectionState.waiting) {
                                                                                   return const Center(child: CircularProgressIndicator());
@@ -514,7 +517,7 @@ class UserPostView extends StatelessWidget {
                                                                                                 child: CircleAvatar(
                                                                                                   radius: (82),
                                                                                                   backgroundColor: Colors.transparent,
-                                                                                                  backgroundImage: NetworkImage(snapshot3.data!),
+                                                                                                  backgroundImage: CachedNetworkImageProvider(snapshot3.data!),
                                                                                                 ),
                                                                                               );
                                                                                             } else {
@@ -584,182 +587,20 @@ class UserPostView extends StatelessWidget {
                                       size: 25),
                                   onPressed: () {
                                     showModalBottomSheet(
-                                        context: context,
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(20),
-                                            topRight: Radius.circular(20),
-                                          ),
+                                      context: context,
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          topRight: Radius.circular(20),
                                         ),
-                                        builder: ((context) {
-                                          TextEditingController
-                                              commentsController =
-                                              TextEditingController();
-
-                                          return SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.7,
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                  margin: const EdgeInsets.only(
-                                                      top: 10),
-                                                  child: const Text(
-                                                    'Comments',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 18),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                    child: StreamProvider<
-                                                        List<
-                                                            PostCommentsModel>>.value(
-                                                  value: model
-                                                      .getPostCommentsStream(
-                                                          dataSnapshot.id),
-                                                  initialData: const [],
-                                                  child: Consumer<
-                                                      List<PostCommentsModel>>(
-                                                    builder:
-                                                        (context, snapshot, _) {
-                                                      if (snapshot.isEmpty) {
-                                                        return const Center(
-                                                            child: Text(
-                                                                "No comments yet"));
-                                                      } else {
-                                                        return ListView.builder(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                                  left: 10,
-                                                                  bottom: 10,
-                                                                  right: 10),
-                                                          itemCount: snapshot
-                                                              .length, // Replace with your actual item count
-                                                          itemBuilder:
-                                                              (context, index) {
-                                                            return FutureBuilder(
-                                                                future: model
-                                                                    .getUserName(
-                                                                        postData
-                                                                            .author),
-                                                                builder: (context,
-                                                                    snapshot2) {
-                                                                  if (snapshot2
-                                                                          .connectionState ==
-                                                                      ConnectionState
-                                                                          .waiting) {
-                                                                    return const Center(
-                                                                        child:
-                                                                            CircularProgressIndicator());
-                                                                  } else if (snapshot2
-                                                                          .connectionState ==
-                                                                      ConnectionState
-                                                                          .done) {
-                                                                    return ListTile(
-                                                                      leading:
-                                                                          SizedBox(
-                                                                        height:
-                                                                            40,
-                                                                        width:
-                                                                            40,
-                                                                        child: FutureBuilder(
-                                                                            future: model.fetchProfilePictureUrl(snapshot[index].user),
-                                                                            builder: (context, snapshot3) {
-                                                                              if (snapshot3.connectionState == ConnectionState.waiting) {
-                                                                                return const CircleAvatar(
-                                                                                  radius: (82),
-                                                                                  backgroundColor: Colors.black,
-                                                                                  child: CircularProgressIndicator(),
-                                                                                );
-                                                                              } else if (snapshot3.connectionState == ConnectionState.done) {
-                                                                                return GestureDetector(
-                                                                                  onTap: () {
-                                                                                    if (snapshot[index].user != model.getUser!.uid) {
-                                                                                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => GuestProfileView(uid: snapshot[index].user)));
-                                                                                    }
-                                                                                  },
-                                                                                  child: CircleAvatar(
-                                                                                    radius: (82),
-                                                                                    backgroundColor: Colors.transparent,
-                                                                                    backgroundImage: NetworkImage(snapshot3.data!),
-                                                                                  ),
-                                                                                );
-                                                                              } else {
-                                                                                return const CircleAvatar(
-                                                                                  radius: (82),
-                                                                                  backgroundColor: Colors.black,
-                                                                                  child: CircularProgressIndicator(),
-                                                                                );
-                                                                              }
-                                                                            }),
-                                                                      ),
-                                                                      title: Text(
-                                                                          snapshot2
-                                                                              .data!),
-                                                                      subtitle: Text(
-                                                                          snapshot[index]
-                                                                              .comments),
-                                                                    );
-                                                                  } else {
-                                                                    return const CircularProgressIndicator();
-                                                                  }
-                                                                });
-                                                          },
-                                                        );
-                                                      }
-                                                    },
-                                                  ),
-                                                )),
-                                                Container(
-                                                  padding:
-                                                      const EdgeInsets.all(20),
-                                                  child: TextField(
-                                                    controller:
-                                                        commentsController,
-                                                    decoration: InputDecoration(
-                                                      hintText: 'Add comment',
-                                                      hintStyle:
-                                                          const TextStyle(
-                                                        fontSize: 16,
-                                                        color: Colors.grey,
-                                                      ),
-                                                      border:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
-                                                      ),
-                                                      contentPadding:
-                                                          const EdgeInsets
-                                                              .symmetric(
-                                                              horizontal: 15),
-                                                    ),
-                                                    keyboardType:
-                                                        TextInputType.text,
-                                                    textInputAction:
-                                                        TextInputAction.send,
-                                                    onSubmitted: (value) async {
-                                                      await model.addComments(
-                                                          value,
-                                                          dataSnapshot.id,
-                                                          model.getUser!.uid);
-                                                      commentsController
-                                                          .clear();
-                                                    },
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                        }));
+                                      ),
+                                      isScrollControlled:
+                                          true, // This is important to allow the sheet to resize with the keyboard
+                                      builder: (context) {
+                                        return CommentModalView(
+                                            postId: dataSnapshot.id);
+                                      },
+                                    );
                                   },
                                 ),
                                 StreamProvider<List<PostCommentsModel>>.value(

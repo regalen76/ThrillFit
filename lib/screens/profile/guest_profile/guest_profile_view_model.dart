@@ -1,3 +1,4 @@
+import 'package:async/async.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -15,6 +16,9 @@ class GuestProfileViewModel extends BaseViewModel {
   Logger logger = Logger();
   final String userUid;
   User? user = Auth().currentUser;
+  final Map<String, AsyncMemoizer<String>> contentMemoirzer = {};
+  final Map<String, AsyncMemoizer<String>> ppMemoirzer = {};
+  final Map<String, AsyncMemoizer<String>> nameMemoizer = {};
 
   GuestProfileViewModel({required this.userUid});
 
@@ -80,7 +84,13 @@ class GuestProfileViewModel extends BaseViewModel {
         FirebaseStorage.instance.ref().child('profile-image/$uid.png');
 
     try {
-      return await storageRef.getDownloadURL();
+      if (!ppMemoirzer.containsKey(uid)) {
+        ppMemoirzer[uid] = AsyncMemoizer<String>();
+      }
+
+      return ppMemoirzer[uid]!.runOnce(() async {
+        return await storageRef.getDownloadURL();
+      });
     } catch (e) {
       logger.e("Failed to fetch profile picture, the error: $e");
       throw Exception("Failed get profile picture");
@@ -88,15 +98,31 @@ class GuestProfileViewModel extends BaseViewModel {
   }
 
   Future<String> getUserName(String uid) async {
-    UserModel? data = await UserRepo(uid: uid).getUserDataOnce();
-    return data!.name;
+    if (!nameMemoizer.containsKey(uid)) {
+      nameMemoizer[uid] = AsyncMemoizer<String>();
+    }
+
+    return nameMemoizer[uid]!.runOnce(() async {
+      UserModel? data = await UserRepo(uid: uid).getUserDataOnce();
+      if (data != null) {
+        return data.name;
+      } else {
+        throw Exception("User not found");
+      }
+    });
   }
 
   Future<String> fetchContent(String path) async {
     var storageRef = FirebaseStorage.instance.ref().child('/feeds/$path');
 
     try {
-      return await storageRef.getDownloadURL();
+      if (!contentMemoirzer.containsKey(path)) {
+        contentMemoirzer[path] = AsyncMemoizer<String>();
+      }
+
+      return contentMemoirzer[path]!.runOnce(() async {
+        return await storageRef.getDownloadURL();
+      });
     } catch (e) {
       logger.e("Failed to fetch post image, the error: $e");
       throw Exception("Failed to get post image");

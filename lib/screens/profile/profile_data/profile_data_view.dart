@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -51,8 +52,9 @@ class ProfileDataView extends StatelessWidget {
                                     CircleAvatar(
                                       radius: (82),
                                       backgroundColor: Colors.transparent,
-                                      backgroundImage: NetworkImage(
-                                          model.getProfilePictureUrl),
+                                      backgroundImage:
+                                          CachedNetworkImageProvider(
+                                              model.getProfilePictureUrl),
                                     ),
                                     Positioned(
                                       top: 10,
@@ -313,6 +315,13 @@ class ProfileDataView extends StatelessWidget {
                                                 model.getIsEdit
                                                     ? Expanded(
                                                         child: TextFormField(
+                                                          onTapOutside:
+                                                              (event) {
+                                                            FocusManager
+                                                                .instance
+                                                                .primaryFocus
+                                                                ?.unfocus();
+                                                          },
                                                           enabled:
                                                               model.getIsEdit,
                                                           textAlign:
@@ -388,6 +397,13 @@ class ProfileDataView extends StatelessWidget {
                                                 model.getIsEdit
                                                     ? Expanded(
                                                         child: TextFormField(
+                                                          onTapOutside:
+                                                              (event) {
+                                                            FocusManager
+                                                                .instance
+                                                                .primaryFocus
+                                                                ?.unfocus();
+                                                          },
                                                           enabled:
                                                               model.getIsEdit,
                                                           textAlign:
@@ -555,6 +571,13 @@ class ProfileDataView extends StatelessWidget {
                                                 model.getIsEdit
                                                     ? Expanded(
                                                         child: TextFormField(
+                                                          onTapOutside:
+                                                              (event) {
+                                                            FocusManager
+                                                                .instance
+                                                                .primaryFocus
+                                                                ?.unfocus();
+                                                          },
                                                           enabled:
                                                               model.getIsEdit,
                                                           textAlign:
@@ -602,6 +625,13 @@ class ProfileDataView extends StatelessWidget {
                                                 model.getIsEdit
                                                     ? Expanded(
                                                         child: TextFormField(
+                                                          onTapOutside:
+                                                              (event) {
+                                                            FocusManager
+                                                                .instance
+                                                                .primaryFocus
+                                                                ?.unfocus();
+                                                          },
                                                           enabled:
                                                               model.getIsEdit,
                                                           textAlign:
@@ -649,6 +679,13 @@ class ProfileDataView extends StatelessWidget {
                                                 model.getIsEdit
                                                     ? Expanded(
                                                         child: TextFormField(
+                                                          onTapOutside:
+                                                              (event) {
+                                                            FocusManager
+                                                                .instance
+                                                                .primaryFocus
+                                                                ?.unfocus();
+                                                          },
                                                           enabled:
                                                               model.getIsEdit,
                                                           textAlign:
