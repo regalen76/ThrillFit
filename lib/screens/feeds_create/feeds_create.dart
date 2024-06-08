@@ -60,13 +60,16 @@ class FeedsCreateView extends StatelessWidget {
             child: Container(
               margin: const EdgeInsets.only(right: 25),
               child: IconButton(
-                onPressed: model.getButtonEnabled
+                onPressed: model.getCommentFieldController.text.isNotEmpty &&
+                        model.getImageFileList.isNotEmpty
                     ? () => model.createPost(context)
                     : () => model.getFormKey.currentState!.validate(),
                 icon: Icon(MdiIcons.plusCircle,
                     size: 35,
-                    color:
-                        model.getButtonEnabled ? Colors.white : Colors.black87),
+                    color: model.getCommentFieldController.text.isNotEmpty &&
+                            model.getImageFileList.isNotEmpty
+                        ? Colors.white
+                        : Colors.black87),
               ),
             ),
           )
@@ -82,6 +85,9 @@ class FeedsCreateView extends StatelessWidget {
         child: Container(
           margin: const EdgeInsets.only(left: 25, right: 25),
           child: TextFormField(
+            onTapOutside: (event) {
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
             textAlign: TextAlign.start,
             maxLines: null,
             style: const TextStyle(fontSize: 18),
