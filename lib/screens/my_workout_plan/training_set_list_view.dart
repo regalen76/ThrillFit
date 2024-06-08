@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:stacked/stacked.dart';
+import 'package:thrill_fit/screens/my_workout_plan/my_workout_move_selection_view.dart';
 import 'package:thrill_fit/screens/my_workout_plan/training_set_list_view_model.dart';
 import 'package:thrill_fit/screens/workout_moves/workout_move_list_view.dart';
 
@@ -54,10 +55,6 @@ class TrainingSetListView extends StatelessWidget {
                                       }, children: [
                                         TableRow(children: [
                                           ListTile(
-                                            onTap: () {
-                                              vm.changeSelectedValue(
-                                                  vm.trainingSetsDummy[i].id);
-                                            },
                                             tileColor: Colors.lime,
                                             shape: const RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.only(
@@ -69,13 +66,20 @@ class TrainingSetListView extends StatelessWidget {
                                               child: Checkbox(
                                                 value: vm.trainingSetsDummy[i]
                                                     .selected,
-                                                onChanged: null,
+                                                onChanged: (value) {
+                                                  vm.changeSelectedValue(
+                                                      vm.trainingSetsDummy[i]
+                                                          .id,
+                                                      value);
+                                                },
                                                 visualDensity:
                                                     const VisualDensity(
                                                         horizontal: -4),
                                                 fillColor:
                                                     MaterialStateProperty.all(
                                                         Colors.black),
+                                                side: const BorderSide(
+                                                    color: Colors.black),
                                                 checkColor: Colors.white,
                                               ),
                                             ),
@@ -178,6 +182,16 @@ class TrainingSetListView extends StatelessWidget {
                               bottom: 24, top: 12, left: 12, right: 12),
                           child: Column(
                             children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 6),
+                                child: Center(
+                                  child: Text(
+                                    "${vm.totalSetSelected} of ${vm.trainingSetsDummy.length} set(s) selected",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
@@ -203,7 +217,45 @@ class TrainingSetListView extends StatelessWidget {
                                   Expanded(
                                     flex: 2,
                                     child: TextButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        vm.validateInput();
+                                        vm.combineSelectedWorkoutMoves();
+
+                                        if (vm.isValidNextPage) {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (BuildContext
+                                                          context) =>
+                                                      MyWorkoutMoveSelectionView(
+                                                        movesFromSets: vm
+                                                            .movesFromSelectedSets,
+                                                      )));
+                                        } else {
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext ctx) {
+                                                return AlertDialog(
+                                                  backgroundColor:
+                                                      Colors.grey.shade700,
+                                                  title: const Text(
+                                                      'Error Validation'),
+                                                  content: const Text(
+                                                      'Please select at least one training set.'),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                      child:
+                                                          const Text('Close'),
+                                                    ),
+                                                  ],
+                                                );
+                                              });
+                                        }
+                                      },
                                       style: TextButton.styleFrom(
                                         fixedSize: const Size.fromRadius(10),
                                         backgroundColor:

@@ -5,8 +5,9 @@ import 'package:thrill_fit/models/models.dart';
 class AddWorkoutPlanViewModel extends BaseViewModel {
   List<String> _goalTypes = [];
   List<String> get goalTypes => _goalTypes;
-  List<GoalTypeSelected> _selectedList = [];
-  List<GoalTypeSelected> get selectedList => _selectedList;
+
+  List<GoalTypeSelected> _typeSelectList = [];
+  List<GoalTypeSelected> get typeSelectList => _typeSelectList;
 
   int _totalTypeSelected = 0;
   int get totalTypeSelected => _totalTypeSelected;
@@ -45,9 +46,10 @@ class AddWorkoutPlanViewModel extends BaseViewModel {
       'Lower Back'
     ];
 
-    _selectedList = [];
+    _typeSelectList = [];
     for (int i = 0; i < _goalTypes.length; i++) {
-      _selectedList.add(GoalTypeSelected(id: i, goalTypeName: _goalTypes[i]));
+      _typeSelectList
+          .add(GoalTypeSelected(id: 'type$i', goalTypeName: _goalTypes[i]));
     }
 
     carouselTypePage();
@@ -56,7 +58,7 @@ class AddWorkoutPlanViewModel extends BaseViewModel {
   }
 
   void carouselTypePage() {
-    var itemCount = _goalTypes.length / 4;
+    var itemCount = _typeSelectList.length / 4;
     _carouselCount = itemCount.ceil();
   }
 
@@ -70,11 +72,13 @@ class AddWorkoutPlanViewModel extends BaseViewModel {
         duration: const Duration(milliseconds: 350), curve: Curves.easeIn);
   }
 
-  void changeSelectedValue(int id) {
-    for (int i = 0; i < _selectedList.length; i++) {
-      if (_selectedList[i].id == id) {
-        _selectedList[i].selected = !_selectedList[i].selected;
-        _selectedList[i].selected ? _totalTypeSelected++ : _totalTypeSelected--;
+  void changeSelectedValue(String id) {
+    for (int i = 0; i < _typeSelectList.length; i++) {
+      if (_typeSelectList[i].id == id) {
+        _typeSelectList[i].selected = !_typeSelectList[i].selected;
+        _typeSelectList[i].selected
+            ? _totalTypeSelected++
+            : _totalTypeSelected--;
       }
     }
     notifyListeners();

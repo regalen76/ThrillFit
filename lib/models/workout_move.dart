@@ -1,6 +1,12 @@
 class WorkoutMove {
-  String? moveName;
-  String? movementImage;
+  final String id;
+  final String? moveName;
+  final String? movementImage;
+  bool selected;
 
-  WorkoutMove({this.moveName, this.movementImage});
+  WorkoutMove(
+      {required this.id,
+      this.moveName,
+      this.movementImage,
+      this.selected = false});
 }

@@ -1,7 +1,7 @@
 class GoalTypeSelected {
-  int id;
-  String? goalTypeName;
-  String? goalTypeImage;
+  final String id;
+  final String? goalTypeName;
+  final String? goalTypeImage;
   bool selected;
 
   GoalTypeSelected(

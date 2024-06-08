@@ -1,11 +1,10 @@
 import 'package:thrill_fit/models/models.dart';
 
 class TrainingSetSelected {
-  int id;
-  String? trainingSetName;
-  String? imageType;
-  List<WorkoutMove>? workoutMoves;
-  bool needEquipment;
+  final String id;
+  final String? trainingSetName;
+  final String? imageType;
+  final List<WorkoutMove>? workoutMoves;
   bool selected;
 
   TrainingSetSelected(
@@ -13,6 +12,5 @@ class TrainingSetSelected {
       this.trainingSetName,
       this.imageType,
       this.workoutMoves,
-      this.needEquipment = false,
       this.selected = false});
 }

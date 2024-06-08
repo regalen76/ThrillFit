@@ -5,47 +5,56 @@ class TrainingSetListViewModel extends BaseViewModel {
   List<TrainingSetSelected> _trainingSetsDummy = [];
   List<TrainingSetSelected> get trainingSetsDummy => _trainingSetsDummy;
 
+  int _totalSetSelected = 0;
+  int get totalSetSelected => _totalSetSelected;
+
+  bool _isValidNextPage = false;
+  bool get isValidNextPage => _isValidNextPage;
+
+  List<WorkoutMove> _movesFromSelectedSets = [];
+  List<WorkoutMove> get movesFromSelectedSets => _movesFromSelectedSets;
+
   void initialize() async {
     setBusy(true);
 
     //Dummy Data
     _trainingSetsDummy = [
       TrainingSetSelected(
-          id: 0,
+          id: 'set1',
           trainingSetName: 'Abs Beginner',
           workoutMoves: [
             WorkoutMove(
+                id: 'move1',
                 moveName: '10 knee-to-elbows',
-                movementImage: 'assets/images/crunches.glb'),
+                movementImage:
+                    'https://firebasestorage.googleapis.com/v0/b/thrillfit-e1100.appspot.com/o/workout%2Fcrunches.glb?alt=media&token=b1642808-5cf3-4594-9a46-2341807027af'),
             WorkoutMove(
+                id: 'move2',
                 moveName: '10 flutter kicks',
-                movementImage: 'assets/images/crunches.glb'),
-            WorkoutMove(moveName: '10 scissors'),
-            WorkoutMove(moveName: '10 the hundreds'),
-            WorkoutMove(moveName: '10 reverse crunches'),
-            WorkoutMove(moveName: '10 sitting twists'),
-            WorkoutMove(moveName: '10 scissors'),
-            WorkoutMove(moveName: '10 the hundreds'),
-            WorkoutMove(moveName: '10 reverse crunches'),
-            WorkoutMove(moveName: '10 sitting twists'),
+                movementImage:
+                    'https://firebasestorage.googleapis.com/v0/b/thrillfit-e1100.appspot.com/o/workout%2Fcrunches.glb?alt=media&token=b1642808-5cf3-4594-9a46-2341807027af'),
+            WorkoutMove(id: 'move3', moveName: '10 scissors'),
+            WorkoutMove(id: 'move4', moveName: '10 the hundreds'),
+            WorkoutMove(id: 'move5', moveName: '10 reverse crunches'),
+            WorkoutMove(id: 'move6', moveName: '10 sitting twists'),
           ]),
       TrainingSetSelected(
-          id: 1,
+          id: 'set2',
           trainingSetName: 'Shoulder Beginner',
           workoutMoves: [
-            WorkoutMove(moveName: '20 chest expansions'),
-            WorkoutMove(moveName: '10 side arm raises'),
-            WorkoutMove(moveName: '10 arm chops'),
-            WorkoutMove(moveName: '10 arm scissors'),
+            WorkoutMove(id: 'move7', moveName: '20 chest expansions'),
+            WorkoutMove(id: 'move8', moveName: '10 side arm raises'),
+            WorkoutMove(id: 'move9', moveName: '10 arm chops'),
+            WorkoutMove(id: 'move10', moveName: '10 arm scissors'),
           ]),
       TrainingSetSelected(
-          id: 2,
+          id: 'set3',
           trainingSetName: 'Chest Advance',
           workoutMoves: [
-            WorkoutMove(moveName: '10 burpees'),
-            WorkoutMove(moveName: '10 regular pushup'),
-            WorkoutMove(moveName: '10 decline pushup'),
-            WorkoutMove(moveName: '10 incline pushup'),
+            WorkoutMove(id: 'move11', moveName: '10 burpees'),
+            WorkoutMove(id: 'move12', moveName: '10 regular pushup'),
+            WorkoutMove(id: 'move13', moveName: '10 decline pushup'),
+            WorkoutMove(id: 'move14', moveName: '10 incline pushup'),
           ])
     ];
 
@@ -53,10 +62,13 @@ class TrainingSetListViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void changeSelectedValue(int id) {
+  void changeSelectedValue(String id, value) {
     for (int i = 0; i < _trainingSetsDummy.length; i++) {
       if (_trainingSetsDummy[i].id == id) {
-        _trainingSetsDummy[i].selected = !_trainingSetsDummy[i].selected;
+        _trainingSetsDummy[i].selected = value;
+        _trainingSetsDummy[i].selected
+            ? _totalSetSelected++
+            : _totalSetSelected--;
       }
     }
     notifyListeners();
@@ -72,5 +84,32 @@ class TrainingSetListViewModel extends BaseViewModel {
     }
 
     return value;
+  }
+
+  void validateInput() {
+    if (_totalSetSelected != 0) {
+      _isValidNextPage = true;
+    } else {
+      _isValidNextPage = false;
+    }
+
+    notifyListeners();
+  }
+
+  void combineSelectedWorkoutMoves() {
+    _movesFromSelectedSets = [];
+
+    for (int i = 0; i < _trainingSetsDummy.length; i++) {
+      if (_trainingSetsDummy[i].selected &&
+          _trainingSetsDummy[i].workoutMoves != null) {
+        for (int j = 0; j < _trainingSetsDummy[i].workoutMoves!.length; j++) {
+          if (_trainingSetsDummy[i].workoutMoves?[j] != null) {
+            _movesFromSelectedSets.add(_trainingSetsDummy[i].workoutMoves![j]);
+          }
+        }
+      }
+    }
+
+    notifyListeners();
   }
 }

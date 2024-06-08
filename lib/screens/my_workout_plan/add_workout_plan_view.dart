@@ -113,8 +113,10 @@ class AddWorkoutPlanView extends StatelessWidget {
                                     var end = start + 4;
                                     return carouselPage(
                                         vm,
-                                        vm.selectedList.sublist(start,
-                                            end.clamp(0, vm.goalTypes.length)));
+                                        vm.typeSelectList.sublist(
+                                            start,
+                                            end.clamp(
+                                                0, vm.typeSelectList.length)));
                                   },
                                 ),
                               ),
@@ -149,7 +151,7 @@ class AddWorkoutPlanView extends StatelessWidget {
                                 padding: const EdgeInsets.only(bottom: 6),
                                 child: Center(
                                   child: Text(
-                                    "${vm.totalTypeSelected} type(s) selected",
+                                    "${vm.totalTypeSelected} of ${vm.typeSelectList.length} type(s) selected",
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold),
                                   ),
