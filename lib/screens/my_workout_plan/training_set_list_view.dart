@@ -2,12 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:stacked/stacked.dart';
+import 'package:thrill_fit/models/models.dart';
 import 'package:thrill_fit/screens/my_workout_plan/my_workout_move_selection_view.dart';
 import 'package:thrill_fit/screens/my_workout_plan/training_set_list_view_model.dart';
 import 'package:thrill_fit/screens/workout_moves/workout_move_list_view.dart';
 
 class TrainingSetListView extends StatelessWidget {
-  const TrainingSetListView({super.key});
+  const TrainingSetListView(
+      {required this.selectedGoal,
+      required this.titleInput,
+      required this.descInput,
+      super.key});
+
+  final List<GoalTypeSelected> selectedGoal;
+  final String titleInput;
+  final String descInput;
 
   @override
   Widget build(BuildContext context) {
@@ -270,6 +279,8 @@ class TrainingSetListView extends StatelessWidget {
                                                       MyWorkoutMoveSelectionView(
                                                         movesFromSets: vm
                                                             .movesFromSelectedSets,
+                                                        titleInput: titleInput,
+                                                        descInput: descInput,
                                                       )));
                                         } else {
                                           showDialog(

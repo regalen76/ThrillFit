@@ -5,12 +5,19 @@ import 'package:model_viewer_plus/model_viewer_plus.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/models.dart';
+import 'package:thrill_fit/screens/my_workout_plan/create_workout_plan_summary_view.dart';
 import 'package:thrill_fit/screens/my_workout_plan/my_workout_move_selection_view_model.dart';
 
 class MyWorkoutMoveSelectionView extends StatelessWidget {
-  const MyWorkoutMoveSelectionView({required this.movesFromSets, super.key});
+  const MyWorkoutMoveSelectionView(
+      {required this.movesFromSets,
+      required this.titleInput,
+      required this.descInput,
+      super.key});
 
   final List<WorkoutMove> movesFromSets;
+  final String titleInput;
+  final String descInput;
 
   @override
   Widget build(BuildContext context) {
@@ -514,7 +521,19 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                               flex: 2,
                               child: TextButton(
                                 onPressed: () {
-                                  vm.validateFrequency();
+                                  if (vm.validateFrequency()) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                CreateWorkoutPlanSummary(
+                                                  titleInput: titleInput,
+                                                  descInput: descInput,
+                                                  frequencyInput: int.parse(vm
+                                                      .frequencyController
+                                                      .text),
+                                                )));
+                                  }
                                 },
                                 style: TextButton.styleFrom(
                                   backgroundColor:

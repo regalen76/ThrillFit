@@ -45,6 +45,12 @@ class MyWorkoutMoveSelectionViewModel extends BaseViewModel {
       );
     }
 
+    for (int i = 0; i < _workoutMoves.length; i++) {
+      if (_workoutMoves[i].selected) {
+        _totalMoveSelected++;
+      }
+    }
+
     var firstMove = _workoutMoves.firstOrNull;
 
     setNameAndModel(firstMove?.moveName ?? '-', firstMove?.movementImage ?? '');
@@ -124,9 +130,11 @@ class MyWorkoutMoveSelectionViewModel extends BaseViewModel {
     return null;
   }
 
-  void validateFrequency() {
-    _formKey.currentState!.validate();
-
-    notifyListeners();
+  bool validateFrequency() {
+    if (_formKey.currentState!.validate()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

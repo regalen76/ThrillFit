@@ -45,6 +45,7 @@ class AddWorkoutPlanView extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(top: 24),
                                 child: TextFormField(
+                                  controller: vm.titleController,
                                   maxLength: 50,
                                   maxLines: 3,
                                   minLines: 1,
@@ -72,6 +73,7 @@ class AddWorkoutPlanView extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(top: 24),
                                 child: TextFormField(
+                                  controller: vm.descController,
                                   maxLength: 150,
                                   maxLines: 3,
                                   minLines: 1,
@@ -197,9 +199,18 @@ class AddWorkoutPlanView extends StatelessWidget {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (BuildContext
-                                                          context) =>
-                                                      const TrainingSetListView()));
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          TrainingSetListView(
+                                                            selectedGoal: vm
+                                                                .allSelectedGoalType(),
+                                                            titleInput: vm
+                                                                .titleController
+                                                                .text,
+                                                            descInput: vm
+                                                                .descController
+                                                                .text,
+                                                          )));
                                         } else {
                                           showDialog(
                                               context: context,

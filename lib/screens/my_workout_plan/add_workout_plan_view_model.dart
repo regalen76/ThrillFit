@@ -30,6 +30,13 @@ class AddWorkoutPlanViewModel extends BaseViewModel {
   bool _isValidSelectedType = false;
   bool get isValidSelectedType => _isValidSelectedType;
 
+  final TextEditingController _titleController =
+      TextEditingController(text: '');
+  TextEditingController get titleController => _titleController;
+
+  final TextEditingController _descController = TextEditingController(text: '');
+  TextEditingController get descController => _descController;
+
   void initialize() async {
     setBusy(true);
     _goalTypes = [
@@ -124,5 +131,17 @@ class AddWorkoutPlanViewModel extends BaseViewModel {
     }
 
     return message;
+  }
+
+  List<GoalTypeSelected> allSelectedGoalType() {
+    List<GoalTypeSelected> listSelected = [];
+
+    for (int i = 0; i < _typeSelectList.length; i++) {
+      if (_typeSelectList[i].selected) {
+        listSelected.add(_typeSelectList[i]);
+      }
+    }
+
+    return listSelected;
   }
 }
