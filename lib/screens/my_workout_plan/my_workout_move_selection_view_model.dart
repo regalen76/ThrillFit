@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/workout_move.dart';
 import 'package:uuid/uuid.dart';
@@ -18,12 +19,22 @@ class MyWorkoutMoveSelectionViewModel extends BaseViewModel {
   String _workoutModel = '';
   String get workoutModel => _workoutModel;
 
-  int _totalSetSelected = 0;
-  int get totalSetSelected => _totalSetSelected;
+  int _totalMoveSelected = 0;
+  int get totalMoveSelected => _totalMoveSelected;
+
+  bool _isValidSelection = false;
+  bool get isValidSelection => _isValidSelection;
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> get formKey => _formKey;
+
+  final _frequencyController = TextEditingController(text: '0');
+  TextEditingController get frequencyController => _frequencyController;
 
   void initialize() async {
     setBusy(true);
 
+    _workoutMoves = [];
     for (int i = 0; i < movesFromSets.length; i++) {
       _workoutMoves.add(WorkoutMove(
           id: movesFromSets[i].id,
@@ -57,7 +68,7 @@ class MyWorkoutMoveSelectionViewModel extends BaseViewModel {
     for (int i = 0; i < _workoutMoves.length; i++) {
       if (_workoutMoves[i].id == id) {
         _workoutMoves[i].selected = value;
-        _workoutMoves[i].selected ? _totalSetSelected++ : _totalSetSelected--;
+        _workoutMoves[i].selected ? _totalMoveSelected++ : _totalMoveSelected--;
       }
     }
     notifyListeners();
@@ -87,6 +98,32 @@ class MyWorkoutMoveSelectionViewModel extends BaseViewModel {
             movementImage: data.movementImage));
 
     _workoutMoves;
+    notifyListeners();
+  }
+
+  void validateInput() {
+    if (_totalMoveSelected != 0) {
+      _isValidSelection = true;
+    } else {
+      _isValidSelection = false;
+    }
+
+    notifyListeners();
+  }
+
+  String? checkForm(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Field can`t be empty';
+    }
+    if (int.parse(value) < 1) {
+      return 'Value should be more than 0';
+    }
+    return null;
+  }
+
+  void validateFrequency() {
+    _formKey.currentState!.validate();
+
     notifyListeners();
   }
 }

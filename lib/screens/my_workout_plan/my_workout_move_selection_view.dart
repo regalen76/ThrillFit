@@ -1,8 +1,5 @@
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
 import 'package:onboarding/onboarding.dart';
@@ -205,7 +202,55 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                                                             )),
                                                         PopupMenuItem(
                                                             onTap: () {
-                                                              vm.deleteMoves(i);
+                                                              showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (BuildContext
+                                                                          ctx) {
+                                                                    return AlertDialog(
+                                                                      backgroundColor:
+                                                                          background,
+                                                                      title: const Text(
+                                                                          'Delete Confirmation'),
+                                                                      content:
+                                                                          const Text(
+                                                                              'Are you sure want to delete this move?'),
+                                                                      actions: [
+                                                                        TextButton(
+                                                                          onPressed:
+                                                                              () {
+                                                                            Navigator.of(context).pop();
+                                                                          },
+                                                                          child:
+                                                                              const Text('Close'),
+                                                                        ),
+                                                                        TextButton(
+                                                                          onPressed:
+                                                                              () {
+                                                                            vm.deleteMoves(i);
+                                                                            Navigator.of(context).pop();
+
+                                                                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                                                                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                                                                duration: Duration(seconds: 3),
+                                                                                backgroundColor: Colors.green,
+                                                                                showCloseIcon: true,
+                                                                                content: Text(
+                                                                                  'Success delete workout move.',
+                                                                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                                                                )));
+                                                                          },
+                                                                          child:
+                                                                              const Text(
+                                                                            'Delete',
+                                                                            style:
+                                                                                TextStyle(color: Colors.red),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    );
+                                                                  });
                                                             },
                                                             child: Row(
                                                               children: [
@@ -226,6 +271,28 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                                                                   i,
                                                                   vm.workoutMoves[
                                                                       i]);
+
+                                                              ScaffoldMessenger
+                                                                      .of(context)
+                                                                  .hideCurrentSnackBar();
+                                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                                  const SnackBar(
+                                                                      duration: Duration(
+                                                                          seconds:
+                                                                              3),
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .green,
+                                                                      showCloseIcon:
+                                                                          true,
+                                                                      content:
+                                                                          Text(
+                                                                        'Success copy workout move.',
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                            fontSize: 16),
+                                                                      )));
                                                             },
                                                             child: Row(
                                                               children: [
@@ -266,7 +333,7 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                                 padding: const EdgeInsets.only(bottom: 6),
                                 child: Center(
                                   child: Text(
-                                    "${vm.totalSetSelected} of ${vm.workoutMoves.length} move(s) selected",
+                                    "${vm.totalMoveSelected} of ${vm.workoutMoves.length} move(s) selected",
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -297,9 +364,36 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                                   Expanded(
                                     flex: 2,
                                     child: TextButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        vm.validateInput();
+
+                                        if (vm.isValidSelection) {
+                                          frequencyInputModal(context, vm);
+                                        } else {
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext ctx) {
+                                                return AlertDialog(
+                                                  backgroundColor: background,
+                                                  title: const Text(
+                                                      'Error Validation'),
+                                                  content: const Text(
+                                                      'Please select at least one workout move.'),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                      child:
+                                                          const Text('Close'),
+                                                    ),
+                                                  ],
+                                                );
+                                              });
+                                        }
+                                      },
                                       style: TextButton.styleFrom(
-                                        fixedSize: const Size.fromRadius(10),
                                         backgroundColor:
                                             Colors.blue, // Background Color
                                       ),
@@ -319,6 +413,89 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                     ],
                   ),
           );
+        });
+  }
+
+  Future frequencyInputModal(
+      BuildContext context, MyWorkoutMoveSelectionViewModel vm) {
+    return showModalBottomSheet(
+        context: context,
+        builder: (BuildContext ctx) {
+          return Container(
+              height: 200,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+              ),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                child: Form(
+                  key: vm.formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: vm.frequencyController,
+                        cursorColor: Colors.white,
+                        maxLength: 2,
+                        decoration: const InputDecoration(
+                            labelText: 'Frequency',
+                            labelStyle: TextStyle(
+                              color: Colors.white,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
+                              borderSide:
+                                  BorderSide(width: 1, color: Colors.blue),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
+                              borderSide:
+                                  BorderSide(width: 2, color: Colors.blue),
+                            )),
+                        validator: vm.checkForm,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                              child: Container(),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: TextButton(
+                                onPressed: () {
+                                  vm.validateFrequency();
+                                },
+                                style: TextButton.styleFrom(
+                                  backgroundColor:
+                                      Colors.blue, // Background Color
+                                ),
+                                child: const Text(
+                                  'Done',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ));
         });
   }
 }

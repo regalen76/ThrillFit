@@ -1,6 +1,7 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
+import 'package:onboarding/onboarding.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/models.dart';
 import 'package:thrill_fit/screens/my_workout_plan/add_workout_plan_view_model.dart';
@@ -44,6 +45,9 @@ class AddWorkoutPlanView extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(top: 24),
                                 child: TextFormField(
+                                  maxLength: 50,
+                                  maxLines: 3,
+                                  minLines: 1,
                                   cursorColor: Colors.white,
                                   decoration: const InputDecoration(
                                       labelText: 'Workout Plan Title',
@@ -68,6 +72,9 @@ class AddWorkoutPlanView extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(top: 24),
                                 child: TextFormField(
+                                  maxLength: 150,
+                                  maxLines: 3,
+                                  minLines: 1,
                                   cursorColor: Colors.white,
                                   decoration: const InputDecoration(
                                       labelText: 'Description',
@@ -198,8 +205,7 @@ class AddWorkoutPlanView extends StatelessWidget {
                                               context: context,
                                               builder: (BuildContext ctx) {
                                                 return AlertDialog(
-                                                  backgroundColor:
-                                                      Colors.grey.shade700,
+                                                  backgroundColor: background,
                                                   title: const Text(
                                                       'Error Validation'),
                                                   content: Text(
@@ -219,7 +225,6 @@ class AddWorkoutPlanView extends StatelessWidget {
                                         }
                                       },
                                       style: TextButton.styleFrom(
-                                        fixedSize: const Size.fromRadius(10),
                                         backgroundColor:
                                             Colors.blue, // Background Color
                                       ),
