@@ -36,10 +36,13 @@ class MyWorkoutMoveSelectionViewModel extends BaseViewModel {
 
     _workoutMoves = [];
     for (int i = 0; i < movesFromSets.length; i++) {
-      _workoutMoves.add(WorkoutMove(
-          id: movesFromSets[i].id,
-          moveName: movesFromSets[i].moveName,
-          movementImage: movesFromSets[i].movementImage));
+      _workoutMoves.add(
+        WorkoutMove(
+            id: movesFromSets[i].id,
+            moveName: movesFromSets[i].moveName,
+            movementImage: movesFromSets[i].movementImage,
+            selected: true),
+      );
     }
 
     var firstMove = _workoutMoves.firstOrNull;

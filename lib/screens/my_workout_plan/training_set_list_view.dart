@@ -17,10 +17,49 @@ class TrainingSetListView extends StatelessWidget {
         builder: (context, vm, child) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Add Workout Plan'),
+              title: const Text('Select Training Sets'),
               backgroundColor: Colors.black,
               automaticallyImplyLeading: false,
-              actions: [],
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext ctx) {
+                          return AlertDialog(
+                            backgroundColor: background,
+                            title: const Text('Cancel Confirmation'),
+                            content: const Text(
+                                'Are you sure you want to cancel the workout plan creation?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('Close'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text(
+                                  'Confirm',
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              ),
+                            ],
+                          );
+                        });
+                  },
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+              ],
             ),
             body: vm.isBusy
                 ? const Center(
