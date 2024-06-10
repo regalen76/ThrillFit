@@ -78,6 +78,11 @@ class ProfileCreateView extends StatelessWidget {
                                                 )),
                                             Expanded(
                                               child: TextFormField(
+                                                onTapOutside: (event) {
+                                                  FocusManager
+                                                      .instance.primaryFocus
+                                                      ?.unfocus();
+                                                },
                                                 textAlign: TextAlign.end,
                                                 style: const TextStyle(
                                                     fontSize: 18,
@@ -102,6 +107,11 @@ class ProfileCreateView extends StatelessWidget {
                                                 )),
                                             Expanded(
                                               child: TextFormField(
+                                                onTapOutside: (event) {
+                                                  FocusManager
+                                                      .instance.primaryFocus
+                                                      ?.unfocus();
+                                                },
                                                 textAlign: TextAlign.end,
                                                 keyboardType:
                                                     TextInputType.number,
@@ -219,6 +229,11 @@ class ProfileCreateView extends StatelessWidget {
                                                 )),
                                             Expanded(
                                               child: TextFormField(
+                                                onTapOutside: (event) {
+                                                  FocusManager
+                                                      .instance.primaryFocus
+                                                      ?.unfocus();
+                                                },
                                                 textAlign: TextAlign.end,
                                                 keyboardType:
                                                     TextInputType.number,
@@ -246,6 +261,11 @@ class ProfileCreateView extends StatelessWidget {
                                                 )),
                                             Expanded(
                                               child: TextFormField(
+                                                onTapOutside: (event) {
+                                                  FocusManager
+                                                      .instance.primaryFocus
+                                                      ?.unfocus();
+                                                },
                                                 textAlign: TextAlign.end,
                                                 keyboardType:
                                                     TextInputType.number,
@@ -273,6 +293,11 @@ class ProfileCreateView extends StatelessWidget {
                                                 )),
                                             Expanded(
                                               child: TextFormField(
+                                                onTapOutside: (event) {
+                                                  FocusManager
+                                                      .instance.primaryFocus
+                                                      ?.unfocus();
+                                                },
                                                 textAlign: TextAlign.end,
                                                 keyboardType:
                                                     TextInputType.number,

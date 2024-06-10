@@ -55,6 +55,12 @@ class LoginPageState extends State<LoginPage> {
 
   Widget entryField(String title, TextEditingController controller) {
     return TextField(
+      autocorrect: false,
+      onTapOutside: (event) {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      enableSuggestions: false,
+      keyboardType: TextInputType.visiblePassword,
       controller: controller,
       style: const TextStyle(color: Colors.white, fontSize: 22),
       decoration: InputDecoration(
@@ -67,6 +73,9 @@ class LoginPageState extends State<LoginPage> {
     return TextField(
       controller: controller,
       obscureText: true,
+      onTapOutside: (event) {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       enableSuggestions: false,
       autocorrect: false,
       style: const TextStyle(color: Colors.white, fontSize: 22),
@@ -127,30 +136,32 @@ class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: const Text('Authentication'),
       ),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 80),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            AnimatedSwitcher(
-              duration: const Duration(seconds: 1),
-              child: Icon(
-                Icons.account_circle,
-                key: ValueKey<bool>(isLogin),
-                color: isLogin ? Colors.blue : Colors.deepPurpleAccent,
-                size: 250,
+      body: SingleChildScrollView(
+        physics: const ClampingScrollPhysics(),
+        child: Container(
+          padding: const EdgeInsets.only(left: 20, right: 20, top: 80),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              AnimatedSwitcher(
+                duration: const Duration(seconds: 1),
+                child: Icon(
+                  Icons.account_circle,
+                  key: ValueKey<bool>(isLogin),
+                  color: isLogin ? Colors.blue : Colors.deepPurpleAccent,
+                  size: 250,
+                ),
               ),
-            ),
-            entryField('email', controllerEmail),
-            entryFieldPassword('password', controllerPassword),
-            submitButton(),
-            loginOrRegisterButton(),
-          ],
+              entryField('email', controllerEmail),
+              entryFieldPassword('password', controllerPassword),
+              submitButton(),
+              loginOrRegisterButton(),
+            ],
+          ),
         ),
       ),
     );

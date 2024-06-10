@@ -17,16 +17,13 @@ class FeedsCreateModel extends BaseViewModel {
   List<XFile> imageFileList = [];
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController commentFieldController = TextEditingController();
-  bool buttonEnabled = false;
 
   User? get getUser => user;
   List<XFile> get getImageFileList => imageFileList;
   GlobalKey<FormState> get getFormKey => formKey;
   TextEditingController get getCommentFieldController => commentFieldController;
-  bool get getButtonEnabled => buttonEnabled;
 
   Future<void> initState() async {
-    commentFieldController.addListener(validateButton);
     await pickImages();
   }
 
@@ -83,6 +80,7 @@ class FeedsCreateModel extends BaseViewModel {
 
     if (imagePaths.isNotEmpty) {
       uploadPostData(imagePaths);
+      notifyListeners();
     }
   }
 
@@ -91,15 +89,5 @@ class FeedsCreateModel extends BaseViewModel {
       return 'Field can`t be empty';
     }
     return null;
-  }
-
-  void validateButton() {
-    if (formKey.currentState != null) {
-      formKey.currentState!.validate();
-      buttonEnabled = commentFieldController.text.isNotEmpty;
-    } else {
-      buttonEnabled = false;
-    }
-    notifyListeners();
   }
 }
