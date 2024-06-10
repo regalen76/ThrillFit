@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/models.dart';
+import 'package:thrill_fit/repository/workout_plan_repo.dart';
 
 class AddWorkoutPlanViewModel extends BaseViewModel {
-  List<String> _goalTypes = [];
-  List<String> get goalTypes => _goalTypes;
+  List<GoalTypeData> _goalTypes = [];
+  List<GoalTypeData> get goalTypes => _goalTypes;
 
   List<GoalTypeSelected> _typeSelectList = [];
   List<GoalTypeSelected> get typeSelectList => _typeSelectList;
@@ -39,24 +40,15 @@ class AddWorkoutPlanViewModel extends BaseViewModel {
 
   void initialize() async {
     setBusy(true);
-    _goalTypes = [
-      'Shoulder',
-      'Chest',
-      'Biceps',
-      'Triceps',
-      'Forearms',
-      'Buttocks',
-      'Upper Leg',
-      'Lower Leg',
-      'Abs',
-      'Upper Back',
-      'Lower Back'
-    ];
+    _goalTypes = await WorkoutPlanRepo().getGoalType();
 
     _typeSelectList = [];
     for (int i = 0; i < _goalTypes.length; i++) {
-      _typeSelectList
-          .add(GoalTypeSelected(id: 'type$i', goalTypeName: _goalTypes[i]));
+      _typeSelectList.add(GoalTypeSelected(
+        id: 'type$i',
+        goalTypeName: _goalTypes[i].goalTypeName,
+        goalTypeImage: _goalTypes[i].goalTypeImage,
+      ));
     }
 
     carouselTypePage();

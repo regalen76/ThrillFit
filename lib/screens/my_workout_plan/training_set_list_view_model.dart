@@ -27,12 +27,12 @@ class TrainingSetListViewModel extends BaseViewModel {
                 id: 'move1',
                 moveName: '10 knee-to-elbows',
                 movementImage:
-                    'https://firebasestorage.googleapis.com/v0/b/thrillfit-e1100.appspot.com/o/workout%2Fcrunches.glb?alt=media&token=b1642808-5cf3-4594-9a46-2341807027af'),
+                    'https://firebasestorage.googleapis.com/v0/b/thrillfit-e1100.appspot.com/o/workout%2Fcrunches.glb?alt=media&token=21a505ea-b9f3-4c78-95d1-1d46b0328cde'),
             WorkoutMove(
                 id: 'move2',
                 moveName: '10 flutter kicks',
                 movementImage:
-                    'https://firebasestorage.googleapis.com/v0/b/thrillfit-e1100.appspot.com/o/workout%2Fcrunches.glb?alt=media&token=b1642808-5cf3-4594-9a46-2341807027af'),
+                    'https://firebasestorage.googleapis.com/v0/b/thrillfit-e1100.appspot.com/o/workout%2Fcrunches.glb?alt=media&token=21a505ea-b9f3-4c78-95d1-1d46b0328cde'),
             WorkoutMove(id: 'move3', moveName: '10 scissors'),
             WorkoutMove(id: 'move4', moveName: '10 the hundreds'),
             WorkoutMove(id: 'move5', moveName: '10 reverse crunches'),
