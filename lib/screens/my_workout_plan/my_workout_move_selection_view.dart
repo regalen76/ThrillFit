@@ -523,16 +523,18 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                               child: TextButton(
                                 onPressed: () {
                                   if (vm.validateFrequency()) {
+                                    Navigator.of(context).pop();
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (BuildContext context) =>
-                                                CreateWorkoutPlanSummary(
+                                                CreateWorkoutPlanSummaryView(
                                                   titleInput: titleInput,
                                                   descInput: descInput,
                                                   frequencyInput: int.parse(vm
                                                       .frequencyController
                                                       .text),
+                                                  savedMove: vm.workoutMoves,
                                                 )));
                                   }
                                 },

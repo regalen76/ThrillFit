@@ -5,7 +5,7 @@ import 'package:thrill_fit/models/models.dart';
 import 'package:thrill_fit/repository/workout_plan_repo.dart';
 
 class TrainingSetListViewModel extends BaseViewModel {
-  List<GoalTypeSelected> selectedGoal;
+  final List<GoalTypeSelected> selectedGoal;
   TrainingSetListViewModel({required this.selectedGoal});
 
   Logger logger = Logger();

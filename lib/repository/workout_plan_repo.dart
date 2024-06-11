@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:thrill_fit/models/models.dart';
+import 'package:uuid/uuid.dart';
 
 class WorkoutPlanRepo {
   final CollectionReference goalTypesCollection =
@@ -10,6 +11,12 @@ class WorkoutPlanRepo {
 
   final CollectionReference trainingSetMovementsCollection =
       FirebaseFirestore.instance.collection('training_set_movements');
+
+  final CollectionReference workoutPlanCollection =
+      FirebaseFirestore.instance.collection('workout_plans');
+
+  final CollectionReference workoutPlanMoveSetCollection =
+      FirebaseFirestore.instance.collection('workout_plan_movesets');
 
   Future<List<GoalTypeData>> getGoalType() async {
     try {
@@ -74,6 +81,38 @@ class WorkoutPlanRepo {
       return trainingSetList;
     } catch (e) {
       return [];
+    }
+  }
+
+  Future<bool> createWorkoutPlan(
+      String userId,
+      String title,
+      String description,
+      int frequency,
+      List<WorkoutMoveSelected> movesInput) async {
+    try {
+      var workoutPlanId = const Uuid().v4();
+      await workoutPlanCollection.doc(workoutPlanId).set(InsertWorkoutPlanModel(
+              userId: userId,
+              title: title,
+              description: description,
+              frequency: frequency,
+              lastUpdated: DateTime.now())
+          .toJson());
+
+      for (int i = 0; i < movesInput.length; i++) {
+        await workoutPlanMoveSetCollection.doc(const Uuid().v4()).set(
+            InsertWorkoutPlanMoveModel(
+                    workoutPlanId: workoutPlanId,
+                    movementName: movesInput[i].movementName ?? '',
+                    movementImage: movesInput[i].movementImage ?? '',
+                    viewOrder: i + 1)
+                .toJson());
+      }
+
+      return true;
+    } catch (e) {
+      return false;
     }
   }
 }

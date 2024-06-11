@@ -4,7 +4,7 @@ import 'package:thrill_fit/models/workout_move_selected.dart';
 import 'package:uuid/uuid.dart';
 
 class MyWorkoutMoveSelectionViewModel extends BaseViewModel {
-  List<WorkoutMoveSelected> movesFromSets;
+  final List<WorkoutMoveSelected> movesFromSets;
   MyWorkoutMoveSelectionViewModel({required this.movesFromSets});
 
   List<WorkoutMoveSelected> _workoutMoves = [];
