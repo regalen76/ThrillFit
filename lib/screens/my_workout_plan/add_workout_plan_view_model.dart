@@ -1,9 +1,12 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/models.dart';
 import 'package:thrill_fit/repository/workout_plan_repo.dart';
 
 class AddWorkoutPlanViewModel extends BaseViewModel {
+  Logger logger = Logger();
   List<GoalTypeData> _goalTypes = [];
   List<GoalTypeData> get goalTypes => _goalTypes;
 
@@ -44,16 +47,30 @@ class AddWorkoutPlanViewModel extends BaseViewModel {
 
     _typeSelectList = [];
     for (int i = 0; i < _goalTypes.length; i++) {
+      var imageUrl = await getGoalTypeImage(_goalTypes[i].goalTypeImage);
+
       _typeSelectList.add(GoalTypeSelected(
-        id: 'type$i',
+        id: _goalTypes[i].id,
         goalTypeName: _goalTypes[i].goalTypeName,
-        goalTypeImage: _goalTypes[i].goalTypeImage,
+        goalTypeImage: imageUrl,
       ));
     }
 
     carouselTypePage();
     setBusy(false);
     notifyListeners();
+  }
+
+  Future<String> getGoalTypeImage(String goalTypeImageName) async {
+    var storageRef =
+        FirebaseStorage.instance.ref().child('goal-types/$goalTypeImageName');
+
+    try {
+      return await storageRef.getDownloadURL();
+    } catch (e) {
+      logger.e("Failed to get goal type icon, the error: $e");
+      return '';
+    }
   }
 
   void carouselTypePage() {

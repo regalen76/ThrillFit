@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:thrill_fit/models/workout_move.dart';
+import 'package:thrill_fit/models/workout_move_selected.dart';
 import 'package:uuid/uuid.dart';
 
 class MyWorkoutMoveSelectionViewModel extends BaseViewModel {
-  List<WorkoutMove> movesFromSets;
+  List<WorkoutMoveSelected> movesFromSets;
   MyWorkoutMoveSelectionViewModel({required this.movesFromSets});
 
-  List<WorkoutMove> _workoutMoves = [];
-  List<WorkoutMove> get workoutMoves => _workoutMoves;
+  List<WorkoutMoveSelected> _workoutMoves = [];
+  List<WorkoutMoveSelected> get workoutMoves => _workoutMoves;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -37,9 +37,9 @@ class MyWorkoutMoveSelectionViewModel extends BaseViewModel {
     _workoutMoves = [];
     for (int i = 0; i < movesFromSets.length; i++) {
       _workoutMoves.add(
-        WorkoutMove(
+        WorkoutMoveSelected(
             id: movesFromSets[i].id,
-            moveName: movesFromSets[i].moveName,
+            movementName: movesFromSets[i].movementName,
             movementImage: movesFromSets[i].movementImage,
             selected: true),
       );
@@ -53,7 +53,8 @@ class MyWorkoutMoveSelectionViewModel extends BaseViewModel {
 
     var firstMove = _workoutMoves.firstOrNull;
 
-    setNameAndModel(firstMove?.moveName ?? '-', firstMove?.movementImage ?? '');
+    setNameAndModel(
+        firstMove?.movementName ?? '-', firstMove?.movementImage ?? '');
 
     setBusy(false);
     notifyListeners();
@@ -97,13 +98,13 @@ class MyWorkoutMoveSelectionViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void duplicateMoves(int index, WorkoutMove data) {
+  void duplicateMoves(int index, WorkoutMoveSelected data) {
     String uniqueId = const Uuid().v4();
     _workoutMoves.insert(
         index,
-        WorkoutMove(
+        WorkoutMoveSelected(
             id: uniqueId,
-            moveName: data.moveName,
+            movementName: data.movementName,
             movementImage: data.movementImage));
 
     _workoutMoves;

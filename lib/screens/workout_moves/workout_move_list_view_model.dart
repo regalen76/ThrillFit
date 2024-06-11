@@ -19,7 +19,8 @@ class WorkoutMoveListViewModel extends BaseViewModel {
 
     var firstMove = trainingSet.workoutMoves?.firstOrNull;
 
-    setNameAndModel(firstMove?.moveName ?? '-', firstMove?.movementImage ?? '');
+    setNameAndModel(
+        firstMove?.movementName ?? '-', firstMove?.movementImage ?? '');
 
     setBusy(false);
     notifyListeners();

@@ -120,7 +120,7 @@ class WorkoutMoveListView extends StatelessWidget {
                                               ),
                                               title: Text(
                                                 vm.trainingSet.workoutMoves?[i]
-                                                        .moveName ??
+                                                        .movementName ??
                                                     '-',
                                                 style: const TextStyle(
                                                   fontSize: 16,
@@ -142,7 +142,7 @@ class WorkoutMoveListView extends StatelessWidget {
                                                     vm
                                                             .trainingSet
                                                             .workoutMoves?[i]
-                                                            .moveName ??
+                                                            .movementName ??
                                                         '-',
                                                     vm
                                                             .trainingSet

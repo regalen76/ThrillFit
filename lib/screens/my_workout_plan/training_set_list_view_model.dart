@@ -1,9 +1,23 @@
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/models.dart';
+import 'package:thrill_fit/repository/workout_plan_repo.dart';
 
 class TrainingSetListViewModel extends BaseViewModel {
-  List<TrainingSetSelected> _trainingSetsDummy = [];
-  List<TrainingSetSelected> get trainingSetsDummy => _trainingSetsDummy;
+  List<GoalTypeSelected> selectedGoal;
+  TrainingSetListViewModel({required this.selectedGoal});
+
+  Logger logger = Logger();
+
+  List<TrainingSetSelected> _trainingSetSelected = [];
+  List<TrainingSetSelected> get trainingSetSelected => _trainingSetSelected;
+
+  List<TrainingSetData> _trainingSetData = [];
+  List<TrainingSetData> get trainingSetData => _trainingSetData;
+
+  List<WorkoutMoveData> _workoutMoveData = [];
+  List<WorkoutMoveData> get workoutMoveData => _workoutMoveData;
 
   int _totalSetSelected = 0;
   int get totalSetSelected => _totalSetSelected;
@@ -11,62 +25,69 @@ class TrainingSetListViewModel extends BaseViewModel {
   bool _isValidNextPage = false;
   bool get isValidNextPage => _isValidNextPage;
 
-  List<WorkoutMove> _movesFromSelectedSets = [];
-  List<WorkoutMove> get movesFromSelectedSets => _movesFromSelectedSets;
+  List<WorkoutMoveSelected> _movesFromSelectedSets = [];
+  List<WorkoutMoveSelected> get movesFromSelectedSets => _movesFromSelectedSets;
 
   void initialize() async {
     setBusy(true);
 
-    //Dummy Data
-    _trainingSetsDummy = [
-      TrainingSetSelected(
-          id: 'set1',
-          trainingSetName: 'Abs Beginner',
-          workoutMoves: [
-            WorkoutMove(
-                id: 'move1',
-                moveName: '10 knee-to-elbows',
-                movementImage:
-                    'https://firebasestorage.googleapis.com/v0/b/thrillfit-e1100.appspot.com/o/workout%2Fcrunches.glb?alt=media&token=21a505ea-b9f3-4c78-95d1-1d46b0328cde'),
-            WorkoutMove(
-                id: 'move2',
-                moveName: '10 flutter kicks',
-                movementImage:
-                    'https://firebasestorage.googleapis.com/v0/b/thrillfit-e1100.appspot.com/o/workout%2Fcrunches.glb?alt=media&token=21a505ea-b9f3-4c78-95d1-1d46b0328cde'),
-            WorkoutMove(id: 'move3', moveName: '10 scissors'),
-            WorkoutMove(id: 'move4', moveName: '10 the hundreds'),
-            WorkoutMove(id: 'move5', moveName: '10 reverse crunches'),
-            WorkoutMove(id: 'move6', moveName: '10 sitting twists'),
-          ]),
-      TrainingSetSelected(
-          id: 'set2',
-          trainingSetName: 'Shoulder Beginner',
-          workoutMoves: [
-            WorkoutMove(id: 'move7', moveName: '20 chest expansions'),
-            WorkoutMove(id: 'move8', moveName: '10 side arm raises'),
-            WorkoutMove(id: 'move9', moveName: '10 arm chops'),
-            WorkoutMove(id: 'move10', moveName: '10 arm scissors'),
-          ]),
-      TrainingSetSelected(
-          id: 'set3',
-          trainingSetName: 'Chest Advance',
-          workoutMoves: [
-            WorkoutMove(id: 'move11', moveName: '10 burpees'),
-            WorkoutMove(id: 'move12', moveName: '10 regular pushup'),
-            WorkoutMove(id: 'move13', moveName: '10 decline pushup'),
-            WorkoutMove(id: 'move14', moveName: '10 incline pushup'),
-          ])
-    ];
+    _trainingSetData = await WorkoutPlanRepo().getTrainingSets(selectedGoal);
+
+    _trainingSetSelected = [];
+    for (int i = 0; i < _trainingSetData.length; i++) {
+      List<WorkoutMoveSelected> workoutMovesList = [];
+
+      _workoutMoveData =
+          await WorkoutPlanRepo().getTrainingSetMoves(_trainingSetData[i].id);
+
+      for (int j = 0; j < _workoutMoveData.length; j++) {
+        var imageUrl =
+            await getMovementImage(_workoutMoveData[j].movementImage);
+
+        workoutMovesList.add(WorkoutMoveSelected(
+          id: _workoutMoveData[j].id,
+          movementName: _workoutMoveData[j].movementName,
+          movementImage: imageUrl,
+        ));
+      }
+
+      _trainingSetSelected.add(TrainingSetSelected(
+        id: _trainingSetData[i].id,
+        goalTypeId: _trainingSetData[i].goalTypeId,
+        trainingSetName: _trainingSetData[i].trainingSetName,
+        workoutMoves: workoutMovesList,
+      ));
+    }
+
+    for (int i = 0; i < _trainingSetSelected.length; i++) {
+      for (int j = 0; j < selectedGoal.length; j++) {
+        if (_trainingSetSelected[i].goalTypeId == selectedGoal[j].id) {
+          _trainingSetSelected[i].imageGoalType = selectedGoal[j].goalTypeImage;
+        }
+      }
+    }
 
     setBusy(false);
     notifyListeners();
   }
 
+  Future<String> getMovementImage(String movementImage) async {
+    var storageRef =
+        FirebaseStorage.instance.ref().child('workout/$movementImage');
+
+    try {
+      return await storageRef.getDownloadURL();
+    } catch (e) {
+      logger.e("Failed to get movement image, the error: $e");
+      return '';
+    }
+  }
+
   void changeSelectedValue(String id, value) {
-    for (int i = 0; i < _trainingSetsDummy.length; i++) {
-      if (_trainingSetsDummy[i].id == id) {
-        _trainingSetsDummy[i].selected = value;
-        _trainingSetsDummy[i].selected
+    for (int i = 0; i < _trainingSetSelected.length; i++) {
+      if (_trainingSetSelected[i].id == id) {
+        _trainingSetSelected[i].selected = value;
+        _trainingSetSelected[i].selected
             ? _totalSetSelected++
             : _totalSetSelected--;
       }
@@ -99,12 +120,13 @@ class TrainingSetListViewModel extends BaseViewModel {
   void combineSelectedWorkoutMoves() {
     _movesFromSelectedSets = [];
 
-    for (int i = 0; i < _trainingSetsDummy.length; i++) {
-      if (_trainingSetsDummy[i].selected &&
-          _trainingSetsDummy[i].workoutMoves != null) {
-        for (int j = 0; j < _trainingSetsDummy[i].workoutMoves!.length; j++) {
-          if (_trainingSetsDummy[i].workoutMoves?[j] != null) {
-            _movesFromSelectedSets.add(_trainingSetsDummy[i].workoutMoves![j]);
+    for (int i = 0; i < _trainingSetSelected.length; i++) {
+      if (_trainingSetSelected[i].selected &&
+          _trainingSetSelected[i].workoutMoves != null) {
+        for (int j = 0; j < _trainingSetSelected[i].workoutMoves!.length; j++) {
+          if (_trainingSetSelected[i].workoutMoves?[j] != null) {
+            _movesFromSelectedSets
+                .add(_trainingSetSelected[i].workoutMoves![j]);
           }
         }
       }

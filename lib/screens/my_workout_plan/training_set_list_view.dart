@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:onboarding/onboarding.dart';
@@ -21,7 +22,8 @@ class TrainingSetListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
-        viewModelBuilder: () => TrainingSetListViewModel(),
+        viewModelBuilder: () =>
+            TrainingSetListViewModel(selectedGoal: selectedGoal),
         onViewModelReady: (vm) => vm.initialize(),
         builder: (context, vm, child) {
           return Scaffold(
@@ -93,7 +95,7 @@ class TrainingSetListView extends StatelessWidget {
                               child: Column(
                                 children: [
                                   for (int i = 0;
-                                      i < vm.trainingSetsDummy.length;
+                                      i < vm.trainingSetSelected.length;
                                       i++) ...[
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
@@ -113,11 +115,11 @@ class TrainingSetListView extends StatelessWidget {
                                             leading: Transform.scale(
                                               scale: 1.3,
                                               child: Checkbox(
-                                                value: vm.trainingSetsDummy[i]
+                                                value: vm.trainingSetSelected[i]
                                                     .selected,
                                                 onChanged: (value) {
                                                   vm.changeSelectedValue(
-                                                      vm.trainingSetsDummy[i]
+                                                      vm.trainingSetSelected[i]
                                                           .id,
                                                       value);
                                                 },
@@ -146,7 +148,7 @@ class TrainingSetListView extends StatelessWidget {
                                                       children: [
                                                         Text(
                                                             vm
-                                                                    .trainingSetsDummy[
+                                                                    .trainingSetSelected[
                                                                         i]
                                                                     .trainingSetName ??
                                                                 '-',
@@ -158,7 +160,7 @@ class TrainingSetListView extends StatelessWidget {
                                                                     FontWeight
                                                                         .bold)),
                                                         Text(
-                                                          'Total moves: ${vm.countTrainingSetMoves(vm.trainingSetsDummy[i])}',
+                                                          'Total moves: ${vm.countTrainingSetMoves(vm.trainingSetSelected[i])}',
                                                           style:
                                                               const TextStyle(
                                                                   fontSize: 14,
@@ -169,11 +171,14 @@ class TrainingSetListView extends StatelessWidget {
                                                     ),
                                                   ),
                                                 ),
-                                                const Image(
+                                                CachedNetworkImage(
                                                     height: 50,
                                                     width: 50,
-                                                    image: AssetImage(
-                                                        'assets/images/Abs.png'))
+                                                    imageUrl: vm
+                                                            .trainingSetSelected[
+                                                                i]
+                                                            .imageGoalType ??
+                                                        ''),
                                               ],
                                             ),
                                           ),
@@ -192,7 +197,7 @@ class TrainingSetListView extends StatelessWidget {
                                                                 context) =>
                                                             WorkoutMoveListView(
                                                               trainingSetWidget:
-                                                                  vm.trainingSetsDummy[
+                                                                  vm.trainingSetSelected[
                                                                       i],
                                                             )));
                                               },
@@ -235,7 +240,7 @@ class TrainingSetListView extends StatelessWidget {
                                 padding: const EdgeInsets.only(bottom: 6),
                                 child: Center(
                                   child: Text(
-                                    "${vm.totalSetSelected} of ${vm.trainingSetsDummy.length} set(s) selected",
+                                    "${vm.totalSetSelected} of ${vm.trainingSetSelected.length} set(s) selected",
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold),
                                   ),

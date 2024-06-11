@@ -15,7 +15,7 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
       required this.descInput,
       super.key});
 
-  final List<WorkoutMove> movesFromSets;
+  final List<WorkoutMoveSelected> movesFromSets;
   final String titleInput;
   final String descInput;
 
@@ -190,7 +190,8 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                                                   ),
                                                 ),
                                                 title: Text(
-                                                  vm.workoutMoves[i].moveName ??
+                                                  vm.workoutMoves[i]
+                                                          .movementName ??
                                                       '-',
                                                   style: const TextStyle(
                                                     fontSize: 16,
@@ -228,7 +229,7 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                                                                   vm
                                                                           .workoutMoves[
                                                                               i]
-                                                                          .moveName ??
+                                                                          .movementName ??
                                                                       '-',
                                                                   vm.workoutMoves[i]
                                                                           .movementImage ??

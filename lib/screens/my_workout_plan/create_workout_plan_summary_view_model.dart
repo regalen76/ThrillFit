@@ -2,7 +2,7 @@ import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/models.dart';
 
 class MyWorkoutMoveSelectionViewModel extends BaseViewModel {
-  List<WorkoutMove> movesFromSets;
+  List<WorkoutMoveSelected> movesFromSets;
 
   MyWorkoutMoveSelectionViewModel({required this.movesFromSets});
 

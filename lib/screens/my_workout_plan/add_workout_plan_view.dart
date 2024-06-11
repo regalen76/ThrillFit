@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
@@ -283,11 +284,10 @@ class AddWorkoutPlanView extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Image(
+                  CachedNetworkImage(
                       height: 110,
                       width: 110,
-                      image: AssetImage(
-                          'assets/images/${selectedList[i].goalTypeName!}.png')),
+                      imageUrl: selectedList[i].goalTypeImage ?? ''),
                   Padding(
                     padding: const EdgeInsets.only(top: 4, bottom: 4),
                     child: Text(
