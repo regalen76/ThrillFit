@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/workout_move_selected.dart';
@@ -10,13 +8,13 @@ class CreateWorkoutPlanSummaryView extends StatelessWidget {
   const CreateWorkoutPlanSummaryView(
       {required this.titleInput,
       required this.descInput,
-      required this.frequencyInput,
+      required this.repetitionInput,
       required this.savedMove,
       super.key});
 
   final String titleInput;
   final String descInput;
-  final int frequencyInput;
+  final int repetitionInput;
   final List<WorkoutMoveSelected> savedMove;
 
   @override
@@ -26,7 +24,7 @@ class CreateWorkoutPlanSummaryView extends StatelessWidget {
             listOfWorkoutMove: savedMove,
             titleInput: titleInput,
             descInput: descInput,
-            frequencyInput: frequencyInput),
+            repetitionInput: repetitionInput),
         onViewModelReady: (vm) => vm.initialize(),
         builder: (context, vm, child) {
           return Scaffold(
@@ -180,7 +178,7 @@ class CreateWorkoutPlanSummaryView extends StatelessWidget {
                                               'Total Moves: ${vm.listOfWorkoutMove.length}',
                                             ),
                                             Text(
-                                              'Frequency: ${vm.frequencyInput}',
+                                              'Repetition: ${vm.repetitionInput}',
                                             )
                                           ],
                                         ),

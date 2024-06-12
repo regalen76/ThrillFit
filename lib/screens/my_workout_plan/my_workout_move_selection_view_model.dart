@@ -28,8 +28,8 @@ class MyWorkoutMoveSelectionViewModel extends BaseViewModel {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   GlobalKey<FormState> get formKey => _formKey;
 
-  final _frequencyController = TextEditingController(text: '0');
-  TextEditingController get frequencyController => _frequencyController;
+  final _repetitionController = TextEditingController(text: '0');
+  TextEditingController get repetitionController => _repetitionController;
 
   void initialize() async {
     setBusy(true);
@@ -112,7 +112,7 @@ class MyWorkoutMoveSelectionViewModel extends BaseViewModel {
   }
 
   void validateInput() {
-    if (_totalMoveSelected != 0) {
+    if (_totalMoveSelected > 0) {
       _isValidSelection = true;
     } else {
       _isValidSelection = false;
@@ -131,7 +131,7 @@ class MyWorkoutMoveSelectionViewModel extends BaseViewModel {
     return null;
   }
 
-  bool validateFrequency() {
+  bool validateRepetition() {
     if (_formKey.currentState!.validate()) {
       return true;
     } else {

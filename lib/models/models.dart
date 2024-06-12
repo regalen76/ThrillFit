@@ -6,3 +6,7 @@ export 'training_set_data.dart';
 export 'workout_move_data.dart';
 export 'insert_workout_plan_model.dart';
 export 'insert_workout_plan_move_model.dart';
+export 'workout_plan_movesets_data.dart';
+export 'workout_plans_data.dart';
+export 'my_workout_plans_model.dart';
+export 'my_workout_plan_moves_model.dart';

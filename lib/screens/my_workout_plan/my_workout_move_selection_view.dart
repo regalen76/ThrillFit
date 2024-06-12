@@ -416,7 +416,7 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                                         vm.validateInput();
 
                                         if (vm.isValidSelection) {
-                                          frequencyInputModal(context, vm);
+                                          repetitionInputModal(context, vm);
                                         } else {
                                           showDialog(
                                               context: context,
@@ -464,11 +464,11 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
         });
   }
 
-  Future frequencyInputModal(
+  Future repetitionInputModal(
       BuildContext context, MyWorkoutMoveSelectionViewModel vm) {
     return showModalBottomSheet(
         context: context,
-        builder: (BuildContext ctx) {
+        builder: (BuildContext context) {
           return Container(
               height: 200,
               decoration: const BoxDecoration(
@@ -485,11 +485,11 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                   child: Column(
                     children: [
                       TextFormField(
-                        controller: vm.frequencyController,
+                        controller: vm.repetitionController,
                         cursorColor: Colors.white,
                         maxLength: 2,
                         decoration: const InputDecoration(
-                            labelText: 'Frequency',
+                            labelText: 'Repetition',
                             labelStyle: TextStyle(
                               color: Colors.white,
                             ),
@@ -522,7 +522,7 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                               flex: 2,
                               child: TextButton(
                                 onPressed: () {
-                                  if (vm.validateFrequency()) {
+                                  if (vm.validateRepetition()) {
                                     Navigator.of(context).pop();
                                     Navigator.push(
                                         context,
@@ -531,8 +531,8 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                                                 CreateWorkoutPlanSummaryView(
                                                   titleInput: titleInput,
                                                   descInput: descInput,
-                                                  frequencyInput: int.parse(vm
-                                                      .frequencyController
+                                                  repetitionInput: int.parse(vm
+                                                      .repetitionController
                                                       .text),
                                                   savedMove: vm.workoutMoves,
                                                 )));

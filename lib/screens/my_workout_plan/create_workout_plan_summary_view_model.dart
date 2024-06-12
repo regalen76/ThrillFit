@@ -9,13 +9,13 @@ class CreateWorkoutPlanSummaryViewModel extends BaseViewModel {
   final List<WorkoutMoveSelected> listOfWorkoutMove;
   final String titleInput;
   final String descInput;
-  final int frequencyInput;
+  final int repetitionInput;
 
   CreateWorkoutPlanSummaryViewModel(
       {required this.listOfWorkoutMove,
       required this.titleInput,
       required this.descInput,
-      required this.frequencyInput});
+      required this.repetitionInput});
 
   User? user = Auth().currentUser;
   Logger logger = Logger();
@@ -34,7 +34,7 @@ class CreateWorkoutPlanSummaryViewModel extends BaseViewModel {
         user!.uid,
         titleInput,
         descInput,
-        frequencyInput,
+        repetitionInput,
         listOfWorkoutMove,
       );
       setBusy(false);

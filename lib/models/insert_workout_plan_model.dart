@@ -10,7 +10,9 @@ class InsertWorkoutPlanModel {
   final String userId;
   final String title;
   final String description;
-  final int frequency;
+  final int repetition;
+  @JsonKey(name: 'daily_repetition')
+  final int dailyRepetition;
   @TimestampConverter()
   @JsonKey(name: 'last_updated')
   final DateTime lastUpdated;
@@ -19,7 +21,8 @@ class InsertWorkoutPlanModel {
       {required this.userId,
       required this.title,
       required this.description,
-      required this.frequency,
+      required this.repetition,
+      required this.dailyRepetition,
       required this.lastUpdated});
 
   factory InsertWorkoutPlanModel.fromJson(Map<String, dynamic> json) =>

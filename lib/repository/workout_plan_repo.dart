@@ -88,7 +88,7 @@ class WorkoutPlanRepo {
       String userId,
       String title,
       String description,
-      int frequency,
+      int repetition,
       List<WorkoutMoveSelected> movesInput) async {
     try {
       var workoutPlanId = const Uuid().v4();
@@ -96,7 +96,8 @@ class WorkoutPlanRepo {
               userId: userId,
               title: title,
               description: description,
-              frequency: frequency,
+              repetition: repetition,
+              dailyRepetition: 0,
               lastUpdated: DateTime.now())
           .toJson());
 
@@ -113,6 +114,53 @@ class WorkoutPlanRepo {
       return true;
     } catch (e) {
       return false;
+    }
+  }
+
+  Future<List<MyWorkoutPlansModel>> getMyWorkoutPlans(
+    String userId,
+  ) async {
+    try {
+      List<MyWorkoutPlansModel> myWorkoutPlans = [];
+
+      QuerySnapshot snapshot =
+          await workoutPlanCollection.where('user_id', isEqualTo: userId).get();
+
+      myWorkoutPlans = snapshot.docs.map((doc) {
+        return MyWorkoutPlansModel(
+          id: doc.id,
+          title: doc.get('title') ?? '',
+          description: doc.get('description') ?? '',
+          repetition: doc.get('repetition') ?? 0,
+          dailyRepetition: doc.get('daily_repetition') ?? 0,
+          workoutMoves: [],
+        );
+      }).toList();
+
+      for (int i = 0; i < myWorkoutPlans.length; i++) {
+        List<MyWorkoutPlanMovesModel> moveData = [];
+
+        QuerySnapshot snapshot = await workoutPlanMoveSetCollection
+            .where('workout_plan_id', isEqualTo: myWorkoutPlans[i].id)
+            .get();
+
+        moveData = snapshot.docs.map((doc) {
+          return MyWorkoutPlanMovesModel(
+            id: doc.id,
+            movementName: doc.get('movement_name') ?? '',
+            movementImage: doc.get('movement_image') ?? '',
+            viewOrder: doc.get('view_order') ?? 0,
+          );
+        }).toList();
+
+        for (int j = 0; j < moveData.length; j++) {
+          myWorkoutPlans[i].workoutMoves.add(moveData[j]);
+        }
+      }
+
+      return myWorkoutPlans;
+    } catch (e) {
+      return [];
     }
   }
 }

@@ -108,7 +108,7 @@ class TrainingSetListViewModel extends BaseViewModel {
   }
 
   void validateInput() {
-    if (_totalSetSelected != 0) {
+    if (_totalSetSelected > 0) {
       _isValidNextPage = true;
     } else {
       _isValidNextPage = false;
