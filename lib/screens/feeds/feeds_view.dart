@@ -5,6 +5,7 @@ import 'package:thrill_fit/screens/feeds/feeds_view_model.dart';
 import 'package:thrill_fit/screens/feeds/followers/feeds_followers_view.dart';
 import 'package:thrill_fit/screens/feeds/timeline/feeds_timeline_view.dart';
 import 'package:thrill_fit/screens/profile/profile_view.dart';
+import 'package:thrill_fit/screens/feeds/search/search_view.dart';
 
 class FeedsView extends StatelessWidget {
   const FeedsView({super.key});
@@ -22,6 +23,20 @@ class FeedsView extends StatelessWidget {
                     appBar: AppBar(
                       title: const Text('Feeds'),
                       actions: [
+                        IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        const SearchView()));
+                          },
+                          icon: Icon(
+                            MdiIcons.magnify,
+                            color: Colors.white,
+                          ),
+                          iconSize: 40,
+                        ),
                         IconButton(
                           onPressed: () {
                             Navigator.push(

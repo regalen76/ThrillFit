@@ -31,6 +31,7 @@ class UserRepo {
             gender: snap.get('gender'),
             height: snap.get('height'),
             name: snap.get('name'),
+            nameSearch: List<String>.from(snap['name_search']),
             phone: snap.get('phone'),
             weight: snap.get('weight'),
           );

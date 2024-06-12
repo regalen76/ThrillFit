@@ -42,6 +42,7 @@ class GuestProfileView extends StatelessWidget {
                       gender: '',
                       height: 0,
                       name: '',
+                      nameSearch: [],
                       phone: '',
                       weight: 0),
                   child: Consumer<UserModel>(
