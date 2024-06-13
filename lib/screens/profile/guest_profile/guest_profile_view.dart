@@ -156,12 +156,15 @@ class GuestProfileView extends StatelessWidget {
                                                                   .center,
                                                           children: [
                                                             Center(
-                                                              child: Text(
+                                                              child: Container(
+                                                                margin: const EdgeInsets.only(left: 20, right: 20),
+                                                                child: Text(
                                                                 'Are you want to unfollow ${data.name}?',
                                                                 style:
                                                                     const TextStyle(
                                                                         fontSize:
                                                                             24),
+                                                              ),
                                                               ),
                                                             ),
                                                             Container(

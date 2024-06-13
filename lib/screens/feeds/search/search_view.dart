@@ -49,61 +49,60 @@ class SearchView extends StatelessWidget {
                             return const SizedBox(height: 5);
                           },
                           itemBuilder: (context, dataSnapshot, index) {
-                            final userData = UserModel.fromJson(dataSnapshot.data() as Map<String, dynamic>);
-                            
-                            return model.getUserName != userData.name ? InkWell(
-                                                    onTap: () {
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder: (BuildContext
-                                                                        context) =>
-                                                                    GuestProfileView(
-                                                                        uid: dataSnapshot.id)));
-                                                    },
-                                                    child:
-                            ListTile(
-                                        leading: SizedBox(
-                                          height: 40,
-                                          width: 40,
-                                          child: FutureBuilder(
-                                              future:
-                                                  model.fetchProfilePictureUrl(
-                                                      dataSnapshot.id),
-                                              builder: (context, snapshot3) {
-                                                if (snapshot3.connectionState ==
-                                                    ConnectionState.waiting) {
-                                                  return const CircleAvatar(
-                                                    radius: (82),
-                                                    backgroundColor:
-                                                        Colors.black,
-                                                    child:
-                                                        CircularProgressIndicator(),
-                                                  );
-                                                } else if (snapshot3
-                                                        .connectionState ==
-                                                    ConnectionState.done) {
-                                                  return CircleAvatar(
-                                                      radius: (82),
-                                                      backgroundColor:
-                                                          Colors.transparent,
-                                                      backgroundImage:
-                                                          CachedNetworkImageProvider(
-                                                              snapshot3.data!),
-                                                    );
-                                                } else {
-                                                  return const CircleAvatar(
-                                                    radius: (82),
-                                                    backgroundColor:
-                                                        Colors.black,
-                                                    child:
-                                                        CircularProgressIndicator(),
-                                                  );
-                                                }
-                                              }),
-                                        ),
-                                        title: Text(userData.name),
-                                      )) : Container();
+                            final userData = UserModel.fromJson(
+                                dataSnapshot.data() as Map<String, dynamic>);
+
+                            return model.getUserName != userData.name
+                                ? InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  GuestProfileView(
+                                                      uid: dataSnapshot.id)));
+                                    },
+                                    child: ListTile(
+                                      leading: SizedBox(
+                                        height: 40,
+                                        width: 40,
+                                        child: FutureBuilder(
+                                            future:
+                                                model.fetchProfilePictureUrl(
+                                                    dataSnapshot.id),
+                                            builder: (context, snapshot3) {
+                                              if (snapshot3.connectionState ==
+                                                  ConnectionState.waiting) {
+                                                return const CircleAvatar(
+                                                  radius: (82),
+                                                  backgroundColor: Colors.black,
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                );
+                                              } else if (snapshot3
+                                                      .connectionState ==
+                                                  ConnectionState.done) {
+                                                return CircleAvatar(
+                                                  radius: (82),
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  backgroundImage:
+                                                      CachedNetworkImageProvider(
+                                                          snapshot3.data!),
+                                                );
+                                              } else {
+                                                return const CircleAvatar(
+                                                  radius: (82),
+                                                  backgroundColor: Colors.black,
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                );
+                                              }
+                                            }),
+                                      ),
+                                      title: Text(userData.name),
+                                    ))
+                                : Container();
                           })
                       : const Center(
                           child: Text('Search User...'),

@@ -14,7 +14,7 @@ class SearchViewModel extends BaseViewModel {
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('user_info');
   final Map<String, AsyncMemoizer<String>> ppMemoirzer = {};
-  
+
   late String userName;
   User? user = Auth().currentUser;
   TextEditingController searchController = TextEditingController();
@@ -36,7 +36,8 @@ class SearchViewModel extends BaseViewModel {
 
   void onSearchChanged() {
     if (searchController.text.isNotEmpty) {
-      searchQuery =  userCollection.where("name_search", arrayContains: searchController.text);
+      searchQuery = userCollection.where("name_search",
+          arrayContains: searchController.text);
       notifyListeners();
     }
   }
@@ -61,10 +62,10 @@ class SearchViewModel extends BaseViewModel {
 
   Future<String> fetchUserName(String uid) async {
     UserModel? data = await UserRepo(uid: uid).getUserDataOnce();
-      if (data != null) {
-        return data.name;
-      } else {
-        throw Exception("User not found");
-      }
+    if (data != null) {
+      return data.name;
+    } else {
+      throw Exception("User not found");
+    }
   }
 }
