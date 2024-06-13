@@ -7,6 +7,7 @@ import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/followers_model.dart';
 import 'package:thrill_fit/models/user_model.dart';
 import 'package:thrill_fit/repository/user_repo.dart';
+import 'package:thrill_fit/screens/authentication/login_register_page.dart';
 import 'package:thrill_fit/screens/profile/followers/followers_view.dart';
 import 'package:thrill_fit/screens/profile/following/following_view.dart';
 import 'package:thrill_fit/screens/profile/profile_data/profile_data_view_model.dart';
@@ -793,10 +794,7 @@ class ProfileDataView extends StatelessWidget {
                                                                                 child: InkWell(
                                                                                   borderRadius: BorderRadius.circular(20),
                                                                                   onTapUp: (_) async {
-                                                                                    await model.signOut();
-                                                                                    if (context.mounted) {
-                                                                                      Navigator.popUntil(context, (route) => route.isFirst);
-                                                                                    }
+                                                                                    await model.signOut(context);
                                                                                   },
                                                                                   child: const SizedBox(
                                                                                     height: 80,

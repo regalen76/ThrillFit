@@ -102,15 +102,83 @@ class UserPostView extends StatelessWidget {
                                                     );
                                                   } else {
                                                     return SizedBox(
-                                                      height: 20,
-                                                      child: Text(
-                                                        snapshot.data!,
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        style: const TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 18),
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.796,
+                                                      height: 30,
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            snapshot.data!,
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                            style: const TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 18),
+                                                          ),
+                                                          XGestureDetector(
+                                                              onTap: (event) {
+                                                                showModalBottomSheet(
+                                                                    context:
+                                                                        context,
+                                                                    shape:
+                                                                        const RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius
+                                                                              .only(
+                                                                        topLeft:
+                                                                            Radius.circular(20),
+                                                                        topRight:
+                                                                            Radius.circular(20),
+                                                                      ),
+                                                                    ),
+                                                                    builder:
+                                                                        ((context) {
+                                                                      return SizedBox(
+                                                                          height: MediaQuery.of(context).size.height *
+                                                                              0.2,
+                                                                          width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width,
+                                                                          child:
+                                                                              Column(
+                                                                            children: [
+                                                                              Container(
+                                                                                margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
+                                                                                child: InkWell(
+                                                                                  onTap: () {},
+                                                                                  child: Row(
+                                                                                    children: [
+                                                                                      Icon(
+                                                                                        MdiIcons.trashCanOutline,
+                                                                                        size: 30,
+                                                                                        color: Colors.redAccent,
+                                                                                      ),
+                                                                                      Container(
+                                                                                        margin: const EdgeInsets.only(left: 10),
+                                                                                        child: const Text(
+                                                                                          'Delete Post',
+                                                                                          style: TextStyle(fontSize: 16),
+                                                                                        ),
+                                                                                      )
+                                                                                    ],
+                                                                                  ),
+                                                                                ),
+                                                                              )
+                                                                            ],
+                                                                          ));
+                                                                    }));
+                                                              },
+                                                              child: Icon(MdiIcons
+                                                                  .dotsVertical))
+                                                        ],
                                                       ),
                                                     );
                                                   }

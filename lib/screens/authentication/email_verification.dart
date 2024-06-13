@@ -147,7 +147,7 @@ class EmailVerifPageState extends State<EmailVerifPage> {
                       'Cancel',
                       style: TextStyle(fontSize: 24, color: Colors.white),
                     ),
-                    onPressed: () => Auth().signOut())
+                    onPressed: () => Auth().signOut(context))
               ],
             ),
           ),
