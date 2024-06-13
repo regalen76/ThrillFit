@@ -152,6 +152,10 @@ class TrainingSetListView extends StatelessWidget {
                                                                         i]
                                                                     .trainingSetName ??
                                                                 '-',
+                                                            maxLines: 2,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
                                                             style: const TextStyle(
                                                                 fontSize: 16,
                                                                 color: Colors
@@ -172,7 +176,7 @@ class TrainingSetListView extends StatelessWidget {
                                                   ),
                                                 ),
                                                 CachedNetworkImage(
-                                                    height: 50,
+                                                    height: 70,
                                                     width: 50,
                                                     imageUrl: vm
                                                             .trainingSetSelected[

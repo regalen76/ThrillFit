@@ -58,7 +58,6 @@ class WorkoutMoveListView extends StatelessWidget {
                                       visible: vm.isLoading,
                                       child: const CircularProgressIndicator(),
                                     ),
-                                    // Lazy load ModelViewer when vm.workoutModel is set
                                     if (vm.workoutModel.isNotEmpty)
                                       ModelViewer(
                                         key: ValueKey(vm.workoutModel),
@@ -76,6 +75,8 @@ class WorkoutMoveListView extends StatelessWidget {
                               child: Center(
                                 child: Text(
                                   vm.workoutName,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -122,6 +123,7 @@ class WorkoutMoveListView extends StatelessWidget {
                                                 vm.trainingSet.workoutMoves?[i]
                                                         .movementName ??
                                                     '-',
+                                                overflow: TextOverflow.ellipsis,
                                                 style: const TextStyle(
                                                   fontSize: 16,
                                                   color: Colors.black,

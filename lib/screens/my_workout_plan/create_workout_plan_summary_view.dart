@@ -201,6 +201,7 @@ class CreateWorkoutPlanSummaryView extends StatelessWidget {
                                                 vm.listOfWorkoutMove[i]
                                                         .movementName ??
                                                     '-',
+                                                overflow: TextOverflow.ellipsis,
                                                 style: const TextStyle(
                                                   fontSize: 16,
                                                   color: Colors.black,

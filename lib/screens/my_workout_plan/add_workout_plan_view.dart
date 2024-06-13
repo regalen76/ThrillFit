@@ -292,6 +292,7 @@ class AddWorkoutPlanView extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 4, bottom: 4),
                     child: Text(
                       selectedList[i].goalTypeName!,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold),
                     ),

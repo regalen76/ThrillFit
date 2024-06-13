@@ -124,6 +124,8 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                                 child: Center(
                                   child: Text(
                                     vm.workoutName,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -193,6 +195,8 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                                                   vm.workoutMoves[i]
                                                           .movementName ??
                                                       '-',
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   style: const TextStyle(
                                                     fontSize: 16,
                                                     color: Colors.black,
