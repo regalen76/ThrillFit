@@ -24,11 +24,16 @@ class FeedsCreateModel extends BaseViewModel {
   TextEditingController get getCommentFieldController => commentFieldController;
 
   Future<void> initState() async {
+    commentFieldController.addListener(onChangeTextField);
     await pickImages();
   }
 
   void disposeAll() {
     commentFieldController.dispose();
+  }
+
+  void onChangeTextField() {
+    notifyListeners();
   }
 
   Future<void> pickImages() async {
