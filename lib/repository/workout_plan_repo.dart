@@ -92,6 +92,8 @@ class WorkoutPlanRepo {
       List<WorkoutMoveSelected> movesInput) async {
     try {
       var workoutPlanId = const Uuid().v4();
+      List<Future> futures = [];
+
       await workoutPlanCollection.doc(workoutPlanId).set(InsertWorkoutPlanModel(
               userId: userId,
               title: title,
@@ -102,14 +104,19 @@ class WorkoutPlanRepo {
           .toJson());
 
       for (int i = 0; i < movesInput.length; i++) {
-        await workoutPlanMoveSetCollection.doc(const Uuid().v4()).set(
-            InsertWorkoutPlanMoveModel(
-                    workoutPlanId: workoutPlanId,
-                    movementName: movesInput[i].movementName ?? '',
-                    movementImage: movesInput[i].movementImage ?? '',
-                    viewOrder: i + 1)
-                .toJson());
+        var jsonRequest = InsertWorkoutPlanMoveModel(
+                workoutPlanId: workoutPlanId,
+                movementName: movesInput[i].movementName ?? '',
+                movementImage: movesInput[i].movementImage ?? '',
+                viewOrder: i + 1)
+            .toJson();
+
+        futures.add(workoutPlanMoveSetCollection
+            .doc(const Uuid().v4())
+            .set(jsonRequest));
       }
+
+      await Future.wait(futures);
 
       return true;
     } catch (e) {
