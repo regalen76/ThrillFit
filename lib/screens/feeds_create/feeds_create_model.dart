@@ -7,6 +7,7 @@ import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/repository/feeds_repo.dart';
 import 'package:thrill_fit/services/auth.dart';
+import 'package:thrill_fit/shared/util.dart';
 import 'package:uuid/uuid.dart';
 
 class FeedsCreateModel extends BaseViewModel {
@@ -52,12 +53,13 @@ class FeedsCreateModel extends BaseViewModel {
     setBusy(false);
     notifyListeners();
     if (context.mounted) {
+      Util().flashMessageSuccess(context, 'Post Successfully Created');
       Navigator.pop(context);
     }
   }
 
   Future<void> uploadPostData(List<String> imagePaths) async {
-    return await FeedsRepo(uid: user!.uid)
+    await FeedsRepo(uid: user!.uid)
         .createPostData(commentFieldController.text, imagePaths);
   }
 

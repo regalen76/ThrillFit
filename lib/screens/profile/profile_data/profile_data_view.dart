@@ -22,7 +22,9 @@ class ProfileDataView extends StatelessWidget {
         onDispose: (model) => model.disposeAll(),
         builder: (context, model, _) {
           return model.isBusy
-              ? const Center(child: CircularProgressIndicator())
+              ? const Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                )
               : StreamProvider<UserModel>.value(
                   value: UserRepo(uid: model.getUser!.uid).userData,
                   initialData: UserModel(

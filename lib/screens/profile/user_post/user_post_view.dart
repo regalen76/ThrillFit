@@ -13,6 +13,7 @@ import 'package:thrill_fit/models/post_likes_model.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:thrill_fit/shared/media_type.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:thrill_fit/shared/util.dart';
 import 'package:video_player/video_player.dart';
 
 class UserPostView extends StatelessWidget {
@@ -22,9 +23,11 @@ class UserPostView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
         viewModelBuilder: () => UserPostViewModel(),
-        builder: (context, model, _) {
+        builder: (contextParent, model, _) {
           return model.isBusy
-              ? const Center(child: CircularProgressIndicator())
+              ? const Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                )
               : Container(
                   margin: const EdgeInsets.only(top: 20),
                   child: FirestorePagination(
@@ -153,7 +156,78 @@ class UserPostView extends StatelessWidget {
                                                                               Container(
                                                                                 margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
                                                                                 child: InkWell(
-                                                                                  onTap: () {},
+                                                                                  onTap: () {
+                                                                                    Navigator.pop(context);
+                                                                                    showDialog(
+                                                                                        context: context,
+                                                                                        builder: (BuildContext context) {
+                                                                                          return AlertDialog(
+                                                                                            insetPadding: EdgeInsets.zero,
+                                                                                            contentPadding: EdgeInsets.zero,
+                                                                                            content: SizedBox(
+                                                                                              height: 200,
+                                                                                              width: 100,
+                                                                                              child: Column(
+                                                                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                                children: [
+                                                                                                  const SizedBox(
+                                                                                                    height: 100,
+                                                                                                    child: Center(
+                                                                                                      child: Text(
+                                                                                                        'Delete this post?',
+                                                                                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                  Container(
+                                                                                                    height: 50,
+                                                                                                    decoration: const BoxDecoration(
+                                                                                                      border: Border(
+                                                                                                        top: BorderSide(color: Color.fromARGB(31, 158, 158, 158), width: 1),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                    width: MediaQuery.of(context).size.width,
+                                                                                                    child: InkWell(
+                                                                                                      onTap: () async {
+                                                                                                        await model.deletePost(dataSnapshot.id, postData.content, context).then((value) {
+                                                                                                          Util().flashMessageSuccess(contextParent, 'Successfully Deleting Post');
+                                                                                                        });
+                                                                                                      },
+                                                                                                      child: const Center(
+                                                                                                        child: Text(
+                                                                                                          'Delete',
+                                                                                                          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                  Container(
+                                                                                                    height: 50,
+                                                                                                    decoration: const BoxDecoration(
+                                                                                                      border: Border(
+                                                                                                        top: BorderSide(color: Color.fromARGB(31, 158, 158, 158), width: 1),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                    width: MediaQuery.of(context).size.width,
+                                                                                                    child: InkWell(
+                                                                                                      onTap: () {
+                                                                                                        Navigator.pop(context);
+                                                                                                      },
+                                                                                                      child: const Center(
+                                                                                                        child: Text(
+                                                                                                          'Cancel',
+                                                                                                          style: TextStyle(fontWeight: FontWeight.bold),
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  )
+                                                                                                ],
+                                                                                              ),
+                                                                                            ),
+                                                                                          );
+                                                                                        });
+                                                                                  },
                                                                                   child: Row(
                                                                                     children: [
                                                                                       Icon(

@@ -17,7 +17,9 @@ class SearchView extends StatelessWidget {
         onDispose: (model) => model.onDispose(),
         builder: (context, model, _) {
           return model.isBusy
-              ? const Center(child: CircularProgressIndicator())
+              ? const Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                )
               : Scaffold(
                   appBar: AppBar(
                     actions: [

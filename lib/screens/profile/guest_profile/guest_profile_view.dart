@@ -30,7 +30,9 @@ class GuestProfileView extends StatelessWidget {
         onViewModelReady: (model) => model.initState(),
         builder: (context, model, _) {
           return model.isBusy
-              ? const Center(child: CircularProgressIndicator())
+              ? const Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                )
               : StreamProvider<UserModel>.value(
                   value: UserRepo(uid: uid).userData,
                   initialData: UserModel(
@@ -65,8 +67,9 @@ class GuestProfileView extends StatelessWidget {
                                       CircleAvatar(
                                         radius: (82),
                                         backgroundColor: Colors.transparent,
-                                        backgroundImage: CachedNetworkImageProvider(
-                                            model.getProfilePictureUrl),
+                                        backgroundImage:
+                                            CachedNetworkImageProvider(
+                                                model.getProfilePictureUrl),
                                       ),
                                     ],
                                   ),
@@ -157,14 +160,19 @@ class GuestProfileView extends StatelessWidget {
                                                           children: [
                                                             Center(
                                                               child: Container(
-                                                                margin: const EdgeInsets.only(left: 20, right: 20),
+                                                                margin:
+                                                                    const EdgeInsets
+                                                                        .only(
+                                                                        left:
+                                                                            20,
+                                                                        right:
+                                                                            20),
                                                                 child: Text(
-                                                                'Are you want to unfollow ${data.name}?',
-                                                                style:
-                                                                    const TextStyle(
-                                                                        fontSize:
-                                                                            24),
-                                                              ),
+                                                                  'Are you want to unfollow ${data.name}?',
+                                                                  style: const TextStyle(
+                                                                      fontSize:
+                                                                          24),
+                                                                ),
                                                               ),
                                                             ),
                                                             Container(
@@ -533,7 +541,8 @@ class GuestProfileView extends StatelessWidget {
                                                     child: Container(
                                                       margin:
                                                           const EdgeInsets.only(
-                                                              left: 10, right: 10),
+                                                              left: 10,
+                                                              right: 10),
                                                       child: Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
@@ -972,20 +981,27 @@ class GuestProfileView extends StatelessWidget {
                                                       size: 25),
                                                   onPressed: () {
                                                     showModalBottomSheet(
-                                          context: context,
-                                          shape: const RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(20),
-                                              topRight: Radius.circular(20),
-                                            ),
-                                          ),
-                                          isScrollControlled:
-                                              true, // This is important to allow the sheet to resize with the keyboard
-                                          builder: (context) {
-                                            return CommentModalView(
-                                                postId: dataSnapshot.id);
-                                          },
-                                        );
+                                                      context: context,
+                                                      shape:
+                                                          const RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  20),
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  20),
+                                                        ),
+                                                      ),
+                                                      isScrollControlled:
+                                                          true, // This is important to allow the sheet to resize with the keyboard
+                                                      builder: (context) {
+                                                        return CommentModalView(
+                                                            postId: dataSnapshot
+                                                                .id);
+                                                      },
+                                                    );
                                                   },
                                                 ),
                                                 StreamProvider<

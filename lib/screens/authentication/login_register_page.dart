@@ -34,11 +34,11 @@ class LoginPageState extends State<LoginPage> {
       } on FirebaseAuthException catch (e) {
         if (mounted) {
           if (e.code == 'invalid-credential') {
-            Util().flashMessageInfo(context, 'Invalid Credentials');
+            Util().flashMessageError(context, 'Invalid Credentials');
           } else if (e.code == 'invalid-email') {
-            Util().flashMessageInfo(context, 'Invalid Email');
+            Util().flashMessageError(context, 'Invalid Email');
           } else if (e.code == 'wrong-password') {
-            Util().flashMessageInfo(context, 'Wrong Password');
+            Util().flashMessageError(context, 'Wrong Password');
           } else {
             Util().flashMessageError(context, e.code);
           }
@@ -58,7 +58,7 @@ class LoginPageState extends State<LoginPage> {
           if (e.message == null) {
             Util().flashMessageError(context, e.code);
           } else {
-            Util().flashMessageInfo(context, e.message!);
+            Util().flashMessageError(context, e.message!);
           }
         }
       }

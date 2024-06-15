@@ -17,7 +17,9 @@ class FollowingView extends StatelessWidget {
         viewModelBuilder: () => FollowingViewModel(userUid: uid),
         builder: (context, model, _) {
           return model.isBusy
-              ? const Center(child: CircularProgressIndicator())
+              ? const Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                )
               : Scaffold(
                   appBar: AppBar(
                     title: const Text('Following'),

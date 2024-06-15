@@ -13,7 +13,9 @@ class ProfileView extends StatelessWidget {
         viewModelBuilder: () => ProfileViewModel(),
         builder: (context, model, _) {
           return model.isBusy
-              ? const Center(child: CircularProgressIndicator())
+              ? const Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                )
               : DefaultTabController(
                   length: 2,
                   child: Scaffold(
