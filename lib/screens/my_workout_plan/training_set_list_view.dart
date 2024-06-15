@@ -4,7 +4,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:onboarding/onboarding.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/models.dart';
-import 'package:thrill_fit/screens/my_workout_plan/my_workout_move_selection_view.dart';
+import 'package:thrill_fit/screens/my_workout_plan/workout_move_selection_view.dart';
 import 'package:thrill_fit/screens/my_workout_plan/training_set_list_view_model.dart';
 import 'package:thrill_fit/screens/workout_moves/workout_move_list_view.dart';
 
@@ -285,7 +285,7 @@ class TrainingSetListView extends StatelessWidget {
                                               MaterialPageRoute(
                                                   builder: (BuildContext
                                                           context) =>
-                                                      MyWorkoutMoveSelectionView(
+                                                      WorkoutMoveSelectionView(
                                                         movesFromSets: vm
                                                             .movesFromSelectedSets,
                                                         titleInput: titleInput,

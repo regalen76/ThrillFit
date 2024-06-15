@@ -6,10 +6,10 @@ import 'package:onboarding/onboarding.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/models.dart';
 import 'package:thrill_fit/screens/my_workout_plan/create_workout_plan_summary_view.dart';
-import 'package:thrill_fit/screens/my_workout_plan/my_workout_move_selection_view_model.dart';
+import 'package:thrill_fit/screens/my_workout_plan/workout_move_selection_view_model.dart';
 
-class MyWorkoutMoveSelectionView extends StatelessWidget {
-  const MyWorkoutMoveSelectionView(
+class WorkoutMoveSelectionView extends StatelessWidget {
+  const WorkoutMoveSelectionView(
       {required this.movesFromSets,
       required this.titleInput,
       required this.descInput,
@@ -23,7 +23,7 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
         viewModelBuilder: () =>
-            MyWorkoutMoveSelectionViewModel(movesFromSets: movesFromSets),
+            WorkoutMoveSelectionViewModel(movesFromSets: movesFromSets),
         onViewModelReady: (vm) => vm.initialize(),
         builder: (context, vm, child) {
           return Scaffold(
@@ -280,17 +280,18 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                                                                         TextButton(
                                                                           onPressed:
                                                                               () {
-                                                                            vm.deleteMoves(i);
+                                                                            var isSuccess =
+                                                                                vm.deleteMoves(i);
                                                                             Navigator.of(context).pop();
 
                                                                             ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                                                                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                                                                duration: Duration(seconds: 3),
-                                                                                backgroundColor: Colors.green,
+                                                                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                                                                duration: const Duration(seconds: 3),
+                                                                                backgroundColor: isSuccess ? Colors.green : Colors.red,
                                                                                 showCloseIcon: true,
                                                                                 content: Text(
-                                                                                  'Success delete workout move.',
-                                                                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                                                                  isSuccess ? 'Success delete workout move.' : 'Failed to delete workout move.',
+                                                                                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                                                                                 )));
                                                                           },
                                                                           child:
@@ -319,28 +320,33 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                                                             )),
                                                         PopupMenuItem(
                                                             onTap: () {
-                                                              vm.duplicateMoves(
-                                                                  i,
-                                                                  vm.workoutMoves[
-                                                                      i]);
+                                                              var isSuccess = vm
+                                                                  .duplicateMoves(
+                                                                      i,
+                                                                      vm.workoutMoves[
+                                                                          i]);
 
                                                               ScaffoldMessenger
                                                                       .of(context)
                                                                   .hideCurrentSnackBar();
                                                               ScaffoldMessenger.of(context).showSnackBar(
-                                                                  const SnackBar(
-                                                                      duration: Duration(
+                                                                  SnackBar(
+                                                                      duration: const Duration(
                                                                           seconds:
                                                                               3),
-                                                                      backgroundColor:
-                                                                          Colors
-                                                                              .green,
+                                                                      backgroundColor: isSuccess
+                                                                          ? Colors
+                                                                              .green
+                                                                          : Colors
+                                                                              .red,
                                                                       showCloseIcon:
                                                                           true,
                                                                       content:
                                                                           Text(
-                                                                        'Success copy workout move.',
-                                                                        style: TextStyle(
+                                                                        isSuccess
+                                                                            ? 'Success copy workout move.'
+                                                                            : 'Failed to copy workout move.',
+                                                                        style: const TextStyle(
                                                                             fontWeight:
                                                                                 FontWeight.bold,
                                                                             fontSize: 16),
@@ -469,7 +475,7 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
   }
 
   Future repetitionInputModal(
-      BuildContext context, MyWorkoutMoveSelectionViewModel vm) {
+      BuildContext context, WorkoutMoveSelectionViewModel vm) {
     return showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/workout_move_selected.dart';
 import 'package:uuid/uuid.dart';
 
-class MyWorkoutMoveSelectionViewModel extends BaseViewModel {
+class WorkoutMoveSelectionViewModel extends BaseViewModel {
   final List<WorkoutMoveSelected> movesFromSets;
-  MyWorkoutMoveSelectionViewModel({required this.movesFromSets});
+  WorkoutMoveSelectionViewModel({required this.movesFromSets});
+
+  Logger logger = Logger();
 
   List<WorkoutMoveSelected> _workoutMoves = [];
   List<WorkoutMoveSelected> get workoutMoves => _workoutMoves;
@@ -93,22 +96,33 @@ class MyWorkoutMoveSelectionViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void deleteMoves(int index) {
-    _workoutMoves.removeAt(index);
-    notifyListeners();
+  bool deleteMoves(int index) {
+    try {
+      _workoutMoves.removeAt(index);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      logger.e("Failed to delete move, the error: $e");
+      return false;
+    }
   }
 
-  void duplicateMoves(int index, WorkoutMoveSelected data) {
-    String uniqueId = const Uuid().v4();
-    _workoutMoves.insert(
-        index,
-        WorkoutMoveSelected(
-            id: uniqueId,
-            movementName: data.movementName,
-            movementImage: data.movementImage));
+  bool duplicateMoves(int index, WorkoutMoveSelected data) {
+    try {
+      String uniqueId = const Uuid().v4();
+      _workoutMoves.insert(
+          index,
+          WorkoutMoveSelected(
+              id: uniqueId,
+              movementName: data.movementName,
+              movementImage: data.movementImage));
 
-    _workoutMoves;
-    notifyListeners();
+      _workoutMoves;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   void validateInput() {
