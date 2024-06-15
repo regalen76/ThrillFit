@@ -95,18 +95,6 @@ class TrainingSetListViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  int countTrainingSetMoves(TrainingSetSelected trainingSet) {
-    int value = 0;
-
-    if (trainingSet.workoutMoves != null) {
-      for (int i = 0; i < trainingSet.workoutMoves!.length; i++) {
-        value++;
-      }
-    }
-
-    return value;
-  }
-
   void validateInput() {
     if (_totalSetSelected > 0) {
       _isValidNextPage = true;
@@ -123,12 +111,7 @@ class TrainingSetListViewModel extends BaseViewModel {
     for (int i = 0; i < _trainingSetSelected.length; i++) {
       if (_trainingSetSelected[i].selected &&
           _trainingSetSelected[i].workoutMoves != null) {
-        for (int j = 0; j < _trainingSetSelected[i].workoutMoves!.length; j++) {
-          if (_trainingSetSelected[i].workoutMoves?[j] != null) {
-            _movesFromSelectedSets
-                .add(_trainingSetSelected[i].workoutMoves![j]);
-          }
-        }
+        _movesFromSelectedSets.addAll(_trainingSetSelected[i].workoutMoves!);
       }
     }
 

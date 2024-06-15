@@ -4,9 +4,9 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:onboarding/onboarding.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/models.dart';
+import 'package:thrill_fit/screens/my_workout_plan/training_set_detail_view.dart';
 import 'package:thrill_fit/screens/my_workout_plan/workout_move_selection_view.dart';
 import 'package:thrill_fit/screens/my_workout_plan/training_set_list_view_model.dart';
-import 'package:thrill_fit/screens/workout_moves/workout_move_list_view.dart';
 
 class TrainingSetListView extends StatelessWidget {
   const TrainingSetListView(
@@ -30,7 +30,6 @@ class TrainingSetListView extends StatelessWidget {
             appBar: AppBar(
               title: const Text('Select Training Sets'),
               backgroundColor: Colors.black,
-              automaticallyImplyLeading: false,
               actions: [
                 TextButton(
                   onPressed: () {
@@ -164,7 +163,7 @@ class TrainingSetListView extends StatelessWidget {
                                                                     FontWeight
                                                                         .bold)),
                                                         Text(
-                                                          'Total moves: ${vm.countTrainingSetMoves(vm.trainingSetSelected[i])}',
+                                                          'Total moves: ${vm.trainingSetSelected[i].workoutMoves?.length ?? 0}',
                                                           style:
                                                               const TextStyle(
                                                                   fontSize: 14,
@@ -199,8 +198,8 @@ class TrainingSetListView extends StatelessWidget {
                                                     MaterialPageRoute(
                                                         builder: (BuildContext
                                                                 context) =>
-                                                            WorkoutMoveListView(
-                                                              trainingSetWidget:
+                                                            TrainingSetDetailView(
+                                                              trainingSetData:
                                                                   vm.trainingSetSelected[
                                                                       i],
                                                             )));
@@ -254,23 +253,6 @@ class TrainingSetListView extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Expanded(flex: 1, child: Container()),
-                                  Expanded(
-                                    flex: 2,
-                                    child: TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      style: TextButton.styleFrom(
-                                        backgroundColor:
-                                            Colors.red, // Background Color
-                                      ),
-                                      child: const Text(
-                                        'Back',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ),
-                                  ),
                                   Expanded(flex: 1, child: Container()),
                                   Expanded(
                                     flex: 2,

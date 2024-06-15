@@ -19,9 +19,9 @@ class AddWorkoutPlanView extends StatelessWidget {
         builder: (context, vm, child) {
           return Scaffold(
             appBar: AppBar(
-                title: const Text('Add Workout Plan'),
-                backgroundColor: Colors.black,
-                automaticallyImplyLeading: false),
+              title: const Text('Add Workout Plan'),
+              backgroundColor: Colors.black,
+            ),
             body: vm.isBusy
                 ? const Center(
                     child: Column(
@@ -171,23 +171,6 @@ class AddWorkoutPlanView extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Expanded(flex: 1, child: Container()),
-                                  Expanded(
-                                    flex: 2,
-                                    child: TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      style: TextButton.styleFrom(
-                                        backgroundColor:
-                                            Colors.red, // Background Color
-                                      ),
-                                      child: const Text(
-                                        'Back',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ),
-                                  ),
                                   Expanded(flex: 1, child: Container()),
                                   Expanded(
                                     flex: 2,

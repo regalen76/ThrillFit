@@ -1,31 +1,28 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:model_viewer_plus/model_viewer_plus.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:stacked/stacked.dart';
+import 'package:thrill_fit/components/workout_move_detail_view.dart';
 import 'package:thrill_fit/models/models.dart';
-import 'package:thrill_fit/screens/workout_moves/workout_move_list_view_model.dart';
+import 'package:thrill_fit/screens/my_workout_plan/training_set_detail_view_model.dart';
 
-class WorkoutMoveListView extends StatelessWidget {
-  const WorkoutMoveListView({
-    required this.trainingSetWidget,
-    super.key,
-  });
+class TrainingSetDetailView extends StatelessWidget {
+  const TrainingSetDetailView({required this.trainingSetData, super.key});
 
-  final TrainingSetSelected trainingSetWidget;
+  final TrainingSetSelected trainingSetData;
 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () =>
-          WorkoutMoveListViewModel(trainingSet: trainingSetWidget),
+          TrainingSetDetailViewModel(trainingSetDetail: trainingSetData),
       onViewModelReady: (vm) => vm.initialize(),
       builder: (context, vm, child) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Workout Moves'),
+            title: const Text('Training Set Detail'),
             backgroundColor: Colors.black,
-            automaticallyImplyLeading: false,
           ),
           body: vm.isBusy
               ? const Center(
@@ -44,46 +41,55 @@ class WorkoutMoveListView extends StatelessWidget {
                     Container(
                       color: background,
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 12),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 20),
                         child: Column(
                           children: [
-                            Center(
-                              child: SizedBox(
-                                height: 200,
-                                width: 200,
-                                child: Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Visibility(
-                                      visible: vm.isLoading,
-                                      child: const CircularProgressIndicator(),
-                                    ),
-                                    if (vm.workoutModel.isNotEmpty)
-                                      ModelViewer(
-                                        key: ValueKey(vm.workoutModel),
-                                        ar: false,
-                                        autoPlay: true,
-                                        src: vm.workoutModel,
-                                        disableZoom: true,
+                            SizedBox(
+                              height: 100,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 12),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            vm.trainingSetDetail
+                                                    .trainingSetName ??
+                                                '',
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Total moves: ${vm.trainingSetDetail.workoutMoves?.length ?? 0}',
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              child: Center(
-                                child: Text(
-                                  vm.workoutName,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
+                                  CachedNetworkImage(
+                                      height: 60,
+                                      width: 60,
+                                      imageUrl:
+                                          vm.trainingSetDetail.imageGoalType ??
+                                              ''),
+                                ],
                               ),
                             ),
+                            const Divider()
                           ],
                         ),
                       ),
@@ -94,9 +100,12 @@ class WorkoutMoveListView extends StatelessWidget {
                         child: SingleChildScrollView(
                           child: Column(
                             children: [
-                              if (vm.trainingSet.workoutMoves != null) ...[
+                              if (vm.trainingSetDetail.workoutMoves !=
+                                  null) ...[
                                 for (int i = 0;
-                                    i < vm.trainingSet.workoutMoves!.length;
+                                    i <
+                                        vm.trainingSetDetail.workoutMoves!
+                                            .length;
                                     i++) ...[
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -120,7 +129,9 @@ class WorkoutMoveListView extends StatelessWidget {
                                                 ),
                                               ),
                                               title: Text(
-                                                vm.trainingSet.workoutMoves?[i]
+                                                vm
+                                                        .trainingSetDetail
+                                                        .workoutMoves?[i]
                                                         .movementName ??
                                                     '-',
                                                 overflow: TextOverflow.ellipsis,
@@ -140,18 +151,19 @@ class WorkoutMoveListView extends StatelessWidget {
                                                 highlightColor:
                                                     Colors.transparent,
                                                 onTap: () {
-                                                  vm.setNameAndModel(
-                                                    vm
-                                                            .trainingSet
-                                                            .workoutMoves?[i]
-                                                            .movementName ??
-                                                        '-',
-                                                    vm
-                                                            .trainingSet
-                                                            .workoutMoves?[i]
-                                                            .movementImage ??
-                                                        '',
-                                                  );
+                                                  if (vm.trainingSetDetail
+                                                          .workoutMoves?[i] !=
+                                                      null) {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (BuildContext
+                                                                    context) =>
+                                                                WorkoutMoveDetailView(
+                                                                    workoutMoveData: vm
+                                                                        .trainingSetDetail
+                                                                        .workoutMoves![i])));
+                                                  }
                                                 },
                                                 child: Container(
                                                   decoration:
@@ -166,7 +178,8 @@ class WorkoutMoveListView extends StatelessWidget {
                                                     ),
                                                   ),
                                                   child: Icon(
-                                                    MdiIcons.play,
+                                                    MdiIcons
+                                                        .informationVariantCircle,
                                                     size: 32,
                                                   ),
                                                 ),
@@ -184,40 +197,6 @@ class WorkoutMoveListView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Container(
-                      color: Theme.of(context).colorScheme.background,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            bottom: 24, top: 12, left: 12, right: 12),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Expanded(flex: 1, child: Container()),
-                                Expanded(
-                                  flex: 2,
-                                  child: TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    style: TextButton.styleFrom(
-                                      backgroundColor:
-                                          Colors.red, // Background Color
-                                    ),
-                                    child: const Text(
-                                      'Back',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(flex: 1, child: Container()),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
                   ],
                 ),
         );

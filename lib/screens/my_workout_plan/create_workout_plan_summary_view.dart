@@ -31,7 +31,6 @@ class CreateWorkoutPlanSummaryView extends StatelessWidget {
               appBar: AppBar(
                 title: const Text('Workout Plan Summary'),
                 backgroundColor: Colors.black,
-                automaticallyImplyLeading: false,
                 actions: [
                   TextButton(
                     onPressed: () {
@@ -227,23 +226,6 @@ class CreateWorkoutPlanSummaryView extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Expanded(flex: 1, child: Container()),
-                                Expanded(
-                                  flex: 2,
-                                  child: TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    style: TextButton.styleFrom(
-                                      backgroundColor:
-                                          Colors.red, // Background Color
-                                    ),
-                                    child: const Text(
-                                      'Back',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                ),
                                 Expanded(flex: 1, child: Container()),
                                 Expanded(
                                   flex: 2,

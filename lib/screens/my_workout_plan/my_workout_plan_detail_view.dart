@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/models.dart';
@@ -21,8 +22,80 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                 title: const Text('My Workout Plan Detail'),
                 backgroundColor: Colors.black,
                 surfaceTintColor: background,
-                automaticallyImplyLeading: false,
-                actions: [],
+                actions: [
+                  PopupMenuButton(
+                    color: Theme.of(context).colorScheme.background,
+                    itemBuilder: (context) {
+                      return [
+                        PopupMenuItem(
+                            onTap: () {},
+                            child: Row(
+                              children: [
+                                Icon(MdiIcons.play),
+                                const Padding(
+                                    padding: EdgeInsets.only(left: 4),
+                                    child: Text('Play'))
+                              ],
+                            )),
+                        PopupMenuItem(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext ctx) {
+                                    return AlertDialog(
+                                      backgroundColor: background,
+                                      title: const Text('Delete Confirmation'),
+                                      content: const Text(
+                                          'Are you sure want to delete this move?'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text('Close'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+
+                                            ScaffoldMessenger.of(context)
+                                                .hideCurrentSnackBar();
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(const SnackBar(
+                                                    duration:
+                                                        Duration(seconds: 3),
+                                                    backgroundColor:
+                                                        Colors.green,
+                                                    showCloseIcon: true,
+                                                    content: Text(
+                                                      'Success delete workout move.',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 16),
+                                                    )));
+                                          },
+                                          child: const Text(
+                                            'Delete',
+                                            style: TextStyle(color: Colors.red),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: Row(
+                              children: [
+                                Icon(MdiIcons.trashCan),
+                                const Padding(
+                                    padding: EdgeInsets.only(left: 4),
+                                    child: Text('Remove'))
+                              ],
+                            )),
+                      ];
+                    },
+                  )
+                ],
               ),
               body: vm.isBusy
                   ? const Center(
@@ -183,32 +256,14 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                                   flex: 2,
                                   child: TextButton(
                                     onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    style: TextButton.styleFrom(
-                                      backgroundColor:
-                                          Colors.red, // Background Color
-                                    ),
-                                    child: const Text(
-                                      'Back',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(flex: 1, child: Container()),
-                                Expanded(
-                                  flex: 2,
-                                  child: TextButton(
-                                    onPressed: () {
                                       showDialog(
                                           context: context,
                                           builder: (BuildContext ctx) {
                                             return AlertDialog(
                                               backgroundColor: background,
-                                              title: const Text(
-                                                  'Create Confirmation'),
+                                              title: const Text('Confirmation'),
                                               content: const Text(
-                                                  'Are you sure want to create this workout plan?'),
+                                                  'Ready to start workouts?'),
                                               actions: [
                                                 TextButton(
                                                   onPressed: () {
@@ -217,9 +272,11 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                                                   child: const Text('Close'),
                                                 ),
                                                 TextButton(
-                                                  onPressed: () async {},
+                                                  onPressed: () async {
+                                                    Navigator.of(context).pop();
+                                                  },
                                                   child: const Text(
-                                                    'Confirm',
+                                                    'Lets go',
                                                     style: TextStyle(
                                                         color: Colors.blue),
                                                   ),
@@ -233,7 +290,7 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                                           Colors.blue, // Background Color
                                     ),
                                     child: const Text(
-                                      'Create',
+                                      'Start',
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),

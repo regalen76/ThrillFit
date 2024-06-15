@@ -13,15 +13,6 @@ class WorkoutMoveSelectionViewModel extends BaseViewModel {
   List<WorkoutMoveSelected> _workoutMoves = [];
   List<WorkoutMoveSelected> get workoutMoves => _workoutMoves;
 
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
-
-  String _workoutName = '-';
-  String get workoutName => _workoutName;
-
-  String _workoutModel = '';
-  String get workoutModel => _workoutModel;
-
   int _totalMoveSelected = 0;
   int get totalMoveSelected => _totalMoveSelected;
 
@@ -54,26 +45,7 @@ class WorkoutMoveSelectionViewModel extends BaseViewModel {
       }
     }
 
-    var firstMove = _workoutMoves.firstOrNull;
-
-    setNameAndModel(
-        firstMove?.movementName ?? '-', firstMove?.movementImage ?? '');
-
     setBusy(false);
-    notifyListeners();
-  }
-
-  void setNameAndModel(String name, String model) async {
-    _isLoading = true;
-
-    _workoutName = name;
-    _workoutModel = model;
-
-    notifyListeners();
-
-    await Future.delayed(const Duration(seconds: 3));
-    _isLoading = false;
-
     notifyListeners();
   }
 
@@ -151,5 +123,16 @@ class WorkoutMoveSelectionViewModel extends BaseViewModel {
     } else {
       return false;
     }
+  }
+
+  List<WorkoutMoveSelected> checkSelectedMoves() {
+    List<WorkoutMoveSelected> listReturn = [];
+    for (int i = 0; i < _workoutMoves.length; i++) {
+      if (_workoutMoves[i].selected) {
+        listReturn.add(_workoutMoves[i]);
+      }
+    }
+
+    return listReturn;
   }
 }

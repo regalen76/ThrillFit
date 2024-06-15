@@ -233,7 +233,7 @@ class MyWorkoutPlanView extends StatelessWidget {
               shape: const CircleBorder(),
               backgroundColor: Colors.blue,
               foregroundColor: Colors.white,
-              tooltip: 'Increment',
+              tooltip: 'Add Workout Plan',
               child: Icon(MdiIcons.plus),
             ),
           );

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:model_viewer_plus/model_viewer_plus.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:stacked/stacked.dart';
+import 'package:thrill_fit/components/workout_move_detail_view.dart';
 import 'package:thrill_fit/models/models.dart';
 import 'package:thrill_fit/screens/my_workout_plan/create_workout_plan_summary_view.dart';
 import 'package:thrill_fit/screens/my_workout_plan/workout_move_selection_view_model.dart';
@@ -30,7 +30,6 @@ class WorkoutMoveSelectionView extends StatelessWidget {
             appBar: AppBar(
               title: const Text('Set Workout Moves'),
               backgroundColor: Colors.black,
-              automaticallyImplyLeading: false,
               actions: [
                 TextButton(
                   onPressed: () {
@@ -87,56 +86,6 @@ class WorkoutMoveSelectionView extends StatelessWidget {
                   ))
                 : Column(
                     children: [
-                      Container(
-                        color: background,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 12),
-                          child: Column(
-                            children: [
-                              Center(
-                                child: SizedBox(
-                                  height: 200,
-                                  width: 200,
-                                  child: Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      Visibility(
-                                        visible: vm.isLoading,
-                                        child:
-                                            const CircularProgressIndicator(),
-                                      ),
-                                      // Lazy load ModelViewer when vm.workoutModel is set
-                                      if (vm.workoutModel.isNotEmpty)
-                                        ModelViewer(
-                                          key: ValueKey(vm.workoutModel),
-                                          ar: false,
-                                          autoPlay: true,
-                                          src: vm.workoutModel,
-                                          disableZoom: true,
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                child: Center(
-                                  child: Text(
-                                    vm.workoutName,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -229,15 +178,13 @@ class WorkoutMoveSelectionView extends StatelessWidget {
                                                       return [
                                                         PopupMenuItem(
                                                             onTap: () {
-                                                              vm.setNameAndModel(
-                                                                  vm
-                                                                          .workoutMoves[
-                                                                              i]
-                                                                          .movementName ??
-                                                                      '-',
-                                                                  vm.workoutMoves[i]
-                                                                          .movementImage ??
-                                                                      '');
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (BuildContext
+                                                                              context) =>
+                                                                          WorkoutMoveDetailView(
+                                                                              workoutMoveData: vm.workoutMoves[i])));
                                                             },
                                                             child: Row(
                                                               children: [
@@ -249,7 +196,7 @@ class WorkoutMoveSelectionView extends StatelessWidget {
                                                                             left:
                                                                                 4),
                                                                     child: Text(
-                                                                        'Play'))
+                                                                        'Demonstrate'))
                                                               ],
                                                             )),
                                                         PopupMenuItem(
@@ -406,23 +353,6 @@ class WorkoutMoveSelectionView extends StatelessWidget {
                                     flex: 2,
                                     child: TextButton(
                                       onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      style: TextButton.styleFrom(
-                                        backgroundColor:
-                                            Colors.red, // Background Color
-                                      ),
-                                      child: const Text(
-                                        'Back',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(flex: 1, child: Container()),
-                                  Expanded(
-                                    flex: 2,
-                                    child: TextButton(
-                                      onPressed: () {
                                         vm.validateInput();
 
                                         if (vm.isValidSelection) {
@@ -544,7 +474,8 @@ class WorkoutMoveSelectionView extends StatelessWidget {
                                                   repetitionInput: int.parse(vm
                                                       .repetitionController
                                                       .text),
-                                                  savedMove: vm.workoutMoves,
+                                                  savedMove:
+                                                      vm.checkSelectedMoves(),
                                                 )));
                                   }
                                 },
