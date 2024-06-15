@@ -14,48 +14,61 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage> {
   bool isLogin = true;
 
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController controllerEmail = TextEditingController();
   final TextEditingController controllerPassword = TextEditingController();
 
+  String? validateEmpty(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Field can`t be empty';
+    }
+    return null;
+  }
+
   Future<void> signInWithEmailAndPassword() async {
-    try {
-      await Auth().signInWithEmailAndPassword(
-          email: controllerEmail.text.trim(),
-          password: controllerPassword.text.trim());
-    } on FirebaseAuthException catch (e) {
-      if (mounted) {
-        if (e.code == 'invalid-credential') {
-          Util().flashMessageInfo(context, 'Wrong Credentials');
-        } else if (e.code == 'invalid-email') {
-          Util().flashMessageInfo(context, 'Invalid Email');
-        } else if (e.code == 'wrong-password') {
-          Util().flashMessageInfo(context, 'Wrong Password');
-        } else {
-          Util().flashMessageError(context, e.code);
+    if (formKey.currentState!.validate()) {
+      try {
+        await Auth().signInWithEmailAndPassword(
+            email: controllerEmail.text.trim(),
+            password: controllerPassword.text.trim());
+      } on FirebaseAuthException catch (e) {
+        if (mounted) {
+          if (e.code == 'invalid-credential') {
+            Util().flashMessageInfo(context, 'Invalid Credentials');
+          } else if (e.code == 'invalid-email') {
+            Util().flashMessageInfo(context, 'Invalid Email');
+          } else if (e.code == 'wrong-password') {
+            Util().flashMessageInfo(context, 'Wrong Password');
+          } else {
+            Util().flashMessageError(context, e.code);
+          }
         }
       }
     }
   }
 
   Future<void> createUserWithEmailAndPassword() async {
-    try {
-      await Auth().createUserWithEmailAndPassword(
-          email: controllerEmail.text.trim(),
-          password: controllerPassword.text.trim());
-    } on FirebaseAuthException catch (e) {
-      if (mounted) {
-        if (e.message == null) {
-          Util().flashMessageError(context, e.code);
-        } else {
-          Util().flashMessageInfo(context, e.message!);
+    if (formKey.currentState!.validate()) {
+      try {
+        await Auth().createUserWithEmailAndPassword(
+            email: controllerEmail.text.trim(),
+            password: controllerPassword.text.trim());
+      } on FirebaseAuthException catch (e) {
+        if (mounted) {
+          if (e.message == null) {
+            Util().flashMessageError(context, e.code);
+          } else {
+            Util().flashMessageInfo(context, e.message!);
+          }
         }
       }
     }
   }
 
-  Widget entryField(String title, TextEditingController controller) {
-    return TextField(
+  TextFormField entryField(String title, TextEditingController controller) {
+    return TextFormField(
       autocorrect: false,
+      validator: validateEmpty,
       onTapOutside: (event) {
         FocusManager.instance.primaryFocus?.unfocus();
       },
@@ -69,9 +82,11 @@ class LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget entryFieldPassword(String title, TextEditingController controller) {
-    return TextField(
+  TextFormField entryFieldPassword(
+      String title, TextEditingController controller) {
+    return TextFormField(
       controller: controller,
+      validator: validateEmpty,
       obscureText: true,
       onTapOutside: (event) {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -144,23 +159,26 @@ class LoginPageState extends State<LoginPage> {
         physics: const ClampingScrollPhysics(),
         child: Container(
           padding: const EdgeInsets.only(left: 20, right: 20, top: 80),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              AnimatedSwitcher(
-                duration: const Duration(seconds: 1),
-                child: Icon(
-                  Icons.account_circle,
-                  key: ValueKey<bool>(isLogin),
-                  color: isLogin ? Colors.blue : Colors.deepPurpleAccent,
-                  size: 250,
+          child: Form(
+            key: formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                AnimatedSwitcher(
+                  duration: const Duration(seconds: 1),
+                  child: Icon(
+                    Icons.account_circle,
+                    key: ValueKey<bool>(isLogin),
+                    color: isLogin ? Colors.blue : Colors.deepPurpleAccent,
+                    size: 250,
+                  ),
                 ),
-              ),
-              entryField('email', controllerEmail),
-              entryFieldPassword('password', controllerPassword),
-              submitButton(),
-              loginOrRegisterButton(),
-            ],
+                entryField('email', controllerEmail),
+                entryFieldPassword('password', controllerPassword),
+                submitButton(),
+                loginOrRegisterButton(),
+              ],
+            ),
           ),
         ),
       ),
