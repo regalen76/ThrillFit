@@ -1,8 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
-part 'insert_workout_plan_move_model.g.dart';
+part 'workout_plan_move_request_model.g.dart';
 
 @JsonSerializable()
-class InsertWorkoutPlanMoveModel {
+class WorkoutPlanMoveRequestModel {
   @JsonKey(name: 'workout_plan_id')
   final String workoutPlanId;
   @JsonKey(name: 'movement_name')
@@ -12,14 +12,14 @@ class InsertWorkoutPlanMoveModel {
   @JsonKey(name: 'view_order')
   final int viewOrder;
 
-  InsertWorkoutPlanMoveModel({
+  WorkoutPlanMoveRequestModel({
     required this.workoutPlanId,
     required this.movementName,
     required this.movementImage,
     required this.viewOrder,
   });
 
-  factory InsertWorkoutPlanMoveModel.fromJson(Map<String, dynamic> json) =>
-      _$InsertWorkoutPlanMoveModelFromJson(json);
-  Map<String, dynamic> toJson() => _$InsertWorkoutPlanMoveModelToJson(this);
+  factory WorkoutPlanMoveRequestModel.fromJson(Map<String, dynamic> json) =>
+      _$WorkoutPlanMoveRequestModelFromJson(json);
+  Map<String, dynamic> toJson() => _$WorkoutPlanMoveRequestModelToJson(this);
 }

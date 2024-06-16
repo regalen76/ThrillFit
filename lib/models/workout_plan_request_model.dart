@@ -2,10 +2,10 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:thrill_fit/shared/timestamp_converter.dart';
 
-part 'insert_workout_plan_model.g.dart';
+part 'workout_plan_request_model.g.dart';
 
 @JsonSerializable()
-class InsertWorkoutPlanModel {
+class WorkoutPlanRequestModel {
   @JsonKey(name: 'user_id')
   final String userId;
   final String title;
@@ -17,7 +17,7 @@ class InsertWorkoutPlanModel {
   @JsonKey(name: 'last_updated')
   final DateTime lastUpdated;
 
-  InsertWorkoutPlanModel(
+  WorkoutPlanRequestModel(
       {required this.userId,
       required this.title,
       required this.description,
@@ -25,7 +25,7 @@ class InsertWorkoutPlanModel {
       required this.dailyRepetition,
       required this.lastUpdated});
 
-  factory InsertWorkoutPlanModel.fromJson(Map<String, dynamic> json) =>
-      _$InsertWorkoutPlanModelFromJson(json);
-  Map<String, dynamic> toJson() => _$InsertWorkoutPlanModelToJson(this);
+  factory WorkoutPlanRequestModel.fromJson(Map<String, dynamic> json) =>
+      _$WorkoutPlanRequestModelFromJson(json);
+  Map<String, dynamic> toJson() => _$WorkoutPlanRequestModelToJson(this);
 }

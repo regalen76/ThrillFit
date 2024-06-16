@@ -94,17 +94,18 @@ class WorkoutPlanRepo {
       var workoutPlanId = const Uuid().v4();
       List<Future> futures = [];
 
-      await workoutPlanCollection.doc(workoutPlanId).set(InsertWorkoutPlanModel(
-              userId: userId,
-              title: title,
-              description: description,
-              repetition: repetition,
-              dailyRepetition: 0,
-              lastUpdated: DateTime.now())
-          .toJson());
+      await workoutPlanCollection.doc(workoutPlanId).set(
+          WorkoutPlanRequestModel(
+                  userId: userId,
+                  title: title,
+                  description: description,
+                  repetition: repetition,
+                  dailyRepetition: 0,
+                  lastUpdated: DateTime.now())
+              .toJson());
 
       for (int i = 0; i < movesInput.length; i++) {
-        var jsonRequest = InsertWorkoutPlanMoveModel(
+        var jsonRequest = WorkoutPlanMoveRequestModel(
                 workoutPlanId: workoutPlanId,
                 movementName: movesInput[i].movementName ?? '',
                 movementImage: movesInput[i].movementImage ?? '',
