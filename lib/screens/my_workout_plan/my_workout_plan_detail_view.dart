@@ -46,7 +46,7 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                                       backgroundColor: background,
                                       title: const Text('Delete Confirmation'),
                                       content: const Text(
-                                          'Are you sure want to delete this move?'),
+                                          'Are you sure want to delete this workout plan?'),
                                       actions: [
                                         TextButton(
                                           onPressed: () {
@@ -55,25 +55,37 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                                           child: const Text('Close'),
                                         ),
                                         TextButton(
-                                          onPressed: () {
+                                          onPressed: () async {
                                             Navigator.of(context).pop();
+
+                                            var isSuccess =
+                                                await vm.deleteWorkoutPlan(
+                                                    vm.workoutPlanData.id);
+                                            var snackBarMsg = isSuccess
+                                                ? "Success delete Workout Plan."
+                                                : "Failed to delete Workout Plan.";
 
                                             ScaffoldMessenger.of(context)
                                                 .hideCurrentSnackBar();
                                             ScaffoldMessenger.of(context)
-                                                .showSnackBar(const SnackBar(
-                                                    duration:
-                                                        Duration(seconds: 3),
-                                                    backgroundColor:
-                                                        Colors.green,
+                                                .showSnackBar(SnackBar(
+                                                    duration: const Duration(
+                                                        seconds: 3),
+                                                    backgroundColor: isSuccess
+                                                        ? Colors.green
+                                                        : Colors.red,
                                                     showCloseIcon: true,
                                                     content: Text(
-                                                      'Success delete workout move.',
-                                                      style: TextStyle(
+                                                      snackBarMsg,
+                                                      style: const TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 16),
                                                     )));
+
+                                            if (isSuccess) {
+                                              Navigator.of(context).pop();
+                                            }
                                           },
                                           child: const Text(
                                             'Delete',
@@ -205,9 +217,7 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                                         ),
                                       ),
                                       for (int i = 0;
-                                          i <
-                                              vm.workoutPlanData.workoutMoves
-                                                  .length;
+                                          i < vm.moveList.length;
                                           i++) ...[
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
@@ -221,10 +231,7 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                                             ),
                                             child: ListTile(
                                               title: Text(
-                                                vm
-                                                    .workoutPlanData
-                                                    .workoutMoves[i]
-                                                    .movementName,
+                                                vm.moveList[i].movementName,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: const TextStyle(
                                                   fontSize: 16,

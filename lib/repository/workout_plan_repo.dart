@@ -92,9 +92,11 @@ class WorkoutPlanRepo {
       List<WorkoutMoveSelected> movesInput) async {
     try {
       var workoutPlanId = const Uuid().v4();
-      List<Future> futures = [];
+      var batch = FirebaseFirestore.instance.batch();
 
-      await workoutPlanCollection.doc(workoutPlanId).set(
+      var workoutPlanDoc = workoutPlanCollection.doc(workoutPlanId);
+      batch.set(
+          workoutPlanDoc,
           WorkoutPlanRequestModel(
                   userId: userId,
                   title: title,
@@ -112,13 +114,11 @@ class WorkoutPlanRepo {
                 viewOrder: i + 1)
             .toJson();
 
-        futures.add(workoutPlanMoveSetCollection
-            .doc(const Uuid().v4())
-            .set(jsonRequest));
+        var moveDoc = workoutPlanMoveSetCollection.doc(const Uuid().v4());
+        batch.set(moveDoc, jsonRequest);
       }
 
-      await Future.wait(futures);
-
+      await batch.commit();
       return true;
     } catch (e) {
       return false;
@@ -160,6 +160,29 @@ class WorkoutPlanRepo {
       }).toList();
     } catch (e) {
       return [];
+    }
+  }
+
+  Future<bool> deleteMyWorkoutPlan(String workoutPlanId) async {
+    try {
+      var batch = FirebaseFirestore.instance.batch();
+      var workoutPlanDoc = workoutPlanCollection.doc(workoutPlanId);
+      batch.delete(workoutPlanDoc);
+
+      QuerySnapshot snapshot = await workoutPlanMoveSetCollection
+          .where('workout_plan_id', isEqualTo: workoutPlanId)
+          .get();
+
+      for (QueryDocumentSnapshot docData in snapshot.docs) {
+        var moveDoc = workoutPlanMoveSetCollection.doc(docData.id);
+        batch.delete(moveDoc);
+      }
+
+      await batch.commit();
+
+      return true;
+    } catch (e) {
+      return false;
     }
   }
 }
