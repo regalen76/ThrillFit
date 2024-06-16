@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:stacked/stacked.dart';
+import 'package:thrill_fit/components/workout_move_detail_view.dart';
 import 'package:thrill_fit/models/workout_move_selected.dart';
 import 'package:thrill_fit/screens/my_workout_plan/create_workout_plan_summary_view_model.dart';
 
@@ -188,26 +190,84 @@ class CreateWorkoutPlanSummaryView extends StatelessWidget {
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 12),
-                                          child: Container(
-                                            decoration: const BoxDecoration(
-                                              color: Colors.lime,
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(8),
+                                          child: Table(
+                                            columnWidths: const {
+                                              0: FlexColumnWidth(7),
+                                              1: FlexColumnWidth(1),
+                                            },
+                                            children: [
+                                              TableRow(
+                                                children: [
+                                                  ListTile(
+                                                    tileColor: Colors.lime,
+                                                    shape:
+                                                        const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(8),
+                                                        bottomLeft:
+                                                            Radius.circular(8),
+                                                      ),
+                                                    ),
+                                                    title: Text(
+                                                      vm.listOfWorkoutMove[i]
+                                                              .movementName ??
+                                                          '-',
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: const TextStyle(
+                                                        fontSize: 16,
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  TableCell(
+                                                    verticalAlignment:
+                                                        TableCellVerticalAlignment
+                                                            .fill,
+                                                    child: InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    WorkoutMoveDetailView(
+                                                                        workoutMoveData:
+                                                                            vm.listOfWorkoutMove[i])));
+                                                      },
+                                                      child: Container(
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                          color: Colors.black,
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    8),
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    8),
+                                                          ),
+                                                        ),
+                                                        child: Icon(
+                                                          MdiIcons
+                                                              .informationVariantCircle,
+                                                          size: 32,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                            ),
-                                            child: ListTile(
-                                              title: Text(
-                                                vm.listOfWorkoutMove[i]
-                                                        .movementName ??
-                                                    '-',
-                                                overflow: TextOverflow.ellipsis,
-                                                style: const TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
+                                            ],
                                           ),
                                         ),
                                       ]

@@ -44,4 +44,12 @@ class MyWorkoutPlanDetailViewModel extends BaseViewModel {
       return false;
     }
   }
+
+  WorkoutMoveSelected convertMoveDetail(MyWorkoutPlanMovesModel data) {
+    return WorkoutMoveSelected(
+      id: data.id,
+      movementName: data.movementName,
+      movementImage: data.movementImage,
+    );
+  }
 }
