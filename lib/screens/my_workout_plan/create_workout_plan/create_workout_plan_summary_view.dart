@@ -4,7 +4,7 @@ import 'package:onboarding/onboarding.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/components/workout_move_detail_view.dart';
 import 'package:thrill_fit/models/workout_move_selected.dart';
-import 'package:thrill_fit/screens/my_workout_plan/create_workout_plan_summary_view_model.dart';
+import 'package:thrill_fit/screens/my_workout_plan/create_workout_plan/create_workout_plan_summary_view_model.dart';
 
 class CreateWorkoutPlanSummaryView extends StatelessWidget {
   const CreateWorkoutPlanSummaryView(

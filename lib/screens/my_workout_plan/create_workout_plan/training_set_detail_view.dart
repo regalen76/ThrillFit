@@ -5,7 +5,7 @@ import 'package:onboarding/onboarding.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/components/workout_move_detail_view.dart';
 import 'package:thrill_fit/models/models.dart';
-import 'package:thrill_fit/screens/my_workout_plan/training_set_detail_view_model.dart';
+import 'package:thrill_fit/screens/my_workout_plan/create_workout_plan/training_set_detail_view_model.dart';
 
 class TrainingSetDetailView extends StatelessWidget {
   const TrainingSetDetailView({required this.trainingSetData, super.key});

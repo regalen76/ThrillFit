@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/models.dart';
-import 'package:thrill_fit/screens/my_workout_plan/add_workout_plan_view_model.dart';
-import 'package:thrill_fit/screens/my_workout_plan/training_set_list_view.dart';
+import 'package:thrill_fit/screens/my_workout_plan/create_workout_plan/add_workout_plan_view_model.dart';
+import 'package:thrill_fit/screens/my_workout_plan/create_workout_plan/training_set_list_view.dart';
 
 class AddWorkoutPlanView extends StatelessWidget {
   const AddWorkoutPlanView({super.key});

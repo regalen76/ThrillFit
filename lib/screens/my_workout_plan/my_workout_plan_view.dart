@@ -4,7 +4,7 @@ import 'package:onboarding/onboarding.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/models.dart';
-import 'package:thrill_fit/screens/my_workout_plan/add_workout_plan_view.dart';
+import 'package:thrill_fit/screens/my_workout_plan/create_workout_plan/add_workout_plan_view.dart';
 import 'package:thrill_fit/screens/my_workout_plan/my_workout_plan_detail_view.dart';
 import 'package:thrill_fit/screens/my_workout_plan/my_workout_plan_view_model.dart';
 

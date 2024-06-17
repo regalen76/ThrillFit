@@ -4,9 +4,9 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:onboarding/onboarding.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/models.dart';
-import 'package:thrill_fit/screens/my_workout_plan/training_set_detail_view.dart';
-import 'package:thrill_fit/screens/my_workout_plan/workout_move_selection_view.dart';
-import 'package:thrill_fit/screens/my_workout_plan/training_set_list_view_model.dart';
+import 'package:thrill_fit/screens/my_workout_plan/create_workout_plan/training_set_detail_view.dart';
+import 'package:thrill_fit/screens/my_workout_plan/create_workout_plan/workout_move_selection_view.dart';
+import 'package:thrill_fit/screens/my_workout_plan/create_workout_plan/training_set_list_view_model.dart';
 
 class TrainingSetListView extends StatelessWidget {
   const TrainingSetListView(
