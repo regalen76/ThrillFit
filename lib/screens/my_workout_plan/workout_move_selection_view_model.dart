@@ -32,7 +32,7 @@ class WorkoutMoveSelectionViewModel extends BaseViewModel {
     for (int i = 0; i < movesFromSets.length; i++) {
       _workoutMoves.add(
         WorkoutMoveSelected(
-            id: movesFromSets[i].id,
+            movementId: movesFromSets[i].movementId,
             movementName: movesFromSets[i].movementName,
             movementImage: movesFromSets[i].movementImage,
             selected: true),
@@ -49,9 +49,9 @@ class WorkoutMoveSelectionViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void changeSelectedValue(String id, value) {
+  void changeSelectedValue(String uniqueId, value) {
     for (int i = 0; i < _workoutMoves.length; i++) {
-      if (_workoutMoves[i].id == id) {
+      if (_workoutMoves[i].uniqueId == uniqueId) {
         _workoutMoves[i].selected = value;
         _workoutMoves[i].selected ? _totalMoveSelected++ : _totalMoveSelected--;
       }
@@ -70,7 +70,15 @@ class WorkoutMoveSelectionViewModel extends BaseViewModel {
 
   bool deleteMoves(int index) {
     try {
+      _totalMoveSelected = 0;
+
       _workoutMoves.removeAt(index);
+
+      for (int i = 0; i < _workoutMoves.length; i++) {
+        if (_workoutMoves[i].selected) {
+          _totalMoveSelected++;
+        }
+      }
       notifyListeners();
       return true;
     } catch (e) {
@@ -81,11 +89,10 @@ class WorkoutMoveSelectionViewModel extends BaseViewModel {
 
   bool duplicateMoves(int index, WorkoutMoveSelected data) {
     try {
-      String uniqueId = const Uuid().v4();
       _workoutMoves.insert(
           index,
           WorkoutMoveSelected(
-              id: uniqueId,
+              movementId: data.movementId,
               movementName: data.movementName,
               movementImage: data.movementImage));
 

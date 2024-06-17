@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/models.dart';
 import 'package:thrill_fit/repository/workout_plan_repo.dart';
@@ -6,6 +8,7 @@ import 'package:thrill_fit/services/auth.dart';
 
 class MyWorkoutPlanViewModel extends BaseViewModel {
   User? user = Auth().currentUser;
+  Logger logger = Logger();
 
   void initialize() async {
     setBusy(true);
@@ -24,11 +27,19 @@ class MyWorkoutPlanViewModel extends BaseViewModel {
 
     List<MyWorkoutPlanMovesModel> moveList = [];
     for (int i = 0; i < movesData.length; i++) {
-      moveList.add(MyWorkoutPlanMovesModel(
-          id: movesData[i].id,
-          movementImage: movesData[i].movementImage,
-          movementName: movesData[i].movementName,
-          viewOrder: movesData[i].viewOrder));
+      var workoutMoveData = await WorkoutPlanRepo()
+          .getTrainingSetMoveById(movesData[i].movementId);
+
+      if (workoutMoveData != null) {
+        var imageUrl = await getMovementImage(workoutMoveData.movementImage);
+
+        moveList.add(MyWorkoutPlanMovesModel(
+            id: movesData[i].id,
+            movementId: movesData[i].movementId,
+            movementName: workoutMoveData.movementName,
+            movementImage: imageUrl,
+            viewOrder: movesData[i].viewOrder));
+      }
     }
 
     return MyWorkoutPlansModel(
@@ -39,5 +50,17 @@ class MyWorkoutPlanViewModel extends BaseViewModel {
       dailyRepetition: data.dailyRepetition,
       workoutMoves: moveList,
     );
+  }
+
+  Future<String> getMovementImage(String movementImage) async {
+    var storageRef =
+        FirebaseStorage.instance.ref().child('workout/$movementImage');
+
+    try {
+      return await storageRef.getDownloadURL();
+    } catch (e) {
+      logger.e("Failed to get movement image, the error: $e");
+      return '';
+    }
   }
 }

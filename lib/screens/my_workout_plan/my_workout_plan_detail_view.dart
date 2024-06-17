@@ -32,10 +32,10 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                             onTap: () {},
                             child: Row(
                               children: [
-                                Icon(MdiIcons.play),
+                                Icon(MdiIcons.pencilOutline),
                                 const Padding(
                                     padding: EdgeInsets.only(left: 4),
-                                    child: Text('Play'))
+                                    child: Text('Edit'))
                               ],
                             )),
                         PopupMenuItem(
@@ -211,9 +211,6 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                                             Text(
                                               'Total Moves: ${vm.workoutPlanData.workoutMoves.length}',
                                             ),
-                                            Text(
-                                              'Repetition: ${vm.workoutPlanData.repetition}',
-                                            )
                                           ],
                                         ),
                                       ),
@@ -315,54 +312,73 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.only(
                                 bottom: 24, top: 12, left: 12, right: 12),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            child: Column(
                               children: [
-                                Expanded(flex: 1, child: Container()),
-                                Expanded(
-                                  flex: 2,
-                                  child: TextButton(
-                                    onPressed: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext ctx) {
-                                            return AlertDialog(
-                                              backgroundColor: background,
-                                              title: const Text('Confirmation'),
-                                              content: const Text(
-                                                  'Ready to start workouts?'),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: const Text('Close'),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () async {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: const Text(
-                                                    'Lets go',
-                                                    style: TextStyle(
-                                                        color: Colors.blue),
-                                                  ),
-                                                ),
-                                              ],
-                                            );
-                                          });
-                                    },
-                                    style: TextButton.styleFrom(
-                                      backgroundColor:
-                                          Colors.blue, // Background Color
-                                    ),
-                                    child: const Text(
-                                      'Start',
-                                      style: TextStyle(color: Colors.white),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 6),
+                                  child: Center(
+                                    child: Text(
+                                      'Repetition done today: ${vm.workoutPlanData.dailyRepetition} / ${vm.workoutPlanData.repetition}',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                 ),
-                                Expanded(flex: 1, child: Container()),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Expanded(flex: 1, child: Container()),
+                                    Expanded(
+                                      flex: 2,
+                                      child: TextButton(
+                                        onPressed: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext ctx) {
+                                                return AlertDialog(
+                                                  backgroundColor: background,
+                                                  title: const Text(
+                                                      'Confirmation'),
+                                                  content: const Text(
+                                                      'Ready to start workouts?'),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                      child:
+                                                          const Text('Close'),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () async {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                      child: const Text(
+                                                        'Lets go',
+                                                        style: TextStyle(
+                                                            color: Colors.blue),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                );
+                                              });
+                                        },
+                                        style: TextButton.styleFrom(
+                                          backgroundColor:
+                                              Colors.blue, // Background Color
+                                        ),
+                                        child: const Text(
+                                          'Start',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(flex: 1, child: Container()),
+                                  ],
+                                ),
                               ],
                             ),
                           ),

@@ -4,17 +4,14 @@ part 'workout_plan_movesets_data.g.dart';
 @JsonSerializable()
 class WorkoutPlanMovesetsData {
   final String id;
-  @JsonKey(name: 'movement_name')
-  final String movementName;
-  @JsonKey(name: 'movement_image')
-  final String movementImage;
+  @JsonKey(name: 'movement_id')
+  final String movementId;
   @JsonKey(name: 'view_order')
   final int viewOrder;
 
   WorkoutPlanMovesetsData({
     required this.id,
-    required this.movementName,
-    required this.movementImage,
+    required this.movementId,
     required this.viewOrder,
   });
 

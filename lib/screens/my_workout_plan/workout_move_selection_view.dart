@@ -97,7 +97,7 @@ class WorkoutMoveSelectionView extends StatelessWidget {
                                   i < vm.workoutMoves.length;
                                   i++) ...[
                                 Container(
-                                  key: ValueKey(vm.workoutMoves[i].id),
+                                  key: ValueKey(vm.workoutMoves[i].uniqueId),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 12),
@@ -126,7 +126,8 @@ class WorkoutMoveSelectionView extends StatelessWidget {
                                                         .selected,
                                                     onChanged: (value) {
                                                       vm.changeSelectedValue(
-                                                          vm.workoutMoves[i].id,
+                                                          vm.workoutMoves[i]
+                                                              .uniqueId,
                                                           value);
                                                     },
                                                     visualDensity:

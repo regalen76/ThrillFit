@@ -45,7 +45,7 @@ class TrainingSetListViewModel extends BaseViewModel {
             await getMovementImage(_workoutMoveData[j].movementImage);
 
         workoutMovesList.add(WorkoutMoveSelected(
-          id: _workoutMoveData[j].id,
+          movementId: _workoutMoveData[j].id,
           movementName: _workoutMoveData[j].movementName,
           movementImage: imageUrl,
         ));

@@ -19,6 +19,7 @@ class MyWorkoutPlanDetailViewModel extends BaseViewModel {
     for (int i = 0; i < workoutPlanData.workoutMoves.length; i++) {
       _moveList.add(MyWorkoutPlanMovesModel(
           id: workoutPlanData.workoutMoves[i].id,
+          movementId: workoutPlanData.workoutMoves[i].movementId,
           movementName: workoutPlanData.workoutMoves[i].movementName,
           movementImage: workoutPlanData.workoutMoves[i].movementImage,
           viewOrder: workoutPlanData.workoutMoves[i].viewOrder));
@@ -47,7 +48,8 @@ class MyWorkoutPlanDetailViewModel extends BaseViewModel {
 
   WorkoutMoveSelected convertMoveDetail(MyWorkoutPlanMovesModel data) {
     return WorkoutMoveSelected(
-      id: data.id,
+      uniqueId: data.id,
+      movementId: data.movementId,
       movementName: data.movementName,
       movementImage: data.movementImage,
     );

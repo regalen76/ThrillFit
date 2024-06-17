@@ -84,6 +84,30 @@ class WorkoutPlanRepo {
     }
   }
 
+  Future<WorkoutMoveData?> getTrainingSetMoveById(String movementId) async {
+    try {
+      return await trainingSetMovementsCollection.doc(movementId).get().then(
+        (DocumentSnapshot doc) {
+          if (doc.exists) {
+            return WorkoutMoveData(
+              id: doc.id,
+              movementImage: doc.get('movement_image') ?? '',
+              movementName: doc.get('movement_name') ?? '',
+              trainingSetId: doc.get('training_set_id') ?? '',
+            );
+          } else {
+            return null;
+          }
+        },
+        onError: (e) {
+          return null;
+        },
+      );
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<bool> createWorkoutPlan(
       String userId,
       String title,
@@ -109,8 +133,7 @@ class WorkoutPlanRepo {
       for (int i = 0; i < movesInput.length; i++) {
         var jsonRequest = WorkoutPlanMoveRequestModel(
                 workoutPlanId: workoutPlanId,
-                movementName: movesInput[i].movementName ?? '',
-                movementImage: movesInput[i].movementImage ?? '',
+                movementId: movesInput[i].movementId,
                 viewOrder: i + 1)
             .toJson();
 
@@ -153,8 +176,7 @@ class WorkoutPlanRepo {
       return snapshot.docs.map((doc) {
         return WorkoutPlanMovesetsData(
           id: doc.id,
-          movementName: doc.get('movement_name') ?? '',
-          movementImage: doc.get('movement_image') ?? '',
+          movementId: doc.get('movement_id') ?? '',
           viewOrder: doc.get('view_order') ?? 0,
         );
       }).toList();

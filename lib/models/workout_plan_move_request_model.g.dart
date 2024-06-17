@@ -10,8 +10,7 @@ WorkoutPlanMoveRequestModel _$WorkoutPlanMoveRequestModelFromJson(
         Map<String, dynamic> json) =>
     WorkoutPlanMoveRequestModel(
       workoutPlanId: json['workout_plan_id'] as String,
-      movementName: json['movement_name'] as String,
-      movementImage: json['movement_image'] as String,
+      movementId: json['movement_id'] as String,
       viewOrder: json['view_order'] as int,
     );
 
@@ -19,7 +18,6 @@ Map<String, dynamic> _$WorkoutPlanMoveRequestModelToJson(
         WorkoutPlanMoveRequestModel instance) =>
     <String, dynamic>{
       'workout_plan_id': instance.workoutPlanId,
-      'movement_name': instance.movementName,
-      'movement_image': instance.movementImage,
+      'movement_id': instance.movementId,
       'view_order': instance.viewOrder,
     };
