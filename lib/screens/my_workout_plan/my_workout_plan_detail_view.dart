@@ -105,6 +105,73 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                                     child: Text('Remove'))
                               ],
                             )),
+                        PopupMenuItem(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext ctx) {
+                                    return AlertDialog(
+                                      backgroundColor: background,
+                                      title: const Text('Reset Confirmation'),
+                                      content: const Text(
+                                          'Are you sure want to reset workout plan repetition?'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text('Close'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () async {
+                                            Navigator.of(context).pop();
+
+                                            var isSuccess = await vm
+                                                .resetWorkoutPlanRepetition(
+                                                    vm.workoutPlanData);
+                                            var snackBarMsg = isSuccess
+                                                ? "Success reset Workout Plan repetition."
+                                                : "Failed to reset Workout Plan repetition.";
+
+                                            ScaffoldMessenger.of(context)
+                                                .hideCurrentSnackBar();
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                                    duration: const Duration(
+                                                        seconds: 3),
+                                                    backgroundColor: isSuccess
+                                                        ? Colors.green
+                                                        : Colors.red,
+                                                    showCloseIcon: true,
+                                                    content: Text(
+                                                      snackBarMsg,
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 16),
+                                                    )));
+
+                                            if (isSuccess) {
+                                              Navigator.of(context).pop();
+                                            }
+                                          },
+                                          child: const Text(
+                                            'Reset',
+                                            style: TextStyle(color: Colors.red),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: Row(
+                              children: [
+                                Icon(MdiIcons.replay),
+                                const Padding(
+                                    padding: EdgeInsets.only(left: 4),
+                                    child: Text('Reset'))
+                              ],
+                            )),
                       ];
                     },
                   )

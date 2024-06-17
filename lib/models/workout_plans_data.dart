@@ -4,6 +4,8 @@ part 'workout_plans_data.g.dart';
 @JsonSerializable()
 class WorkoutPlansData {
   final String id;
+  @JsonKey(name: 'user_id')
+  final String userId;
   final String title;
   final String description;
   final int repetition;
@@ -12,6 +14,7 @@ class WorkoutPlansData {
 
   WorkoutPlansData({
     required this.id,
+    required this.userId,
     required this.title,
     required this.description,
     required this.repetition,

@@ -158,6 +158,7 @@ class WorkoutPlanRepo {
       return snap.docs.map((doc) {
         return WorkoutPlansData(
             id: doc.id,
+            userId: doc.get('user_id') ?? '',
             title: doc.get('title') ?? '',
             description: doc.get('description') ?? '',
             repetition: doc.get('repetition') ?? '',
@@ -202,6 +203,21 @@ class WorkoutPlanRepo {
 
       await batch.commit();
 
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> resetWorkoutPlanRepetition(
+      String workoutPlanId, WorkoutPlanRequestModel data) async {
+    try {
+      var batch = FirebaseFirestore.instance.batch();
+
+      var workoutPlanDoc = workoutPlanCollection.doc(workoutPlanId);
+      batch.set(workoutPlanDoc, data.toJson(), SetOptions(merge: true));
+
+      await batch.commit();
       return true;
     } catch (e) {
       return false;

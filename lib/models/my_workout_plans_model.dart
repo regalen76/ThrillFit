@@ -2,6 +2,7 @@ import 'package:thrill_fit/models/models.dart';
 
 class MyWorkoutPlansModel {
   final String id;
+  final String userId;
   final String title;
   final String description;
   final int repetition;
@@ -10,6 +11,7 @@ class MyWorkoutPlansModel {
 
   MyWorkoutPlansModel(
       {required this.id,
+      required this.userId,
       required this.title,
       required this.description,
       required this.repetition,

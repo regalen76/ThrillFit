@@ -54,4 +54,27 @@ class MyWorkoutPlanDetailViewModel extends BaseViewModel {
       movementImage: data.movementImage,
     );
   }
+
+  Future<bool> resetWorkoutPlanRepetition(MyWorkoutPlansModel data) async {
+    setBusy(true);
+
+    try {
+      var dataPayload = WorkoutPlanRequestModel(
+          userId: data.userId,
+          title: data.title,
+          description: data.description,
+          repetition: data.repetition,
+          dailyRepetition: 0,
+          lastUpdated: DateTime.now());
+      var isSuccess = await WorkoutPlanRepo()
+          .resetWorkoutPlanRepetition(data.id, dataPayload);
+
+      setBusy(false);
+      return isSuccess;
+    } catch (e) {
+      logger.e("Failed to get create workout plan, the error: $e");
+      setBusy(false);
+      return false;
+    }
+  }
 }

@@ -44,6 +44,7 @@ class MyWorkoutPlanViewModel extends BaseViewModel {
 
     return MyWorkoutPlansModel(
       id: data.id,
+      userId: data.userId,
       title: data.title,
       description: data.description,
       repetition: data.repetition,
