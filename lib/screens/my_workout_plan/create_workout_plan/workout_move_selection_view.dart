@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:model_viewer_plus/model_viewer_plus.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:stacked/stacked.dart';
+import 'package:thrill_fit/components/workout_move_detail_view.dart';
 import 'package:thrill_fit/models/models.dart';
-import 'package:thrill_fit/screens/my_workout_plan/create_workout_plan_summary_view.dart';
-import 'package:thrill_fit/screens/my_workout_plan/my_workout_move_selection_view_model.dart';
+import 'package:thrill_fit/screens/my_workout_plan/create_workout_plan/create_workout_plan_summary_view.dart';
+import 'package:thrill_fit/screens/my_workout_plan/create_workout_plan/workout_move_selection_view_model.dart';
 
-class MyWorkoutMoveSelectionView extends StatelessWidget {
-  const MyWorkoutMoveSelectionView(
+class WorkoutMoveSelectionView extends StatelessWidget {
+  const WorkoutMoveSelectionView(
       {required this.movesFromSets,
       required this.titleInput,
       required this.descInput,
@@ -23,14 +23,13 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
         viewModelBuilder: () =>
-            MyWorkoutMoveSelectionViewModel(movesFromSets: movesFromSets),
+            WorkoutMoveSelectionViewModel(movesFromSets: movesFromSets),
         onViewModelReady: (vm) => vm.initialize(),
         builder: (context, vm, child) {
           return Scaffold(
             appBar: AppBar(
               title: const Text('Set Workout Moves'),
               backgroundColor: Colors.black,
-              automaticallyImplyLeading: false,
               actions: [
                 TextButton(
                   onPressed: () {
@@ -87,54 +86,6 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                   ))
                 : Column(
                     children: [
-                      Container(
-                        color: background,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 12),
-                          child: Column(
-                            children: [
-                              Center(
-                                child: SizedBox(
-                                  height: 200,
-                                  width: 200,
-                                  child: Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      Visibility(
-                                        visible: vm.isLoading,
-                                        child:
-                                            const CircularProgressIndicator(),
-                                      ),
-                                      // Lazy load ModelViewer when vm.workoutModel is set
-                                      if (vm.workoutModel.isNotEmpty)
-                                        ModelViewer(
-                                          key: ValueKey(vm.workoutModel),
-                                          ar: false,
-                                          autoPlay: true,
-                                          src: vm.workoutModel,
-                                          disableZoom: true,
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                child: Center(
-                                  child: Text(
-                                    vm.workoutName,
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -146,7 +97,7 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                                   i < vm.workoutMoves.length;
                                   i++) ...[
                                 Container(
-                                  key: ValueKey(vm.workoutMoves[i].id),
+                                  key: ValueKey(vm.workoutMoves[i].uniqueId),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 12),
@@ -175,7 +126,8 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                                                         .selected,
                                                     onChanged: (value) {
                                                       vm.changeSelectedValue(
-                                                          vm.workoutMoves[i].id,
+                                                          vm.workoutMoves[i]
+                                                              .uniqueId,
                                                           value);
                                                     },
                                                     visualDensity:
@@ -193,6 +145,8 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                                                   vm.workoutMoves[i]
                                                           .movementName ??
                                                       '-',
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   style: const TextStyle(
                                                     fontSize: 16,
                                                     color: Colors.black,
@@ -225,15 +179,13 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                                                       return [
                                                         PopupMenuItem(
                                                             onTap: () {
-                                                              vm.setNameAndModel(
-                                                                  vm
-                                                                          .workoutMoves[
-                                                                              i]
-                                                                          .movementName ??
-                                                                      '-',
-                                                                  vm.workoutMoves[i]
-                                                                          .movementImage ??
-                                                                      '');
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (BuildContext
+                                                                              context) =>
+                                                                          WorkoutMoveDetailView(
+                                                                              workoutMoveData: vm.workoutMoves[i])));
                                                             },
                                                             child: Row(
                                                               children: [
@@ -245,7 +197,7 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                                                                             left:
                                                                                 4),
                                                                     child: Text(
-                                                                        'Play'))
+                                                                        'Demonstrate'))
                                                               ],
                                                             )),
                                                         PopupMenuItem(
@@ -276,17 +228,18 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                                                                         TextButton(
                                                                           onPressed:
                                                                               () {
-                                                                            vm.deleteMoves(i);
+                                                                            var isSuccess =
+                                                                                vm.deleteMoves(i);
                                                                             Navigator.of(context).pop();
 
                                                                             ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                                                                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                                                                duration: Duration(seconds: 3),
-                                                                                backgroundColor: Colors.green,
+                                                                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                                                                duration: const Duration(seconds: 3),
+                                                                                backgroundColor: isSuccess ? Colors.green : Colors.red,
                                                                                 showCloseIcon: true,
                                                                                 content: Text(
-                                                                                  'Success delete workout move.',
-                                                                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                                                                  isSuccess ? 'Success delete workout move.' : 'Failed to delete workout move.',
+                                                                                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                                                                                 )));
                                                                           },
                                                                           child:
@@ -315,28 +268,33 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                                                             )),
                                                         PopupMenuItem(
                                                             onTap: () {
-                                                              vm.duplicateMoves(
-                                                                  i,
-                                                                  vm.workoutMoves[
-                                                                      i]);
+                                                              var isSuccess = vm
+                                                                  .duplicateMoves(
+                                                                      i,
+                                                                      vm.workoutMoves[
+                                                                          i]);
 
                                                               ScaffoldMessenger
                                                                       .of(context)
                                                                   .hideCurrentSnackBar();
                                                               ScaffoldMessenger.of(context).showSnackBar(
-                                                                  const SnackBar(
-                                                                      duration: Duration(
+                                                                  SnackBar(
+                                                                      duration: const Duration(
                                                                           seconds:
                                                                               3),
-                                                                      backgroundColor:
-                                                                          Colors
-                                                                              .green,
+                                                                      backgroundColor: isSuccess
+                                                                          ? Colors
+                                                                              .green
+                                                                          : Colors
+                                                                              .red,
                                                                       showCloseIcon:
                                                                           true,
                                                                       content:
                                                                           Text(
-                                                                        'Success copy workout move.',
-                                                                        style: TextStyle(
+                                                                        isSuccess
+                                                                            ? 'Success copy workout move.'
+                                                                            : 'Failed to copy workout move.',
+                                                                        style: const TextStyle(
                                                                             fontWeight:
                                                                                 FontWeight.bold,
                                                                             fontSize: 16),
@@ -396,27 +354,10 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                                     flex: 2,
                                     child: TextButton(
                                       onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      style: TextButton.styleFrom(
-                                        backgroundColor:
-                                            Colors.red, // Background Color
-                                      ),
-                                      child: const Text(
-                                        'Back',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(flex: 1, child: Container()),
-                                  Expanded(
-                                    flex: 2,
-                                    child: TextButton(
-                                      onPressed: () {
                                         vm.validateInput();
 
                                         if (vm.isValidSelection) {
-                                          frequencyInputModal(context, vm);
+                                          repetitionInputModal(context, vm);
                                         } else {
                                           showDialog(
                                               context: context,
@@ -464,11 +405,11 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
         });
   }
 
-  Future frequencyInputModal(
-      BuildContext context, MyWorkoutMoveSelectionViewModel vm) {
+  Future repetitionInputModal(
+      BuildContext context, WorkoutMoveSelectionViewModel vm) {
     return showModalBottomSheet(
         context: context,
-        builder: (BuildContext ctx) {
+        builder: (BuildContext context) {
           return Container(
               height: 200,
               decoration: const BoxDecoration(
@@ -485,11 +426,11 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                   child: Column(
                     children: [
                       TextFormField(
-                        controller: vm.frequencyController,
+                        controller: vm.repetitionController,
                         cursorColor: Colors.white,
                         maxLength: 2,
                         decoration: const InputDecoration(
-                            labelText: 'Frequency',
+                            labelText: 'Repetition',
                             labelStyle: TextStyle(
                               color: Colors.white,
                             ),
@@ -522,7 +463,7 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                               flex: 2,
                               child: TextButton(
                                 onPressed: () {
-                                  if (vm.validateFrequency()) {
+                                  if (vm.validateRepetition()) {
                                     Navigator.of(context).pop();
                                     Navigator.push(
                                         context,
@@ -531,10 +472,11 @@ class MyWorkoutMoveSelectionView extends StatelessWidget {
                                                 CreateWorkoutPlanSummaryView(
                                                   titleInput: titleInput,
                                                   descInput: descInput,
-                                                  frequencyInput: int.parse(vm
-                                                      .frequencyController
+                                                  repetitionInput: int.parse(vm
+                                                      .repetitionController
                                                       .text),
-                                                  savedMove: vm.workoutMoves,
+                                                  savedMove:
+                                                      vm.checkSelectedMoves(),
                                                 )));
                                   }
                                 },

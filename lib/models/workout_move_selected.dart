@@ -1,12 +1,17 @@
+import 'package:uuid/uuid.dart';
+
 class WorkoutMoveSelected {
-  final String id;
+  final String uniqueId;
+  final String movementId;
   final String? movementName;
   final String? movementImage;
   bool selected;
 
   WorkoutMoveSelected(
-      {required this.id,
+      {String? uniqueId,
+      required this.movementId,
       this.movementName,
       this.movementImage,
-      this.selected = false});
+      this.selected = false})
+      : uniqueId = uniqueId ?? const Uuid().v4();
 }

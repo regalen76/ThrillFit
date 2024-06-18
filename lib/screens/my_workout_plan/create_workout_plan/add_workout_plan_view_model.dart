@@ -114,7 +114,7 @@ class AddWorkoutPlanViewModel extends BaseViewModel {
       _isValidNextPage = false;
     }
 
-    if (_totalTypeSelected != 0) {
+    if (_totalTypeSelected > 0) {
       _isValidSelectedType = true;
     } else {
       _isValidSelectedType = false;

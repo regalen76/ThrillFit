@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/models.dart';
-import 'package:thrill_fit/screens/my_workout_plan/add_workout_plan_view_model.dart';
-import 'package:thrill_fit/screens/my_workout_plan/training_set_list_view.dart';
+import 'package:thrill_fit/screens/my_workout_plan/create_workout_plan/add_workout_plan_view_model.dart';
+import 'package:thrill_fit/screens/my_workout_plan/create_workout_plan/training_set_list_view.dart';
 
 class AddWorkoutPlanView extends StatelessWidget {
   const AddWorkoutPlanView({super.key});
@@ -19,9 +19,9 @@ class AddWorkoutPlanView extends StatelessWidget {
         builder: (context, vm, child) {
           return Scaffold(
             appBar: AppBar(
-                title: const Text('Add Workout Plan'),
-                backgroundColor: Colors.black,
-                automaticallyImplyLeading: false),
+              title: const Text('Add Workout Plan'),
+              backgroundColor: Colors.black,
+            ),
             body: vm.isBusy
                 ? const Center(
                     child: Column(
@@ -176,23 +176,6 @@ class AddWorkoutPlanView extends StatelessWidget {
                                     flex: 2,
                                     child: TextButton(
                                       onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      style: TextButton.styleFrom(
-                                        backgroundColor:
-                                            Colors.red, // Background Color
-                                      ),
-                                      child: const Text(
-                                        'Back',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(flex: 1, child: Container()),
-                                  Expanded(
-                                    flex: 2,
-                                    child: TextButton(
-                                      onPressed: () {
                                         vm.validateInput();
 
                                         if (vm.isValidNextPage &&
@@ -292,6 +275,7 @@ class AddWorkoutPlanView extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 4, bottom: 4),
                     child: Text(
                       selectedList[i].goalTypeName!,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold),
                     ),
