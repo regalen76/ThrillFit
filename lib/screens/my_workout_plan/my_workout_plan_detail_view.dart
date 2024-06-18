@@ -4,6 +4,7 @@ import 'package:onboarding/onboarding.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/components/workout_move_detail_view.dart';
 import 'package:thrill_fit/models/models.dart';
+import 'package:thrill_fit/screens/feeds_create/share_workout/share_workout.dart';
 import 'package:thrill_fit/screens/my_workout_plan/my_workout_plan_detail_view_model.dart';
 
 class MyWorkoutPlanDetailView extends StatelessWidget {
@@ -170,6 +171,23 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                                 const Padding(
                                     padding: EdgeInsets.only(left: 4),
                                     child: Text('Reset'))
+                              ],
+                            )),
+                        PopupMenuItem(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          ShareWorkoutView(
+                                              workoutId: myWorkoutPlan.id)));
+                            },
+                            child: Row(
+                              children: [
+                                Icon(MdiIcons.share),
+                                const Padding(
+                                    padding: EdgeInsets.only(left: 4),
+                                    child: Text('Share'))
                               ],
                             )),
                       ];

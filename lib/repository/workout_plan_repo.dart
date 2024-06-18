@@ -223,4 +223,66 @@ class WorkoutPlanRepo {
       return false;
     }
   }
+
+  Future copyWorkoutPlanAndMoveset(String workoutId, String userId) async {
+    try {
+      workoutPlanCollection
+          .doc(workoutId)
+          .get()
+          .then((DocumentSnapshot doc) async {
+        final workoutPlanData = WorkoutPlansData(
+            id: doc.id,
+            userId: doc.get('user_id') ?? '',
+            title: doc.get('title') ?? '',
+            description: doc.get('description') ?? '',
+            repetition: doc.get('repetition') ?? '',
+            dailyRepetition: doc.get('daily_repetition') ?? '');
+
+        workoutPlanMoveSetCollection
+            .where('workout_plan_id', isEqualTo: workoutPlanData.id)
+            .get()
+            .then((snapshot) {
+          final List<WorkoutPlanMovesetsData> workoutPlanMovesetsData =
+              snapshot.docs.map((doc) {
+            return WorkoutPlanMovesetsData(
+              id: doc.id,
+              movementId: doc.get('movement_id') ?? '',
+              viewOrder: doc.get('view_order') ?? 0,
+            );
+          }).toList();
+
+          //create workout plan first
+          var newWorkoutId = const Uuid().v4();
+          workoutPlanCollection
+              .doc(newWorkoutId)
+              .set(WorkoutPlanRequestModel(
+                      userId: userId,
+                      title: workoutPlanData.title,
+                      description: workoutPlanData.description,
+                      repetition: workoutPlanData.repetition,
+                      dailyRepetition: 0,
+                      lastUpdated: DateTime.now())
+                  .toJson())
+              .then((_) async {
+            //create workout plan movesets
+            final batch = FirebaseFirestore.instance.batch();
+            for (var workoutPlanMove in workoutPlanMovesetsData) {
+              final docRef =
+                  workoutPlanMoveSetCollection.doc(const Uuid().v4());
+              batch.set(
+                  docRef,
+                  WorkoutPlanMoveRequestModel(
+                          workoutPlanId: newWorkoutId,
+                          movementId: workoutPlanMove.movementId,
+                          viewOrder: workoutPlanMove.viewOrder)
+                      .toJson());
+            }
+            await batch.commit();
+          });
+        });
+      });
+    } catch (e) {
+      return [];
+    }
+  }
 }

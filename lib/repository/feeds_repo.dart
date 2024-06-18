@@ -104,6 +104,17 @@ class FeedsRepo {
         .toJson());
   }
 
+  Future createPostDataWorkoutPlan(
+      String body, String workoutId, List<String> content) async {
+    return await postsCollection.doc(const Uuid().v4()).set(PostModel(
+            author: uid,
+            content: content,
+            body: body,
+            timestamp: DateTime.now(),
+            workoutPlan: workoutId)
+        .toJson());
+  }
+
   Future createCommentsData(String comments, String postId, String user) async {
     return await postCommentsCollection.doc(const Uuid().v4()).set(
         PostCommentsModel(comments: comments, postId: postId, user: user)
