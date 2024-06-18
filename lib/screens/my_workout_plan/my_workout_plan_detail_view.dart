@@ -4,6 +4,7 @@ import 'package:onboarding/onboarding.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/components/workout_move_detail_view.dart';
 import 'package:thrill_fit/models/models.dart';
+import 'package:thrill_fit/screens/my_workout_plan/edit_workout_plan/edit_workout_plan_move_view.dart';
 import 'package:thrill_fit/screens/my_workout_plan/my_workout_plan_detail_view_model.dart';
 
 class MyWorkoutPlanDetailView extends StatelessWidget {
@@ -29,7 +30,16 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                     itemBuilder: (context) {
                       return [
                         PopupMenuItem(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          EditWorkoutPlanMoveView(
+                                            myWorkoutPlanDetail:
+                                                vm.workoutPlanData,
+                                          )));
+                            },
                             child: Row(
                               children: [
                                 Icon(MdiIcons.pencilOutline),
@@ -282,7 +292,9 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                                         ),
                                       ),
                                       for (int i = 0;
-                                          i < vm.moveList.length;
+                                          i <
+                                              vm.workoutPlanData.workoutMoves
+                                                  .length;
                                           i++) ...[
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
@@ -308,7 +320,9 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                                                       ),
                                                     ),
                                                     title: Text(
-                                                      vm.moveList[i]
+                                                      vm
+                                                          .workoutPlanData
+                                                          .workoutMoves[i]
                                                           .movementName,
                                                       overflow:
                                                           TextOverflow.ellipsis,
@@ -336,8 +350,9 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                                                                 builder: (BuildContext
                                                                         context) =>
                                                                     WorkoutMoveDetailView(
-                                                                        workoutMoveData:
-                                                                            vm.convertMoveDetail(vm.moveList[i]))));
+                                                                        workoutMoveData: vm.convertMoveDetail(vm
+                                                                            .workoutPlanData
+                                                                            .workoutMoves[i]))));
                                                       },
                                                       child: Container(
                                                         decoration:

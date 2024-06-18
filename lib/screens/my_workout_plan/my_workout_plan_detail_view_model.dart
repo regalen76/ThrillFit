@@ -9,23 +9,11 @@ class MyWorkoutPlanDetailViewModel extends BaseViewModel {
 
   Logger logger = Logger();
 
-  List<MyWorkoutPlanMovesModel> _moveList = [];
-  List<MyWorkoutPlanMovesModel> get moveList => _moveList;
-
   void initialize() async {
     setBusy(true);
 
-    _moveList = [];
-    for (int i = 0; i < workoutPlanData.workoutMoves.length; i++) {
-      _moveList.add(MyWorkoutPlanMovesModel(
-          id: workoutPlanData.workoutMoves[i].id,
-          movementId: workoutPlanData.workoutMoves[i].movementId,
-          movementName: workoutPlanData.workoutMoves[i].movementName,
-          movementImage: workoutPlanData.workoutMoves[i].movementImage,
-          viewOrder: workoutPlanData.workoutMoves[i].viewOrder));
-    }
-
-    _moveList.sort((a, b) => a.viewOrder.compareTo(b.viewOrder));
+    workoutPlanData.workoutMoves
+        .sort((a, b) => a.viewOrder.compareTo(b.viewOrder));
 
     setBusy(false);
     notifyListeners();
@@ -67,12 +55,12 @@ class MyWorkoutPlanDetailViewModel extends BaseViewModel {
           dailyRepetition: 0,
           lastUpdated: DateTime.now());
       var isSuccess = await WorkoutPlanRepo()
-          .resetWorkoutPlanRepetition(data.id, dataPayload);
+          .editWorkoutPlanDailyRepetition(data.id, dataPayload);
 
       setBusy(false);
       return isSuccess;
     } catch (e) {
-      logger.e("Failed to get create workout plan, the error: $e");
+      logger.e("Failed to reset workout plan repetition, the error: $e");
       setBusy(false);
       return false;
     }

@@ -40,7 +40,7 @@ class CreateWorkoutPlanSummaryViewModel extends BaseViewModel {
       setBusy(false);
       return isSuccess;
     } catch (e) {
-      logger.e("Failed to get create workout plan, the error: $e");
+      logger.e("Failed to create workout plan, the error: $e");
       setBusy(false);
       return false;
     }

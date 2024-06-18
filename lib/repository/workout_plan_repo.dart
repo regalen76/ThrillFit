@@ -209,13 +209,50 @@ class WorkoutPlanRepo {
     }
   }
 
-  Future<bool> resetWorkoutPlanRepetition(
+  Future<bool> editWorkoutPlanDailyRepetition(
       String workoutPlanId, WorkoutPlanRequestModel data) async {
     try {
       var batch = FirebaseFirestore.instance.batch();
 
       var workoutPlanDoc = workoutPlanCollection.doc(workoutPlanId);
       batch.set(workoutPlanDoc, data.toJson(), SetOptions(merge: true));
+
+      await batch.commit();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> editWorkoutPlanData(
+      String workoutPlanId,
+      WorkoutPlanRequestModel data,
+      List<WorkoutMoveSelected> movesInput) async {
+    try {
+      var batch = FirebaseFirestore.instance.batch();
+
+      var workoutPlanDoc = workoutPlanCollection.doc(workoutPlanId);
+      batch.set(workoutPlanDoc, data.toJson(), SetOptions(merge: true));
+
+      QuerySnapshot snapshot = await workoutPlanMoveSetCollection
+          .where('workout_plan_id', isEqualTo: workoutPlanId)
+          .get();
+
+      for (QueryDocumentSnapshot docData in snapshot.docs) {
+        var moveDoc = workoutPlanMoveSetCollection.doc(docData.id);
+        batch.delete(moveDoc);
+      }
+
+      for (int i = 0; i < movesInput.length; i++) {
+        var jsonRequest = WorkoutPlanMoveRequestModel(
+                workoutPlanId: workoutPlanId,
+                movementId: movesInput[i].movementId,
+                viewOrder: i + 1)
+            .toJson();
+
+        var moveDoc = workoutPlanMoveSetCollection.doc(const Uuid().v4());
+        batch.set(moveDoc, jsonRequest);
+      }
 
       await batch.commit();
       return true;

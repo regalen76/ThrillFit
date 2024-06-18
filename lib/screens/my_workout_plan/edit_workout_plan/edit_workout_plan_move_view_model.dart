@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
-import 'package:thrill_fit/models/workout_move_selected.dart';
+import 'package:thrill_fit/models/models.dart';
 
-class WorkoutMoveSelectionViewModel extends BaseViewModel {
-  final List<WorkoutMoveSelected> movesFromSets;
-  WorkoutMoveSelectionViewModel({required this.movesFromSets});
+class EditWorkoutPlanMoveViewModel extends BaseViewModel {
+  final MyWorkoutPlansModel detailData;
+  EditWorkoutPlanMoveViewModel({required this.detailData});
 
   Logger logger = Logger();
 
@@ -18,22 +17,17 @@ class WorkoutMoveSelectionViewModel extends BaseViewModel {
   bool _isValidSelection = false;
   bool get isValidSelection => _isValidSelection;
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  GlobalKey<FormState> get formKey => _formKey;
-
-  final _repetitionController = TextEditingController(text: '0');
-  TextEditingController get repetitionController => _repetitionController;
-
   void initialize() async {
     setBusy(true);
 
     _workoutMoves = [];
-    for (int i = 0; i < movesFromSets.length; i++) {
+    for (int i = 0; i < detailData.workoutMoves.length; i++) {
       _workoutMoves.add(
         WorkoutMoveSelected(
-            movementId: movesFromSets[i].movementId,
-            movementName: movesFromSets[i].movementName,
-            movementImage: movesFromSets[i].movementImage,
+            uniqueId: detailData.workoutMoves[i].id,
+            movementId: detailData.workoutMoves[i].movementId,
+            movementName: detailData.workoutMoves[i].movementName,
+            movementImage: detailData.workoutMoves[i].movementImage,
             selected: true),
       );
     }
@@ -48,6 +42,15 @@ class WorkoutMoveSelectionViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void updateIndexTiles(int oldIndex, int newIndex) {
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
+    final item = _workoutMoves.removeAt(oldIndex);
+    _workoutMoves.insert(newIndex, item);
+    notifyListeners();
+  }
+
   void changeSelectedValue(String uniqueId, value) {
     for (int i = 0; i < _workoutMoves.length; i++) {
       if (_workoutMoves[i].uniqueId == uniqueId) {
@@ -55,15 +58,6 @@ class WorkoutMoveSelectionViewModel extends BaseViewModel {
         _workoutMoves[i].selected ? _totalMoveSelected++ : _totalMoveSelected--;
       }
     }
-    notifyListeners();
-  }
-
-  void updateIndexTiles(int oldIndex, int newIndex) {
-    if (oldIndex < newIndex) {
-      newIndex -= 1;
-    }
-    final item = _workoutMoves.removeAt(oldIndex);
-    _workoutMoves.insert(newIndex, item);
     notifyListeners();
   }
 
@@ -111,24 +105,6 @@ class WorkoutMoveSelectionViewModel extends BaseViewModel {
     }
 
     notifyListeners();
-  }
-
-  String? checkForm(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Field can`t be empty';
-    }
-    if (int.parse(value) < 1) {
-      return 'Value should be more than 0';
-    }
-    return null;
-  }
-
-  bool validateRepetition() {
-    if (_formKey.currentState!.validate()) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   List<WorkoutMoveSelected> checkSelectedMoves() {
