@@ -127,6 +127,12 @@ class ProfileCreateModel extends BaseViewModel {
   Future saveCreateProfile(BuildContext context) async {
     if (formKey.currentState!.validate()) {
       setBusy(true);
+      List<String> nameSearch = [];
+      String temp = "";
+      for (int i = 0; i < nameField.text.length; i++) {
+        temp = temp + nameField.text[i];
+        nameSearch.add(temp.toLowerCase());
+      }
       try {
         await UserRepo(uid: user!.uid).createUserData(UserModel(
             age: int.parse(ageField.text),
@@ -137,6 +143,7 @@ class ProfileCreateModel extends BaseViewModel {
             gender: selectedGender!,
             height: int.parse(heightField.text),
             name: nameField.text,
+            nameSearch: nameSearch,
             phone: phoneField.text,
             weight: int.parse(weightField.text)));
 

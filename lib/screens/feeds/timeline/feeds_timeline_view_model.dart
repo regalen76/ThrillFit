@@ -2,6 +2,7 @@ import 'package:async/async.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/models/post_comments_model.dart';
@@ -119,5 +120,19 @@ class FeedsTimelineViewModel extends BaseViewModel {
 
   Future unlikePost(String userId, String postId) async {
     return FeedsRepo(uid: user!.uid).deleteLikesData(postId, userId);
+  }
+
+  Future deletePost(
+      String postId, List<String>? content, BuildContext context) async {
+    Navigator.pop(context);
+    setBusy(true);
+    for (var i = 0; i < content!.length; i++) {
+      await FirebaseStorage.instance
+          .ref()
+          .child('/feeds/${content[i]}')
+          .delete();
+    }
+    await FeedsRepo(uid: user!.uid).deletePost(postId);
+    setBusy(false);
   }
 }

@@ -15,6 +15,9 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       gender: json['gender'] as String,
       height: json['height'] as int,
       name: json['name'] as String,
+      nameSearch: (json['name_search'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
       phone: json['phone'] as String,
       weight: json['weight'] as int,
     );
@@ -28,6 +31,7 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'gender': instance.gender,
       'height': instance.height,
       'name': instance.name,
+      'name_search': instance.nameSearch,
       'phone': instance.phone,
       'weight': instance.weight,
     };

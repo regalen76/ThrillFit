@@ -14,6 +14,8 @@ class UserModel {
   final String gender;
   final int height;
   final String name;
+  @JsonKey(name: 'name_search')
+  final List<String> nameSearch;
   final String phone;
   final int weight;
 
@@ -26,6 +28,7 @@ class UserModel {
       required this.gender,
       required this.height,
       required this.name,
+      required this.nameSearch,
       required this.phone,
       required this.weight});
 

@@ -17,7 +17,9 @@ class ProfileCreateView extends StatelessWidget {
         onDispose: (viewModel) => {viewModel.disposeAll()},
         builder: (context, model, _) {
           return model.isBusy
-              ? const Center(child: CircularProgressIndicator())
+              ? const Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                )
               : Scaffold(
                   appBar: AppBar(
                     title: const Text('Profile'),

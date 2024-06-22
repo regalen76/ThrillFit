@@ -126,4 +126,8 @@ class FeedsRepo {
       await postLikesCollection.doc(doc.id).delete();
     }
   }
+
+  Future<void> deletePost(String postId) async {
+    await postsCollection.doc(postId).delete();
+  }
 }

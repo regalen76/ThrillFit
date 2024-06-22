@@ -22,7 +22,9 @@ class ProfileDataView extends StatelessWidget {
         onDispose: (model) => model.disposeAll(),
         builder: (context, model, _) {
           return model.isBusy
-              ? const Center(child: CircularProgressIndicator())
+              ? const Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                )
               : StreamProvider<UserModel>.value(
                   value: UserRepo(uid: model.getUser!.uid).userData,
                   initialData: UserModel(
@@ -34,6 +36,7 @@ class ProfileDataView extends StatelessWidget {
                       gender: '',
                       height: 0,
                       name: '',
+                      nameSearch: [],
                       phone: '',
                       weight: 0),
                   child: Consumer<UserModel>(
@@ -792,10 +795,7 @@ class ProfileDataView extends StatelessWidget {
                                                                                 child: InkWell(
                                                                                   borderRadius: BorderRadius.circular(20),
                                                                                   onTapUp: (_) async {
-                                                                                    await model.signOut();
-                                                                                    if (context.mounted) {
-                                                                                      Navigator.popUntil(context, (route) => route.isFirst);
-                                                                                    }
+                                                                                    await model.signOut(context);
                                                                                   },
                                                                                   child: const SizedBox(
                                                                                     height: 80,

@@ -27,7 +27,9 @@ class FeedsFollowersView extends StatelessWidget {
         onViewModelReady: (model) => model.initState(),
         builder: (context, model, _) {
           return model.isBusy
-              ? const Center(child: CircularProgressIndicator())
+              ? const Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                )
               : model.getListOfFollowed.isEmpty
                   ? const Center(
                       child: Text("You followed no one..."),

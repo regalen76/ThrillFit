@@ -13,7 +13,9 @@ class NavigatorView extends StatelessWidget {
         onViewModelReady: (viewModel) => viewModel.initState(context),
         builder: (context, model, _) {
           return model.isBusy
-              ? const Center(child: CircularProgressIndicator())
+              ? const Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                )
               : Scaffold(
                   body: model.getScreens[model.getCurrentTabIndex],
                   bottomNavigationBar: Theme(

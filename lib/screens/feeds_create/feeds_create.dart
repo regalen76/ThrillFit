@@ -17,7 +17,9 @@ class FeedsCreateView extends StatelessWidget {
         onDispose: (model) => model.disposeAll(),
         builder: (context, model, _) {
           return model.isBusy
-              ? const Center(child: CircularProgressIndicator())
+              ? const Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                )
               : Scaffold(
                   appBar: AppBar(),
                   bottomNavigationBar: buttonSection(model, context),
