@@ -90,8 +90,7 @@ class WorkoutPlanCompletionView extends StatelessWidget {
                                       Row(children: [
                                         const Expanded(
                                           child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 12),
+                                            padding: EdgeInsets.only(right: 12),
                                             child: Text(
                                               'Congratulations, you\'ve completed the workout!',
                                               style: TextStyle(
@@ -216,9 +215,9 @@ class WorkoutPlanCompletionView extends StatelessWidget {
                                             return AlertDialog(
                                               backgroundColor: background,
                                               title: const Text(
-                                                  'Create Confirmation'),
+                                                  'Finish Confirmation'),
                                               content: const Text(
-                                                  'Are you sure want to create this workout plan?'),
+                                                  'Confirm completion of this workout?'),
                                               actions: [
                                                 TextButton(
                                                   onPressed: () {
@@ -230,7 +229,9 @@ class WorkoutPlanCompletionView extends StatelessWidget {
                                                   onPressed: () async {
                                                     Navigator.of(context).pop();
 
-                                                    var isSuccess = false;
+                                                    var isSuccess = await vm
+                                                        .addWorkoutPlanRepetition(
+                                                            vm.completionData);
                                                     var snackBarMsg = isSuccess
                                                         ? "Success create Workout Plan."
                                                         : "Failed to create Workout Plan.";
@@ -261,8 +262,6 @@ class WorkoutPlanCompletionView extends StatelessWidget {
                                                             )));
 
                                                     if (isSuccess) {
-                                                      Navigator.of(context)
-                                                          .pop();
                                                       Navigator.of(context)
                                                           .pop();
                                                       Navigator.of(context)
