@@ -263,45 +263,6 @@ class GuestProfileView extends StatelessWidget {
                                   child: Row(
                                     children: [
                                       Expanded(
-                                        child: Container(
-                                          decoration: const BoxDecoration(
-                                              border: Border(
-                                                top: BorderSide(
-                                                    color: Colors.grey,
-                                                    width: 3), // Top border
-                                                left: BorderSide(
-                                                    color: Colors.grey,
-                                                    width: 3), // Left border
-                                                bottom: BorderSide(
-                                                    color: Colors.grey,
-                                                    width: 3), // Bottom border
-                                              ),
-                                              borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(10),
-                                                  bottomLeft:
-                                                      Radius.circular(10))),
-                                          child: SizedBox(
-                                              height: 100,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  const Text(
-                                                    'Challenge Wins:',
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                  Text('${data.challengeWins}',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: const TextStyle(
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.bold))
-                                                ],
-                                              )),
-                                        ),
-                                      ),
-                                      Expanded(
                                         child: InkWell(
                                           onTapUp: (_) {
                                             Navigator.push(
@@ -326,6 +287,11 @@ class GuestProfileView extends StatelessWidget {
                                                     color: Colors.grey,
                                                     width: 3), // Bottom border
                                               ),
+                                              borderRadius: BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(10),
+                                                    bottomLeft:
+                                                        Radius.circular(10))
                                             ),
                                             child: SizedBox(
                                               height: 100,
