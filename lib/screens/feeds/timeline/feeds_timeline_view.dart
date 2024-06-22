@@ -776,7 +776,130 @@ class FeedsTimelineView extends StatelessWidget {
                                           } else {
                                             return const SizedBox();
                                           }
-                                        }))
+                                        })),
+                                    if (postData.workoutPlan != null)
+                                      IconButton(
+                                        icon: Icon(MdiIcons.contentCopy,
+                                            size: 25),
+                                        onPressed: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  insetPadding: EdgeInsets.zero,
+                                                  contentPadding:
+                                                      EdgeInsets.zero,
+                                                  content: SizedBox(
+                                                    height: 200,
+                                                    width: 100,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        const SizedBox(
+                                                          height: 100,
+                                                          child: Center(
+                                                            child: Text(
+                                                              'Copy this workout plan?',
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 20),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          height: 50,
+                                                          decoration:
+                                                              const BoxDecoration(
+                                                            border: Border(
+                                                              top: BorderSide(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          31,
+                                                                          158,
+                                                                          158,
+                                                                          158),
+                                                                  width: 1),
+                                                            ),
+                                                          ),
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
+                                                          child: InkWell(
+                                                            onTap: () async {
+                                                              model
+                                                                  .copyWorkoutPlan(
+                                                                      postData
+                                                                          .workoutPlan!,
+                                                                      context)
+                                                                  .then((_) {
+                                                                Util().flashMessageSuccess(
+                                                                    contextParent,
+                                                                    'Workout Plan Copied');
+                                                              });
+                                                            },
+                                                            child: const Center(
+                                                              child: Text(
+                                                                'Yes',
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Colors
+                                                                        .white),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          height: 50,
+                                                          decoration:
+                                                              const BoxDecoration(
+                                                            border: Border(
+                                                              top: BorderSide(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          31,
+                                                                          158,
+                                                                          158,
+                                                                          158),
+                                                                  width: 1),
+                                                            ),
+                                                          ),
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
+                                                          child: InkWell(
+                                                            onTap: () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                            child: const Center(
+                                                              child: Text(
+                                                                'Cancel',
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              });
+                                        },
+                                      ),
                                   ],
                                 ))
                               ],

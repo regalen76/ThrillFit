@@ -40,8 +40,8 @@ class NavigatorView extends StatelessWidget {
                             icon: Icon(MdiIcons.dumbbell),
                             label: 'Workout Plans'),
                         BottomNavigationBarItem(
-                            icon: Icon(MdiIcons.trophyAward),
-                            label: 'Challenges')
+                            icon: Icon(MdiIcons.accountCircle),
+                            label: 'Profile')
                       ],
                     ),
                   ),

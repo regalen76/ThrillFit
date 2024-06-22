@@ -11,6 +11,7 @@ import 'package:thrill_fit/models/post_model.dart';
 import 'package:thrill_fit/models/user_model.dart';
 import 'package:thrill_fit/repository/feeds_repo.dart';
 import 'package:thrill_fit/repository/user_repo.dart';
+import 'package:thrill_fit/repository/workout_plan_repo.dart';
 import 'package:thrill_fit/services/auth.dart';
 
 class FeedsTimelineViewModel extends BaseViewModel {
@@ -133,6 +134,13 @@ class FeedsTimelineViewModel extends BaseViewModel {
           .delete();
     }
     await FeedsRepo(uid: user!.uid).deletePost(postId);
+    setBusy(false);
+  }
+
+  Future copyWorkoutPlan(String workoutId, BuildContext context) async {
+    Navigator.pop(context);
+    setBusy(true);
+    await WorkoutPlanRepo().copyWorkoutPlanAndMoveset(workoutId, user!.uid);
     setBusy(false);
   }
 }
