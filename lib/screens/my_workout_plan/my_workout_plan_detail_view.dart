@@ -6,6 +6,7 @@ import 'package:thrill_fit/components/workout_move_detail_view.dart';
 import 'package:thrill_fit/models/models.dart';
 import 'package:thrill_fit/screens/my_workout_plan/edit_workout_plan/edit_workout_plan_move_view.dart';
 import 'package:thrill_fit/screens/my_workout_plan/my_workout_plan_detail_view_model.dart';
+import 'package:thrill_fit/screens/my_workout_plan/start_workout_plan/start_workout_view.dart';
 
 class MyWorkoutPlanDetailView extends StatelessWidget {
   const MyWorkoutPlanDetailView({required this.myWorkoutPlan, super.key});
@@ -274,7 +275,7 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                                                   ),
                                                 ],
                                                 color: Colors.lime,
-                                                fontSize: 26,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           )),
                                       const Divider(),
@@ -437,6 +438,15 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                                                       onPressed: () async {
                                                         Navigator.of(context)
                                                             .pop();
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    StartWorkoutView(
+                                                                      workoutPlanDetail:
+                                                                          vm.workoutPlanData,
+                                                                    )));
                                                       },
                                                       child: const Text(
                                                         'Lets go',
