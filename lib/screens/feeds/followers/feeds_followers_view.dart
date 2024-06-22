@@ -628,24 +628,26 @@ class FeedsFollowersView extends StatelessWidget {
                               }),
                         ),
                         Positioned(
-                          bottom: 20,
-                          right: 20,
-                          child: CircleAvatar(
-                            radius: 30, // This will give the round shape
-                            backgroundColor: Colors.grey,
-                            child: IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              const FeedsCreateView()));
-                                },
-                                icon: const Icon(
-                                  Icons.add, // Plus logo
-                                  color: Colors.black,
-                                  size: 40,
-                                )),
+                          bottom: 16,
+                          right: 16,
+                          child: FloatingActionButton(
+                            elevation: 8,
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          const FeedsCreateView()));
+                            },
+                            shape: const CircleBorder(
+                                side: BorderSide(color: Colors.black)),
+                            backgroundColor: Colors.lime,
+                            foregroundColor: Colors.black,
+                            tooltip: 'Create Feeds',
+                            child: Icon(
+                              MdiIcons.plus,
+                              size: 30,
+                            ),
                           ),
                         ),
                       ],

@@ -29,7 +29,7 @@ class NavigatorView extends StatelessWidget {
                       currentIndex: model.getCurrentTabIndex,
                       backgroundColor: Colors.black,
                       unselectedItemColor: Colors.grey,
-                      selectedItemColor: Colors.blue,
+                      selectedItemColor: Colors.lime,
                       onTap: (int index) {
                         model.changeIndex(index);
                       },

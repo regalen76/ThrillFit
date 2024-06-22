@@ -223,6 +223,7 @@ class MyWorkoutPlanView extends StatelessWidget {
                     ),
                   ),
             floatingActionButton: FloatingActionButton(
+              elevation: 8,
               onPressed: () {
                 Navigator.push(
                     context,
@@ -230,11 +231,14 @@ class MyWorkoutPlanView extends StatelessWidget {
                         builder: (BuildContext context) =>
                             const AddWorkoutPlanView()));
               },
-              shape: const CircleBorder(),
-              backgroundColor: Colors.blue,
-              foregroundColor: Colors.white,
+              shape: const CircleBorder(side: BorderSide(color: Colors.black)),
+              backgroundColor: Colors.lime,
+              foregroundColor: Colors.black,
               tooltip: 'Add Workout Plan',
-              child: Icon(MdiIcons.plus),
+              child: Icon(
+                MdiIcons.plus,
+                size: 30,
+              ),
             ),
           );
         });

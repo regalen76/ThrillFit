@@ -23,6 +23,8 @@ class ProfileView extends StatelessWidget {
                       title: const Text('User'),
                       backgroundColor: Colors.black,
                       bottom: const TabBar(
+                        indicatorColor: Colors.lime,
+                        labelColor: Colors.lime,
                         tabs: [
                           Tab(
                             child: Text(
