@@ -11,6 +11,8 @@ class WorkoutPlansData {
   final int repetition;
   @JsonKey(name: 'daily_repetition')
   final int dailyRepetition;
+  @JsonKey(name: 'last_updated')
+  final DateTime lastUpdated;
 
   WorkoutPlansData({
     required this.id,
@@ -19,6 +21,7 @@ class WorkoutPlansData {
     required this.description,
     required this.repetition,
     required this.dailyRepetition,
+    required this.lastUpdated,
   });
 
   factory WorkoutPlansData.fromJson(Map<String, dynamic> json) =>

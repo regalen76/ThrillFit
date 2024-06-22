@@ -22,6 +22,24 @@ class MyWorkoutPlanViewModel extends BaseViewModel {
 
   Future<MyWorkoutPlansModel> fetchWorkoutPlanMoves(
       WorkoutPlansData data) async {
+    //Reset daily repetition after if day changed
+    var lastUpdateData = DateTime(
+        data.lastUpdated.year, data.lastUpdated.month, data.lastUpdated.day);
+    var dateNow =
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+
+    if (lastUpdateData.isBefore(dateNow)) {
+      var dataPayload = WorkoutPlanRequestModel(
+          userId: data.userId,
+          title: data.title,
+          description: data.description,
+          repetition: data.repetition,
+          dailyRepetition: 0,
+          lastUpdated: DateTime.now());
+      await WorkoutPlanRepo()
+          .editWorkoutPlanDailyRepetition(data.id, dataPayload);
+    }
+
     List<WorkoutPlanMovesetsData> movesData =
         await WorkoutPlanRepo().getWorkoutPlanMovesets(data.id);
 

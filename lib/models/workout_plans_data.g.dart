@@ -14,6 +14,7 @@ WorkoutPlansData _$WorkoutPlansDataFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String,
       repetition: json['repetition'] as int,
       dailyRepetition: json['daily_repetition'] as int,
+      lastUpdated: DateTime.parse(json['last_updated'] as String),
     );
 
 Map<String, dynamic> _$WorkoutPlansDataToJson(WorkoutPlansData instance) =>
@@ -24,4 +25,5 @@ Map<String, dynamic> _$WorkoutPlansDataToJson(WorkoutPlansData instance) =>
       'description': instance.description,
       'repetition': instance.repetition,
       'daily_repetition': instance.dailyRepetition,
+      'last_updated': instance.lastUpdated.toIso8601String(),
     };

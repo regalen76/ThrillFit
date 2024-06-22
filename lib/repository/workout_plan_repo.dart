@@ -162,7 +162,8 @@ class WorkoutPlanRepo {
             title: doc.get('title') ?? '',
             description: doc.get('description') ?? '',
             repetition: doc.get('repetition') ?? '',
-            dailyRepetition: doc.get('daily_repetition') ?? '');
+            dailyRepetition: doc.get('daily_repetition') ?? '',
+            lastUpdated: (doc.get('last_updated') as Timestamp).toDate());
       }).toList();
     });
   }
@@ -236,7 +237,8 @@ class WorkoutPlanRepo {
             title: doc.get('title') ?? '',
             description: doc.get('description') ?? '',
             repetition: doc.get('repetition') ?? '',
-            dailyRepetition: doc.get('daily_repetition') ?? '');
+            dailyRepetition: doc.get('daily_repetition') ?? '',
+            lastUpdated: (doc.get('last_updated') as Timestamp).toDate());
 
         workoutPlanMoveSetCollection
             .where('workout_plan_id', isEqualTo: workoutPlanData.id)
