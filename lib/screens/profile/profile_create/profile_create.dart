@@ -23,6 +23,7 @@ class ProfileCreateView extends StatelessWidget {
               : Scaffold(
                   appBar: AppBar(
                     title: const Text('Profile'),
+                    backgroundColor: Colors.black,
                   ),
                   body: SingleChildScrollView(
                     child: SizedBox(

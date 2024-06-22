@@ -21,7 +21,10 @@ class FeedsCreateView extends StatelessWidget {
                   body: Center(child: CircularProgressIndicator()),
                 )
               : Scaffold(
-                  appBar: AppBar(),
+                  appBar: AppBar(
+                    title: const Text('Create Feeds'),
+                    backgroundColor: Colors.black,
+                  ),
                   bottomNavigationBar: buttonSection(model, context),
                   body: SizedBox(
                     child: Column(

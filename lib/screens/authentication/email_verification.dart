@@ -91,6 +91,7 @@ class EmailVerifPageState extends State<EmailVerifPage> {
       : Scaffold(
           appBar: AppBar(
             title: const Text('Verification'),
+            backgroundColor: Colors.black,
           ),
           body: Padding(
             padding: const EdgeInsets.all(16),

@@ -20,7 +20,7 @@ class MyWorkoutPlanView extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: const Text('My Workout Plan'),
-              backgroundColor: background,
+              backgroundColor: Colors.black,
               surfaceTintColor: background,
             ),
             body: vm.isBusy

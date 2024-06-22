@@ -52,6 +52,7 @@ class GuestProfileView extends StatelessWidget {
                       return Scaffold(
                         appBar: AppBar(
                           title: Text(data.name),
+                          backgroundColor: Colors.black,
                         ),
                         body: SingleChildScrollView(
                           child: SizedBox(
@@ -276,23 +277,23 @@ class GuestProfileView extends StatelessWidget {
                                           },
                                           child: Container(
                                             decoration: const BoxDecoration(
-                                              border: Border(
-                                                top: BorderSide(
-                                                    color: Colors.grey,
-                                                    width: 3), // Top border
-                                                left: BorderSide(
-                                                    color: Colors.grey,
-                                                    width: 3),
-                                                bottom: BorderSide(
-                                                    color: Colors.grey,
-                                                    width: 3), // Bottom border
-                                              ),
-                                              borderRadius: BorderRadius.only(
+                                                border: Border(
+                                                  top: BorderSide(
+                                                      color: Colors.grey,
+                                                      width: 3), // Top border
+                                                  left: BorderSide(
+                                                      color: Colors.grey,
+                                                      width: 3),
+                                                  bottom: BorderSide(
+                                                      color: Colors.grey,
+                                                      width:
+                                                          3), // Bottom border
+                                                ),
+                                                borderRadius: BorderRadius.only(
                                                     topLeft:
                                                         Radius.circular(10),
                                                     bottomLeft:
-                                                        Radius.circular(10))
-                                            ),
+                                                        Radius.circular(10))),
                                             child: SizedBox(
                                               height: 100,
                                               child: Column(

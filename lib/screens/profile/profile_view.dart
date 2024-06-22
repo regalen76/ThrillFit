@@ -21,6 +21,7 @@ class ProfileView extends StatelessWidget {
                   child: Scaffold(
                     appBar: AppBar(
                       title: const Text('User'),
+                      backgroundColor: Colors.black,
                       bottom: const TabBar(
                         tabs: [
                           Tab(

@@ -23,6 +23,7 @@ class FollowersView extends StatelessWidget {
               : Scaffold(
                   appBar: AppBar(
                     title: const Text('Followers'),
+                    backgroundColor: Colors.black,
                   ),
                   body: StreamProvider<List<FollowersModel>>.value(
                     value: UserRepo(uid: model.getUser!.uid)

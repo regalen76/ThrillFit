@@ -154,6 +154,7 @@ class LoginPageState extends State<LoginPage> {
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: const Text('Authentication'),
+        backgroundColor: Colors.black,
       ),
       body: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),

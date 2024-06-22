@@ -23,6 +23,7 @@ class FeedsView extends StatelessWidget {
                   child: Scaffold(
                     appBar: AppBar(
                       title: const Text('Feeds'),
+                      backgroundColor: Colors.black,
                       actions: [
                         IconButton(
                           onPressed: () {

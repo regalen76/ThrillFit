@@ -24,6 +24,7 @@ class ShareWorkoutView extends StatelessWidget {
               : Scaffold(
                   appBar: AppBar(
                     title: const Text('Share Workout Plan'),
+                    backgroundColor: Colors.black,
                   ),
                   bottomNavigationBar: buttonSection(model, context),
                   body: SizedBox(
