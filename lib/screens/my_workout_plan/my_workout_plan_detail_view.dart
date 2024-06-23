@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:onboarding/onboarding.dart';
@@ -7,6 +8,7 @@ import 'package:thrill_fit/models/models.dart';
 import 'package:thrill_fit/screens/feeds_create/share_workout/share_workout.dart';
 import 'package:thrill_fit/screens/my_workout_plan/my_workout_plan_detail_view_model.dart';
 import 'package:thrill_fit/screens/my_workout_plan/start_workout_plan/start_workout_view.dart';
+import 'package:thrill_fit/shared/util.dart';
 
 class MyWorkoutPlanDetailView extends StatelessWidget {
   const MyWorkoutPlanDetailView({required this.myWorkoutPlan, super.key});
@@ -54,30 +56,15 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                                             var isSuccess =
                                                 await vm.deleteWorkoutPlan(
                                                     vm.workoutPlanData.id);
-                                            var snackBarMsg = isSuccess
-                                                ? "Success delete Workout Plan."
-                                                : "Failed to delete Workout Plan.";
-
-                                            ScaffoldMessenger.of(context)
-                                                .hideCurrentSnackBar();
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(SnackBar(
-                                                    duration: const Duration(
-                                                        seconds: 3),
-                                                    backgroundColor: isSuccess
-                                                        ? Colors.green
-                                                        : Colors.red,
-                                                    showCloseIcon: true,
-                                                    content: Text(
-                                                      snackBarMsg,
-                                                      style: const TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 16),
-                                                    )));
 
                                             if (isSuccess) {
+                                              Util().flashMessageSuccess(
+                                                  context,
+                                                  "Success delete Workout Plan.");
                                               Navigator.of(context).pop();
+                                            } else {
+                                              Util().flashMessageError(context,
+                                                  "Failed to delete Workout Plan.");
                                             }
                                           },
                                           child: const Text(
@@ -121,30 +108,15 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                                             var isSuccess = await vm
                                                 .resetWorkoutPlanRepetition(
                                                     vm.workoutPlanData);
-                                            var snackBarMsg = isSuccess
-                                                ? "Success reset Workout Plan repetition."
-                                                : "Failed to reset Workout Plan repetition.";
-
-                                            ScaffoldMessenger.of(context)
-                                                .hideCurrentSnackBar();
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(SnackBar(
-                                                    duration: const Duration(
-                                                        seconds: 3),
-                                                    backgroundColor: isSuccess
-                                                        ? Colors.green
-                                                        : Colors.red,
-                                                    showCloseIcon: true,
-                                                    content: Text(
-                                                      snackBarMsg,
-                                                      style: const TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 16),
-                                                    )));
 
                                             if (isSuccess) {
+                                              Util().flashMessageSuccess(
+                                                  context,
+                                                  "Success reset Workout Plan repetition.");
                                               Navigator.of(context).pop();
+                                            } else {
+                                              Util().flashMessageError(context,
+                                                  "Failed to reset Workout Plan repetition.");
                                             }
                                           },
                                           child: const Text(
@@ -434,6 +406,12 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                                                     ),
                                                     TextButton(
                                                       onPressed: () async {
+                                                        final player =
+                                                            AudioPlayer();
+                                                        await player.play(
+                                                            AssetSource(
+                                                                'sounds/start_workout.mp3'));
+
                                                         Navigator.of(context)
                                                             .pop();
                                                         Navigator.push(

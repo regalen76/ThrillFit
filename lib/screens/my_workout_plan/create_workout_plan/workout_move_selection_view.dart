@@ -7,6 +7,7 @@ import 'package:thrill_fit/components/workout_move_detail_view.dart';
 import 'package:thrill_fit/models/models.dart';
 import 'package:thrill_fit/screens/my_workout_plan/create_workout_plan/create_workout_plan_summary_view.dart';
 import 'package:thrill_fit/screens/my_workout_plan/create_workout_plan/workout_move_selection_view_model.dart';
+import 'package:thrill_fit/shared/util.dart';
 
 class WorkoutMoveSelectionView extends StatelessWidget {
   const WorkoutMoveSelectionView(
@@ -232,15 +233,11 @@ class WorkoutMoveSelectionView extends StatelessWidget {
                                                                                 vm.deleteMoves(i);
                                                                             Navigator.of(context).pop();
 
-                                                                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                                                                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                                                                duration: const Duration(seconds: 3),
-                                                                                backgroundColor: isSuccess ? Colors.green : Colors.red,
-                                                                                showCloseIcon: true,
-                                                                                content: Text(
-                                                                                  isSuccess ? 'Success delete workout move.' : 'Failed to delete workout move.',
-                                                                                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                                                                                )));
+                                                                            if (isSuccess) {
+                                                                              Util().flashMessageSuccess(context, "Success delete workout move.");
+                                                                            } else {
+                                                                              Util().flashMessageError(context, "Failed to delete workout move.");
+                                                                            }
                                                                           },
                                                                           child:
                                                                               const Text(
@@ -274,31 +271,15 @@ class WorkoutMoveSelectionView extends StatelessWidget {
                                                                       vm.workoutMoves[
                                                                           i]);
 
-                                                              ScaffoldMessenger
-                                                                      .of(context)
-                                                                  .hideCurrentSnackBar();
-                                                              ScaffoldMessenger.of(context).showSnackBar(
-                                                                  SnackBar(
-                                                                      duration: const Duration(
-                                                                          seconds:
-                                                                              3),
-                                                                      backgroundColor: isSuccess
-                                                                          ? Colors
-                                                                              .green
-                                                                          : Colors
-                                                                              .red,
-                                                                      showCloseIcon:
-                                                                          true,
-                                                                      content:
-                                                                          Text(
-                                                                        isSuccess
-                                                                            ? 'Success copy workout move.'
-                                                                            : 'Failed to copy workout move.',
-                                                                        style: const TextStyle(
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                            fontSize: 16),
-                                                                      )));
+                                                              if (isSuccess) {
+                                                                Util().flashMessageSuccess(
+                                                                    context,
+                                                                    "Success copy workout move.");
+                                                              } else {
+                                                                Util().flashMessageError(
+                                                                    context,
+                                                                    "Failed to copy workout move.");
+                                                              }
                                                             },
                                                             child: Row(
                                                               children: [

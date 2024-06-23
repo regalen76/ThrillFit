@@ -5,6 +5,7 @@ import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/components/workout_move_detail_view.dart';
 import 'package:thrill_fit/models/workout_move_selected.dart';
 import 'package:thrill_fit/screens/my_workout_plan/create_workout_plan/create_workout_plan_summary_view_model.dart';
+import 'package:thrill_fit/shared/util.dart';
 
 class CreateWorkoutPlanSummaryView extends StatelessWidget {
   const CreateWorkoutPlanSummaryView(
@@ -313,36 +314,11 @@ class CreateWorkoutPlanSummaryView extends StatelessWidget {
 
                                                     var isSuccess = await vm
                                                         .submitWorkoutPlan();
-                                                    var snackBarMsg = isSuccess
-                                                        ? "Success create Workout Plan."
-                                                        : "Failed to create Workout Plan.";
-
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .hideCurrentSnackBar();
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(SnackBar(
-                                                            duration:
-                                                                const Duration(
-                                                                    seconds: 3),
-                                                            backgroundColor:
-                                                                isSuccess
-                                                                    ? Colors
-                                                                        .green
-                                                                    : Colors
-                                                                        .red,
-                                                            showCloseIcon: true,
-                                                            content: Text(
-                                                              snackBarMsg,
-                                                              style: const TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: 16),
-                                                            )));
 
                                                     if (isSuccess) {
+                                                      Util().flashMessageSuccess(
+                                                          context,
+                                                          "Success create Workout Plan.");
                                                       Navigator.of(context)
                                                           .pop();
                                                       Navigator.of(context)
@@ -351,6 +327,10 @@ class CreateWorkoutPlanSummaryView extends StatelessWidget {
                                                           .pop();
                                                       Navigator.of(context)
                                                           .pop();
+                                                    } else {
+                                                      Util().flashMessageError(
+                                                          context,
+                                                          "Failed to create Workout Plan.");
                                                     }
                                                   },
                                                   child: const Text(

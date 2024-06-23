@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -102,8 +103,12 @@ class StartWorkoutView extends StatelessWidget {
                                   Expanded(
                                     flex: 3,
                                     child: TextButton(
-                                      onPressed: () {
+                                      onPressed: () async {
                                         if (vm.currentIndex > 0) {
+                                          final player = AudioPlayer();
+                                          await player.play(AssetSource(
+                                              'sounds/change_move.mp3'));
+
                                           vm.updateCurrentIndex(false);
                                           vm.setNameAndModel(
                                               vm
@@ -143,10 +148,14 @@ class StartWorkoutView extends StatelessWidget {
                                   Expanded(
                                     flex: 3,
                                     child: TextButton(
-                                      onPressed: () {
+                                      onPressed: () async {
                                         if (vm.currentIndex ==
                                             vm.workoutData.workoutMoves.length -
                                                 1) {
+                                          final player = AudioPlayer();
+                                          await player.play(AssetSource(
+                                              'sounds/complete_plan.mp3'));
+
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -160,6 +169,10 @@ class StartWorkoutView extends StatelessWidget {
                                         if (vm.currentIndex <
                                             vm.workoutData.workoutMoves.length -
                                                 1) {
+                                          final player = AudioPlayer();
+                                          await player.play(AssetSource(
+                                              'sounds/change_move.mp3'));
+
                                           vm.updateCurrentIndex(true);
                                           vm.setNameAndModel(
                                               vm
