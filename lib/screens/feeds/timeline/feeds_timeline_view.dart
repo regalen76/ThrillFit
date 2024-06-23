@@ -112,302 +112,309 @@ class FeedsTimelineView extends StatelessWidget {
                                                         );
                                                       }
                                                     })))), //profile image
-                                    Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Container(
-                                          margin: const EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                margin: const EdgeInsets.only(
-                                                    bottom: 10),
-                                                child: FutureBuilder(
-                                                    future: model.getUserName(
-                                                        postData.author),
-                                                    builder:
-                                                        (context, snapshot) {
-                                                      if (snapshot
-                                                              .connectionState ==
-                                                          ConnectionState
-                                                              .waiting) {
-                                                        return const SizedBox(
-                                                          height: 20,
-                                                        );
-                                                      } else {
-                                                        return SizedBox(
-                                                          width: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.796,
-                                                          height: 30,
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              Text(
-                                                                snapshot.data!,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .start,
-                                                                style: const TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        18),
-                                                              ),
-                                                              if (postData
-                                                                      .author ==
-                                                                  model.getUser!
-                                                                      .uid)
-                                                                XGestureDetector(
-                                                                    onTap:
-                                                                        (event) {
-                                                                      showModalBottomSheet(
-                                                                          context:
-                                                                              context,
-                                                                          shape:
-                                                                              const RoundedRectangleBorder(
-                                                                            borderRadius:
-                                                                                BorderRadius.only(
-                                                                              topLeft: Radius.circular(20),
-                                                                              topRight: Radius.circular(20),
-                                                                            ),
-                                                                          ),
-                                                                          builder:
-                                                                              ((context) {
-                                                                            return SizedBox(
-                                                                                height: MediaQuery.of(context).size.height * 0.2,
-                                                                                width: MediaQuery.of(context).size.width,
-                                                                                child: Column(
-                                                                                  children: [
-                                                                                    Container(
-                                                                                      margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
-                                                                                      child: InkWell(
-                                                                                        onTap: () {
-                                                                                          Navigator.pop(context);
-                                                                                          showDialog(
-                                                                                              context: context,
-                                                                                              builder: (BuildContext context) {
-                                                                                                return AlertDialog(
-                                                                                                  insetPadding: EdgeInsets.zero,
-                                                                                                  contentPadding: EdgeInsets.zero,
-                                                                                                  content: SizedBox(
-                                                                                                    height: 200,
-                                                                                                    width: 100,
-                                                                                                    child: Column(
-                                                                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                                                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                                                                                      children: [
-                                                                                                        const SizedBox(
-                                                                                                          height: 100,
-                                                                                                          child: Center(
-                                                                                                            child: Text(
-                                                                                                              'Delete this post?',
-                                                                                                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                                                                                                            ),
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                        Container(
-                                                                                                          height: 50,
-                                                                                                          decoration: const BoxDecoration(
-                                                                                                            border: Border(
-                                                                                                              top: BorderSide(color: Color.fromARGB(31, 158, 158, 158), width: 1),
-                                                                                                            ),
-                                                                                                          ),
-                                                                                                          width: MediaQuery.of(context).size.width,
-                                                                                                          child: InkWell(
-                                                                                                            onTap: () async {
-                                                                                                              await model.deletePost(dataSnapshot.id, postData.content, context).then((value) {
-                                                                                                                Util().flashMessageSuccess(contextParent, 'Successfully Deleting Post');
-                                                                                                              });
-                                                                                                            },
-                                                                                                            child: const Center(
-                                                                                                              child: Text(
-                                                                                                                'Delete',
-                                                                                                                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
-                                                                                                              ),
-                                                                                                            ),
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                        Container(
-                                                                                                          height: 50,
-                                                                                                          decoration: const BoxDecoration(
-                                                                                                            border: Border(
-                                                                                                              top: BorderSide(color: Color.fromARGB(31, 158, 158, 158), width: 1),
-                                                                                                            ),
-                                                                                                          ),
-                                                                                                          width: MediaQuery.of(context).size.width,
-                                                                                                          child: InkWell(
-                                                                                                            onTap: () {
-                                                                                                              Navigator.pop(context);
-                                                                                                            },
-                                                                                                            child: const Center(
-                                                                                                              child: Text(
-                                                                                                                'Cancel',
-                                                                                                                style: TextStyle(fontWeight: FontWeight.bold),
-                                                                                                              ),
-                                                                                                            ),
-                                                                                                          ),
-                                                                                                        )
-                                                                                                      ],
-                                                                                                    ),
-                                                                                                  ),
-                                                                                                );
-                                                                                              });
-                                                                                        },
-                                                                                        child: Row(
-                                                                                          children: [
-                                                                                            Icon(
-                                                                                              MdiIcons.trashCanOutline,
-                                                                                              size: 30,
-                                                                                              color: Colors.redAccent,
-                                                                                            ),
-                                                                                            Container(
-                                                                                              margin: const EdgeInsets.only(left: 10),
-                                                                                              child: const Text(
-                                                                                                'Delete Post',
-                                                                                                style: TextStyle(fontSize: 16),
-                                                                                              ),
-                                                                                            )
-                                                                                          ],
-                                                                                        ),
-                                                                                      ),
-                                                                                    )
-                                                                                  ],
-                                                                                ));
-                                                                          }));
-                                                                    },
-                                                                    child: Icon(
-                                                                        MdiIcons
-                                                                            .dotsVertical))
-                                                            ],
-                                                          ),
-                                                        );
-                                                      }
-                                                    }), //Nama
-                                              ),
-                                              SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.796,
-                                                  child: Text(
-                                                    postData.body,
-                                                    style: const TextStyle(
-                                                        fontSize: 16),
-                                                  )),
-                                              Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.796,
+                                    Expanded(
+                                      child: Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Container(
+                                            margin: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
                                                   margin: const EdgeInsets.only(
-                                                      top: 15),
-                                                  height: 250,
-                                                  child: PageView.builder(
-                                                      itemCount: postData
-                                                          .content!.length,
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                        final content = postData
-                                                            .content![index];
+                                                      bottom: 10),
+                                                  child: FutureBuilder(
+                                                      future: model.getUserName(
+                                                          postData.author),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot
+                                                                .connectionState ==
+                                                            ConnectionState
+                                                                .waiting) {
+                                                          return const SizedBox(
+                                                            height: 20,
+                                                          );
+                                                        } else {
+                                                          return SizedBox(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.796,
+                                                            height: 30,
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Text(
+                                                                  snapshot
+                                                                      .data!,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .start,
+                                                                  style: const TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          18),
+                                                                ),
+                                                                if (postData
+                                                                        .author ==
+                                                                    model
+                                                                        .getUser!
+                                                                        .uid)
+                                                                  XGestureDetector(
+                                                                      onTap:
+                                                                          (event) {
+                                                                        showModalBottomSheet(
+                                                                            context:
+                                                                                context,
+                                                                            shape:
+                                                                                const RoundedRectangleBorder(
+                                                                              borderRadius: BorderRadius.only(
+                                                                                topLeft: Radius.circular(20),
+                                                                                topRight: Radius.circular(20),
+                                                                              ),
+                                                                            ),
+                                                                            builder:
+                                                                                ((context) {
+                                                                              return SizedBox(
+                                                                                  height: MediaQuery.of(context).size.height * 0.2,
+                                                                                  width: MediaQuery.of(context).size.width,
+                                                                                  child: Column(
+                                                                                    children: [
+                                                                                      Container(
+                                                                                        margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
+                                                                                        child: InkWell(
+                                                                                          onTap: () {
+                                                                                            Navigator.pop(context);
+                                                                                            showDialog(
+                                                                                                context: context,
+                                                                                                builder: (BuildContext context) {
+                                                                                                  return AlertDialog(
+                                                                                                    insetPadding: EdgeInsets.zero,
+                                                                                                    contentPadding: EdgeInsets.zero,
+                                                                                                    content: SizedBox(
+                                                                                                      height: 200,
+                                                                                                      width: 100,
+                                                                                                      child: Column(
+                                                                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                                                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                                        children: [
+                                                                                                          const SizedBox(
+                                                                                                            height: 100,
+                                                                                                            child: Center(
+                                                                                                              child: Text(
+                                                                                                                'Delete this post?',
+                                                                                                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                                                                                                              ),
+                                                                                                            ),
+                                                                                                          ),
+                                                                                                          Container(
+                                                                                                            height: 50,
+                                                                                                            decoration: const BoxDecoration(
+                                                                                                              border: Border(
+                                                                                                                top: BorderSide(color: Color.fromARGB(31, 158, 158, 158), width: 1),
+                                                                                                              ),
+                                                                                                            ),
+                                                                                                            width: MediaQuery.of(context).size.width,
+                                                                                                            child: InkWell(
+                                                                                                              onTap: () async {
+                                                                                                                await model.deletePost(dataSnapshot.id, postData.content, context).then((value) {
+                                                                                                                  Util().flashMessageSuccess(contextParent, 'Successfully Deleting Post');
+                                                                                                                });
+                                                                                                              },
+                                                                                                              child: const Center(
+                                                                                                                child: Text(
+                                                                                                                  'Delete',
+                                                                                                                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+                                                                                                                ),
+                                                                                                              ),
+                                                                                                            ),
+                                                                                                          ),
+                                                                                                          Container(
+                                                                                                            height: 50,
+                                                                                                            decoration: const BoxDecoration(
+                                                                                                              border: Border(
+                                                                                                                top: BorderSide(color: Color.fromARGB(31, 158, 158, 158), width: 1),
+                                                                                                              ),
+                                                                                                            ),
+                                                                                                            width: MediaQuery.of(context).size.width,
+                                                                                                            child: InkWell(
+                                                                                                              onTap: () {
+                                                                                                                Navigator.pop(context);
+                                                                                                              },
+                                                                                                              child: const Center(
+                                                                                                                child: Text(
+                                                                                                                  'Cancel',
+                                                                                                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                                                                                                ),
+                                                                                                              ),
+                                                                                                            ),
+                                                                                                          )
+                                                                                                        ],
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  );
+                                                                                                });
+                                                                                          },
+                                                                                          child: Row(
+                                                                                            children: [
+                                                                                              Icon(
+                                                                                                MdiIcons.trashCanOutline,
+                                                                                                size: 30,
+                                                                                                color: Colors.redAccent,
+                                                                                              ),
+                                                                                              Container(
+                                                                                                margin: const EdgeInsets.only(left: 10),
+                                                                                                child: const Text(
+                                                                                                  'Delete Post',
+                                                                                                  style: TextStyle(fontSize: 16),
+                                                                                                ),
+                                                                                              )
+                                                                                            ],
+                                                                                          ),
+                                                                                        ),
+                                                                                      )
+                                                                                    ],
+                                                                                  ));
+                                                                            }));
+                                                                      },
+                                                                      child: Icon(
+                                                                          MdiIcons
+                                                                              .dotsVertical))
+                                                              ],
+                                                            ),
+                                                          );
+                                                        }
+                                                      }), //Nama
+                                                ),
+                                                SizedBox(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.796,
+                                                    child: Text(
+                                                      postData.body,
+                                                      style: const TextStyle(
+                                                          fontSize: 16),
+                                                    )),
+                                                Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.796,
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            top: 15),
+                                                    height: 250,
+                                                    child: PageView.builder(
+                                                        itemCount: postData
+                                                            .content!.length,
+                                                        itemBuilder:
+                                                            (context, index) {
+                                                          final content =
+                                                              postData.content![
+                                                                  index];
 
-                                                        return Column(
-                                                          children: [
-                                                            if (MediaType()
-                                                                .isImage(
-                                                                    content))
-                                                              FutureBuilder(
-                                                                  future: model
-                                                                      .fetchContent(
-                                                                          content),
-                                                                  builder: (context,
-                                                                      snapshot) {
-                                                                    if (snapshot
-                                                                            .connectionState ==
-                                                                        ConnectionState
-                                                                            .waiting) {
-                                                                      return const Center(
-                                                                          child:
-                                                                              CircularProgressIndicator());
-                                                                    } else {
-                                                                      return Expanded(
-                                                                          child:
-                                                                              Container(
-                                                                        decoration: BoxDecoration(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(20),
-                                                                            image: DecorationImage(image: CachedNetworkImageProvider(snapshot.data!), fit: BoxFit.contain)),
-                                                                      ));
-                                                                    }
-                                                                  }),
-                                                            if (MediaType()
-                                                                .isVideo(
-                                                                    content))
-                                                              FutureBuilder(
-                                                                  future: model
-                                                                      .fetchContent(
-                                                                          content),
-                                                                  builder: (context,
-                                                                      snapshot) {
-                                                                    if (snapshot
-                                                                            .connectionState ==
-                                                                        ConnectionState
-                                                                            .waiting) {
-                                                                      return const Center(
-                                                                          child:
-                                                                              CircularProgressIndicator());
-                                                                    } else {
-                                                                      final flickManager =
-                                                                          FlickManager(
-                                                                              videoPlayerController: VideoPlayerController.networkUrl(Uri.parse(snapshot.data!)));
+                                                          return Column(
+                                                            children: [
+                                                              if (MediaType()
+                                                                  .isImage(
+                                                                      content))
+                                                                FutureBuilder(
+                                                                    future: model
+                                                                        .fetchContent(
+                                                                            content),
+                                                                    builder:
+                                                                        (context,
+                                                                            snapshot) {
+                                                                      if (snapshot
+                                                                              .connectionState ==
+                                                                          ConnectionState
+                                                                              .waiting) {
+                                                                        return const Center(
+                                                                            child:
+                                                                                CircularProgressIndicator());
+                                                                      } else {
+                                                                        return Expanded(
+                                                                            child:
+                                                                                Container(
+                                                                          decoration: BoxDecoration(
+                                                                              borderRadius: BorderRadius.circular(20),
+                                                                              image: DecorationImage(image: CachedNetworkImageProvider(snapshot.data!), fit: BoxFit.contain)),
+                                                                        ));
+                                                                      }
+                                                                    }),
+                                                              if (MediaType()
+                                                                  .isVideo(
+                                                                      content))
+                                                                FutureBuilder(
+                                                                    future: model
+                                                                        .fetchContent(
+                                                                            content),
+                                                                    builder:
+                                                                        (context,
+                                                                            snapshot) {
+                                                                      if (snapshot
+                                                                              .connectionState ==
+                                                                          ConnectionState
+                                                                              .waiting) {
+                                                                        return const Center(
+                                                                            child:
+                                                                                CircularProgressIndicator());
+                                                                      } else {
+                                                                        final flickManager =
+                                                                            FlickManager(videoPlayerController: VideoPlayerController.networkUrl(Uri.parse(snapshot.data!)));
 
-                                                                      return Expanded(
-                                                                          child:
-                                                                              FlickVideoPlayer(flickManager: flickManager));
-                                                                    }
-                                                                  }),
-                                                            postData.content!
-                                                                        .length !=
-                                                                    1
-                                                                ? Container(
-                                                                    width: MediaQuery.of(context)
-                                                                            .size
-                                                                            .width *
-                                                                        0.80,
-                                                                    margin: const EdgeInsets
-                                                                        .only(
-                                                                        top:
-                                                                            10),
-                                                                    child: Center(
-                                                                        child: DotsIndicator(
-                                                                      dotsCount: postData
-                                                                          .content!
-                                                                          .length,
-                                                                      position:
-                                                                          index,
-                                                                      decorator:
-                                                                          const DotsDecorator(
-                                                                        color: Colors
-                                                                            .white, // Inactive color
-                                                                        activeColor:
-                                                                            Colors.lightBlue,
-                                                                      ),
-                                                                    )),
-                                                                  )
-                                                                : Container()
-                                                          ],
-                                                        );
-                                                      })), //content
-                                            ],
-                                          ),
-                                        ))
+                                                                        return Expanded(
+                                                                            child:
+                                                                                FlickVideoPlayer(flickManager: flickManager));
+                                                                      }
+                                                                    }),
+                                                              postData.content!
+                                                                          .length !=
+                                                                      1
+                                                                  ? Container(
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.80,
+                                                                      margin: const EdgeInsets
+                                                                          .only(
+                                                                          top:
+                                                                              10),
+                                                                      child: Center(
+                                                                          child: DotsIndicator(
+                                                                        dotsCount: postData
+                                                                            .content!
+                                                                            .length,
+                                                                        position:
+                                                                            index,
+                                                                        decorator:
+                                                                            const DotsDecorator(
+                                                                          color:
+                                                                              Colors.white, // Inactive color
+                                                                          activeColor:
+                                                                              Colors.lightBlue,
+                                                                        ),
+                                                                      )),
+                                                                    )
+                                                                  : Container()
+                                                            ],
+                                                          );
+                                                        })), //content
+                                              ],
+                                            ),
+                                          )),
+                                    )
                                   ],
                                 ),
                                 SizedBox(
