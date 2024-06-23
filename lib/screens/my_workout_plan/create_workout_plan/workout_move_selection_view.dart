@@ -390,9 +390,9 @@ class WorkoutMoveSelectionView extends StatelessWidget {
       BuildContext context, WorkoutMoveSelectionViewModel vm) {
     return showModalBottomSheet(
         context: context,
+        isScrollControlled: true,
         builder: (BuildContext context) {
           return Container(
-              height: 200,
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20),
@@ -400,11 +400,16 @@ class WorkoutMoveSelectionView extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                padding: EdgeInsets.only(
+                    top: 16,
+                    left: 16,
+                    right: 16,
+                    bottom: MediaQuery.of(context).viewInsets.bottom + 16),
                 child: Form(
                   key: vm.formKey,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       TextFormField(
                         controller: vm.repetitionController,
