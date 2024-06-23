@@ -119,7 +119,8 @@ class TrainingSetDetailView extends StatelessWidget {
                                         TableRow(
                                           children: [
                                             ListTile(
-                                              tileColor: Colors.lime,
+                                              tileColor:
+                                                  const Color(0XFFe0fe0e),
                                               shape:
                                                   const RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.only(

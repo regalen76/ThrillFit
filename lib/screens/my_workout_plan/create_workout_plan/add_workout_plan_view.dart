@@ -263,7 +263,7 @@ class AddWorkoutPlanView extends StatelessWidget {
                           : Colors.transparent,
                       width: 6),
                   borderRadius: BorderRadius.circular(8),
-                  color: Colors.lime),
+                  color: const Color(0XFFe0fe0e)),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [

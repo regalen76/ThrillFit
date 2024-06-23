@@ -94,7 +94,8 @@ class MyWorkoutPlanView extends StatelessWidget {
                                                             TableRow(children: [
                                                               ListTile(
                                                                 tileColor:
-                                                                    Colors.lime,
+                                                                    const Color(
+                                                                        0XFFe0fe0e),
                                                                 shape: const RoundedRectangleBorder(
                                                                     borderRadius: BorderRadius.only(
                                                                         topLeft:
@@ -232,7 +233,7 @@ class MyWorkoutPlanView extends StatelessWidget {
                             const AddWorkoutPlanView()));
               },
               shape: const CircleBorder(side: BorderSide(color: Colors.black)),
-              backgroundColor: Colors.lime,
+              backgroundColor: const Color(0XFFe0fe0e),
               foregroundColor: Colors.black,
               tooltip: 'Add Workout Plan',
               child: Icon(

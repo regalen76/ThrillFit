@@ -41,8 +41,8 @@ class FeedsView extends StatelessWidget {
                         )
                       ],
                       bottom: const TabBar(
-                        indicatorColor: Colors.lime,
-                        labelColor: Colors.lime,
+                        indicatorColor: Color(0XFFe0fe0e),
+                        labelColor: Color(0XFFe0fe0e),
                         tabs: [
                           Tab(
                             child: Text(

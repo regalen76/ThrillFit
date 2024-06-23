@@ -123,7 +123,7 @@ class StartWorkoutView extends StatelessWidget {
                                       },
                                       style: TextButton.styleFrom(
                                         backgroundColor: (vm.currentIndex > 0)
-                                            ? Colors.lime
+                                            ? const Color(0XFFe0fe0e)
                                             : Colors.grey,
                                       ),
                                       child: Row(children: [
@@ -186,7 +186,8 @@ class StartWorkoutView extends StatelessWidget {
                                         }
                                       },
                                       style: TextButton.styleFrom(
-                                        backgroundColor: Colors.lime,
+                                        backgroundColor:
+                                            const Color(0XFFe0fe0e),
                                       ),
                                       child: Row(children: [
                                         Expanded(

@@ -63,7 +63,7 @@ class WorkoutMoveDetailView extends StatelessWidget {
                                             color: Colors.black,
                                           ),
                                         ],
-                                        color: Colors.lime,
+                                        color: Color(0XFFe0fe0e),
                                         fontSize: 26,
                                         fontWeight: FontWeight.bold),
                                   ),

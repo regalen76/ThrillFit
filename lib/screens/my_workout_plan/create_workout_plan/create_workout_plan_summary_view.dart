@@ -106,7 +106,7 @@ class CreateWorkoutPlanSummaryView extends StatelessWidget {
                                       const Text(
                                         'Title',
                                         style: TextStyle(
-                                            color: Colors.lime,
+                                            color: Color(0XFFe0fe0e),
                                             shadows: <Shadow>[
                                               Shadow(
                                                 offset: Offset(-5.0, 5.0),
@@ -131,7 +131,7 @@ class CreateWorkoutPlanSummaryView extends StatelessWidget {
                                         child: Text(
                                           'Description',
                                           style: TextStyle(
-                                              color: Colors.lime,
+                                              color: Color(0XFFe0fe0e),
                                               shadows: <Shadow>[
                                                 Shadow(
                                                   offset: Offset(-5.0, 5.0),
@@ -164,7 +164,7 @@ class CreateWorkoutPlanSummaryView extends StatelessWidget {
                                                     color: Colors.black,
                                                   ),
                                                 ],
-                                                color: Colors.lime,
+                                                color: Color(0XFFe0fe0e),
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           )),
@@ -200,7 +200,8 @@ class CreateWorkoutPlanSummaryView extends StatelessWidget {
                                               TableRow(
                                                 children: [
                                                   ListTile(
-                                                    tileColor: Colors.lime,
+                                                    tileColor:
+                                                        const Color(0XFFe0fe0e),
                                                     shape:
                                                         const RoundedRectangleBorder(
                                                       borderRadius:

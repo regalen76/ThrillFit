@@ -112,7 +112,7 @@ class WorkoutMoveSelectionView extends StatelessWidget {
                                           children: [
                                             Container(
                                               decoration: const BoxDecoration(
-                                                color: Colors.lime,
+                                                color: Color(0XFFe0fe0e),
                                                 borderRadius: BorderRadius.only(
                                                   topLeft: Radius.circular(8),
                                                   bottomLeft:

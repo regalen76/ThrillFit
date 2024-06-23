@@ -117,7 +117,7 @@ class WorkoutPlanCompletionView extends StatelessWidget {
                                         child: Text(
                                           'Title',
                                           style: TextStyle(
-                                              color: Colors.lime,
+                                              color: Color(0XFFe0fe0e),
                                               shadows: <Shadow>[
                                                 Shadow(
                                                   offset: Offset(-5.0, 5.0),
@@ -150,7 +150,7 @@ class WorkoutPlanCompletionView extends StatelessWidget {
                                                     color: Colors.black,
                                                   ),
                                                 ],
-                                                color: Colors.lime,
+                                                color: Color(0XFFe0fe0e),
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           )),
@@ -171,7 +171,7 @@ class WorkoutPlanCompletionView extends StatelessWidget {
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 12),
                                           child: ListTile(
-                                            tileColor: Colors.lime,
+                                            tileColor: const Color(0XFFe0fe0e),
                                             shape: const RoundedRectangleBorder(
                                               borderRadius: BorderRadius.all(
                                                 Radius.circular(8),
