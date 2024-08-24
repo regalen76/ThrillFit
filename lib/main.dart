@@ -19,15 +19,23 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          brightness: Brightness.dark,
-          fontFamily: 'Poppins',
-          scaffoldBackgroundColor: background,
-          appBarTheme: const AppBarTheme(backgroundColor: background)),
+        brightness: Brightness.dark,
+        fontFamily: 'Poppins',
+        scaffoldBackgroundColor: background,
+        appBarTheme: const AppBarTheme(backgroundColor: background),
+        progressIndicatorTheme: const ProgressIndicatorThemeData(
+          color: Color(0XFFe0fe0e),
+        ),
+      ),
       darkTheme: ThemeData(
-          brightness: Brightness.dark,
-          fontFamily: 'Poppins',
-          scaffoldBackgroundColor: background,
-          appBarTheme: const AppBarTheme(backgroundColor: background)),
+        brightness: Brightness.dark,
+        fontFamily: 'Poppins',
+        scaffoldBackgroundColor: background,
+        appBarTheme: const AppBarTheme(backgroundColor: background),
+        progressIndicatorTheme: const ProgressIndicatorThemeData(
+          color: Color(0XFFe0fe0e),
+        ),
+      ),
       themeMode: ThemeMode.dark,
       debugShowCheckedModeBanner: false,
       home: const WidgetTree(),
