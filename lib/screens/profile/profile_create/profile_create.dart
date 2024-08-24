@@ -321,20 +321,31 @@ class ProfileCreateView extends StatelessWidget {
                                           margin: const EdgeInsets.only(
                                               top: 15, bottom: 35),
                                           width: 300,
+                                          height: 50,
                                           child: ElevatedButton(
-                                              style: ButtonStyle(
-                                                  shape: MaterialStateProperty.all<
-                                                          OutlinedBorder>(
-                                                      ContinuousRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      20.0)))),
-                                              onPressed: () {
-                                                model
-                                                    .saveCreateProfile(context);
-                                              },
-                                              child: const Text('Save')),
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all<
+                                                          Color>(
+                                                      const Color(0xFFe0fe0e)),
+                                              shape: MaterialStateProperty.all<
+                                                  OutlinedBorder>(
+                                                ContinuousRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          300.0),
+                                                ),
+                                              ),
+                                            ),
+                                            onPressed: () {
+                                              model.saveCreateProfile(context);
+                                            },
+                                            child: const Text(
+                                              'Save',
+                                              style: TextStyle(
+                                                  color: Colors.black),
+                                            ),
+                                          ),
                                         ),
                                       ],
                                     ),

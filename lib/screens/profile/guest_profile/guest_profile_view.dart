@@ -138,117 +138,116 @@ class GuestProfileView extends StatelessWidget {
                                                 ),
                                               ),
                                               onPressed: () {
-                                                showModalBottomSheet(
-                                                  context: context,
-                                                  shape:
-                                                      const RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(20),
-                                                      topRight:
-                                                          Radius.circular(20),
-                                                    ),
-                                                  ),
-                                                  builder: ((context) {
-                                                    return SizedBox(
-                                                      height: 300,
-                                                      child: Center(
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Center(
-                                                              child: Container(
-                                                                margin:
-                                                                    const EdgeInsets
-                                                                        .only(
-                                                                        left:
-                                                                            20,
-                                                                        right:
-                                                                            20),
-                                                                child: Text(
-                                                                  'Are you want to unfollow ${data.name}?',
-                                                                  style: const TextStyle(
-                                                                      fontSize:
-                                                                          24),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Container(
-                                                                margin:
-                                                                    const EdgeInsets
-                                                                        .only(
-                                                                        top:
-                                                                            40),
-                                                                child: Row(
+                                                showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                              context) {
+                                                            return AlertDialog(
+                                                              insetPadding:
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                              contentPadding:
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                              content: SizedBox(
+                                                                height: 200,
+                                                                width: 100,
+                                                                child: Column(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
                                                                   children: [
-                                                                    Expanded(
+                                                                     SizedBox(
+                                                                      height:
+                                                                          100,
                                                                       child:
                                                                           Center(
                                                                         child:
-                                                                            Material(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(20),
-                                                                          child:
-                                                                              InkWell(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(20),
-                                                                            onTapUp:
-                                                                                (_) async {
-                                                                              await UserRepo(uid: model.getUser!.uid).deleteFollowersData(uid, model.getUser!.uid);
+                                                                            Text(
+                                                                          'Unfollow ${data.name}?',
+                                                                          style: const TextStyle(
+                                                                              fontWeight: FontWeight.bold,
+                                                                              fontSize: 20),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    Container(
+                                                                      height:
+                                                                          50,
+                                                                      decoration:
+                                                                          const BoxDecoration(
+                                                                        border:
+                                                                            Border(
+                                                                          top: BorderSide(
+                                                                              color: Color.fromARGB(31, 158, 158, 158),
+                                                                              width: 1),
+                                                                        ),
+                                                                      ),
+                                                                      width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width,
+                                                                      child:
+                                                                          InkWell(
+                                                                        onTap:
+                                                                            () async {
+                                                                          await UserRepo(uid: model.getUser!.uid).deleteFollowersData(uid, model.getUser!.uid);
                                                                               if (context.mounted) {
                                                                                 Navigator.pop(context);
-                                                                              }
-                                                                            },
-                                                                            child:
-                                                                                const SizedBox(
-                                                                              height: 80,
-                                                                              width: 170,
-                                                                              child: Center(
-                                                                                child: Text('Yes'),
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    Expanded(
-                                                                      child:
-                                                                          Center(
+                                                                              }                                                                        },
                                                                         child:
-                                                                            Material(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(20),
+                                                                            const Center(
                                                                           child:
-                                                                              InkWell(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(20),
-                                                                            onTapUp:
-                                                                                (_) {
-                                                                              Navigator.pop(context);
-                                                                            },
-                                                                            child:
-                                                                                const SizedBox(
-                                                                              height: 80,
-                                                                              width: 170,
-                                                                              child: Center(
-                                                                                child: Text('No'),
-                                                                              ),
-                                                                            ),
+                                                                              Text(
+                                                                            'Yes',
+                                                                            style:
+                                                                                TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                                                                           ),
                                                                         ),
                                                                       ),
                                                                     ),
+                                                                    Container(
+                                                                      height:
+                                                                          50,
+                                                                      decoration:
+                                                                          const BoxDecoration(
+                                                                        border:
+                                                                            Border(
+                                                                          top: BorderSide(
+                                                                              color: Color.fromARGB(31, 158, 158, 158),
+                                                                              width: 1),
+                                                                        ),
+                                                                      ),
+                                                                      width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width,
+                                                                      child:
+                                                                          InkWell(
+                                                                        onTap:
+                                                                            () {
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                        },
+                                                                        child:
+                                                                            const Center(
+                                                                          child:
+                                                                              Text(
+                                                                            'Cancel',
+                                                                            style:
+                                                                                TextStyle(fontWeight: FontWeight.bold),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    )
                                                                   ],
-                                                                )),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    );
-                                                  }),
-                                                );
+                                                                ),
+                                                              ),
+                                                            );
+                                                          });
                                               },
                                               child: const Text('Followed'),
                                             );

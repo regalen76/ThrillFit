@@ -110,13 +110,14 @@ class LoginPageState extends State<LoginPage> {
         width: MediaQuery.of(context).size.width,
         height: 65,
         decoration: BoxDecoration(
-          color: isLogin ? Colors.blue : Colors.deepPurpleAccent,
+          color: isLogin ? Colors.blue : const Color(0xFFe0fe0e),
           borderRadius: BorderRadius.circular(30),
         ),
         child: Center(
           child: Text(
             isLogin ? 'Login' : 'Register',
-            style: const TextStyle(color: Colors.white, fontSize: 24),
+            style: TextStyle(
+                color: isLogin ? Colors.white : Colors.black, fontSize: 24),
           ),
         ),
       ),
@@ -135,13 +136,14 @@ class LoginPageState extends State<LoginPage> {
         width: MediaQuery.of(context).size.width,
         height: 65,
         decoration: BoxDecoration(
-          color: isLogin ? Colors.deepPurpleAccent : Colors.blue,
+          color: isLogin ? const Color(0xFFe0fe0e) : Colors.blue,
           borderRadius: BorderRadius.circular(30),
         ),
         child: Center(
           child: Text(
             isLogin ? 'Register Instead' : 'Login Instead',
-            style: const TextStyle(color: Colors.white, fontSize: 24),
+            style: TextStyle(
+                color: isLogin ? Colors.black : Colors.white, fontSize: 24),
           ),
         ),
       ),
@@ -170,7 +172,7 @@ class LoginPageState extends State<LoginPage> {
                   child: Icon(
                     Icons.account_circle,
                     key: ValueKey<bool>(isLogin),
-                    color: isLogin ? Colors.blue : Colors.deepPurpleAccent,
+                    color: isLogin ? Colors.blue : const Color(0xFFe0fe0e),
                     size: 250,
                   ),
                 ),

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
@@ -697,112 +698,147 @@ class ProfileDataView extends StatelessWidget {
                                                             top: 15,
                                                             bottom: 35),
                                                     width: 300,
+                                                    height: 50,
                                                     child: ElevatedButton(
                                                         style: ButtonStyle(
-                                                            shape: MaterialStateProperty.all<
-                                                                    OutlinedBorder>(
-                                                                ContinuousRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            20.0)))),
+                                                          backgroundColor:
+                                                              MaterialStateProperty
+                                                                  .all<Color>(
+                                                                      Colors
+                                                                          .blue),
+                                                          shape: MaterialStateProperty
+                                                              .all<
+                                                                  OutlinedBorder>(
+                                                            ContinuousRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          300.0),
+                                                            ),
+                                                          ),
+                                                        ),
                                                         onPressed: () {
                                                           model
                                                               .saveEditProfile();
                                                         },
-                                                        child:
-                                                            const Text('Save')),
+                                                        child: const Text(
+                                                          'Save',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white),
+                                                        )),
                                                   )
                                                 : InkWell(
                                                     onTapUp: (_) {
-                                                      showModalBottomSheet(
-                                                        context: context,
-                                                        shape:
-                                                            const RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    20),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    20),
-                                                          ),
-                                                        ),
-                                                        builder: ((context) {
-                                                          return SizedBox(
-                                                            height: 300,
-                                                            child: Center(
-                                                              child: Column(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  const Center(
-                                                                    child: Text(
-                                                                      'Are you sure you want to logout?',
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              24),
-                                                                    ),
-                                                                  ),
-                                                                  Container(
-                                                                      margin: const EdgeInsets
-                                                                          .only(
-                                                                          top:
-                                                                              40),
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                              context) {
+                                                            return AlertDialog(
+                                                              insetPadding:
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                              contentPadding:
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                              content: SizedBox(
+                                                                height: 200,
+                                                                width: 100,
+                                                                child: Column(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    const SizedBox(
+                                                                      height:
+                                                                          100,
                                                                       child:
-                                                                          Row(
-                                                                        children: [
-                                                                          Expanded(
-                                                                            child:
-                                                                                Center(
-                                                                              child: Material(
-                                                                                borderRadius: BorderRadius.circular(20),
-                                                                                child: InkWell(
-                                                                                  borderRadius: BorderRadius.circular(20),
-                                                                                  onTapUp: (_) async {
-                                                                                    await model.signOut(context);
-                                                                                  },
-                                                                                  child: const SizedBox(
-                                                                                    height: 80,
-                                                                                    width: 170,
-                                                                                    child: Center(
-                                                                                      child: Text('Yes'),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            ),
+                                                                          Center(
+                                                                        child:
+                                                                            Text(
+                                                                          'Sign Out?',
+                                                                          style: TextStyle(
+                                                                              fontWeight: FontWeight.bold,
+                                                                              fontSize: 20),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    Container(
+                                                                      height:
+                                                                          50,
+                                                                      decoration:
+                                                                          const BoxDecoration(
+                                                                        border:
+                                                                            Border(
+                                                                          top: BorderSide(
+                                                                              color: Color.fromARGB(31, 158, 158, 158),
+                                                                              width: 1),
+                                                                        ),
+                                                                      ),
+                                                                      width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width,
+                                                                      child:
+                                                                          InkWell(
+                                                                        onTap:
+                                                                            () async {
+                                                                          await model
+                                                                              .signOut(context);
+                                                                        },
+                                                                        child:
+                                                                            const Center(
+                                                                          child:
+                                                                              Text(
+                                                                            'Yes',
+                                                                            style:
+                                                                                TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                                                                           ),
-                                                                          Expanded(
-                                                                            child:
-                                                                                Center(
-                                                                              child: Material(
-                                                                                borderRadius: BorderRadius.circular(20),
-                                                                                child: InkWell(
-                                                                                  borderRadius: BorderRadius.circular(20),
-                                                                                  onTapUp: (_) {
-                                                                                    Navigator.pop(context);
-                                                                                  },
-                                                                                  child: const SizedBox(
-                                                                                    height: 80,
-                                                                                    width: 170,
-                                                                                    child: Center(
-                                                                                      child: Text('No'),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    Container(
+                                                                      height:
+                                                                          50,
+                                                                      decoration:
+                                                                          const BoxDecoration(
+                                                                        border:
+                                                                            Border(
+                                                                          top: BorderSide(
+                                                                              color: Color.fromARGB(31, 158, 158, 158),
+                                                                              width: 1),
+                                                                        ),
+                                                                      ),
+                                                                      width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width,
+                                                                      child:
+                                                                          InkWell(
+                                                                        onTap:
+                                                                            () {
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                        },
+                                                                        child:
+                                                                            const Center(
+                                                                          child:
+                                                                              Text(
+                                                                            'Cancel',
+                                                                            style:
+                                                                                TextStyle(fontWeight: FontWeight.bold),
                                                                           ),
-                                                                        ],
-                                                                      )),
-                                                                ],
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
                                                               ),
-                                                            ),
-                                                          );
-                                                        }),
-                                                      );
+                                                            );
+                                                          });
                                                     },
                                                     child: Container(
                                                       margin:

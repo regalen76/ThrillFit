@@ -64,6 +64,7 @@ dependencies:
   model_viewer_plus: ^1.7.2
   internet_connection_checker: ^1.0.0+1
   audioplayers: ^6.0.0
+  memory_info: ^0.0.4
 
 dev_dependencies:
   flutter_test:

@@ -198,23 +198,82 @@ class AddWorkoutPlanView extends StatelessWidget {
                                         } else {
                                           showDialog(
                                               context: context,
-                                              builder: (BuildContext ctx) {
+                                              builder: (BuildContext context) {
                                                 return AlertDialog(
-                                                  backgroundColor: background,
-                                                  title: const Text(
-                                                      'Error Validation'),
-                                                  content: Text(
-                                                      vm.buildErrorMessage()),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                      child:
-                                                          const Text('Close'),
+                                                  insetPadding: EdgeInsets.zero,
+                                                  contentPadding:
+                                                      EdgeInsets.zero,
+                                                  title: const Center(
+                                                    child: Text(
+                                                        'Error Validation'),
+                                                  ),
+                                                  content: SizedBox(
+                                                    height: 200,
+                                                    width: 100,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Container(
+                                                          margin:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 20,
+                                                                  right: 20),
+                                                          height: 100,
+                                                          child: Center(
+                                                            child: Text(
+                                                              vm.buildErrorMessage(),
+                                                              style: const TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 20),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          height: 50,
+                                                          decoration:
+                                                              const BoxDecoration(
+                                                            border: Border(
+                                                              top: BorderSide(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          31,
+                                                                          158,
+                                                                          158,
+                                                                          158),
+                                                                  width: 1),
+                                                            ),
+                                                          ),
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
+                                                          child: InkWell(
+                                                            onTap: () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                            child: const Center(
+                                                              child: Text(
+                                                                'Close',
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        )
+                                                      ],
                                                     ),
-                                                  ],
+                                                  ),
                                                 );
                                               });
                                         }

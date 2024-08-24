@@ -137,16 +137,16 @@ class EmailVerifPageState extends State<EmailVerifPage> {
                 ),
                 ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepPurpleAccent,
+                        backgroundColor: const Color(0xFFe0fe0e),
                         minimumSize: const Size.fromHeight(70)),
                     icon: Icon(
                       MdiIcons.email,
                       size: 32,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                     label: const Text(
                       'Cancel',
-                      style: TextStyle(fontSize: 24, color: Colors.white),
+                      style: TextStyle(fontSize: 24, color: Colors.black),
                     ),
                     onPressed: () => Auth().signOut(context))
               ],
