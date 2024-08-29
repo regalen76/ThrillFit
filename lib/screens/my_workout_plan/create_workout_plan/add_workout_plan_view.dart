@@ -50,7 +50,7 @@ class AddWorkoutPlanView extends StatelessWidget {
                                   maxLength: 50,
                                   maxLines: 3,
                                   minLines: 1,
-                                  cursorColor: Colors.white,
+                                  cursorColor: Colors.blue,
                                   decoration: const InputDecoration(
                                       labelText: 'Workout Plan Title',
                                       labelStyle: TextStyle(
@@ -78,7 +78,7 @@ class AddWorkoutPlanView extends StatelessWidget {
                                   maxLength: 150,
                                   maxLines: 3,
                                   minLines: 1,
-                                  cursorColor: Colors.white,
+                                  cursorColor: Colors.blue,
                                   decoration: const InputDecoration(
                                       labelText: 'Description',
                                       labelStyle: TextStyle(

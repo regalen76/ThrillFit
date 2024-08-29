@@ -34,6 +34,7 @@ class SearchView extends StatelessWidget {
                           child: TextField(
                             controller: model.getSearhController,
                             autocorrect: false,
+                            cursorColor: Colors.blue,
                             decoration: const InputDecoration(
                                 hintText: 'Search', border: InputBorder.none),
                           ),

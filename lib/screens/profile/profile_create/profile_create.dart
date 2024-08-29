@@ -93,6 +93,15 @@ class ProfileCreateView extends StatelessWidget {
                                                         FontWeight.bold),
                                                 validator: model.validateEmpty,
                                                 controller: model.getNameField,
+                                                cursorColor: Colors.blue,
+                                                decoration:
+                                                    const InputDecoration(
+                                                  focusedBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: Colors.blue),
+                                                  ),
+                                                ),
                                               ),
                                             )
                                           ],
@@ -124,6 +133,15 @@ class ProfileCreateView extends StatelessWidget {
                                                         FontWeight.bold),
                                                 validator: model.validateEmpty,
                                                 controller: model.getPhoneField,
+                                                cursorColor: Colors.blue,
+                                                decoration:
+                                                    const InputDecoration(
+                                                  focusedBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: Colors.blue),
+                                                  ),
+                                                ),
                                               ),
                                             )
                                           ],
@@ -152,7 +170,11 @@ class ProfileCreateView extends StatelessWidget {
                                                   contentPadding:
                                                       EdgeInsets.symmetric(
                                                           vertical: 16),
-                                                  // Add more decoration..
+                                                  focusedBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: Colors.blue),
+                                                  ),
                                                 ),
                                                 hint: const Text(
                                                   'Select Your Gender',
@@ -247,6 +269,15 @@ class ProfileCreateView extends StatelessWidget {
                                                 validator: model.validateEmpty,
                                                 controller:
                                                     model.getHeightField,
+                                                cursorColor: Colors.blue,
+                                                decoration:
+                                                    const InputDecoration(
+                                                  focusedBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: Colors.blue),
+                                                  ),
+                                                ),
                                               ),
                                             )
                                           ],
@@ -279,6 +310,15 @@ class ProfileCreateView extends StatelessWidget {
                                                 controller:
                                                     model.getWeightField,
                                                 validator: model.validateEmpty,
+                                                cursorColor: Colors.blue,
+                                                decoration:
+                                                    const InputDecoration(
+                                                  focusedBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: Colors.blue),
+                                                  ),
+                                                ),
                                               ),
                                             )
                                           ],
@@ -310,6 +350,15 @@ class ProfileCreateView extends StatelessWidget {
                                                         FontWeight.bold),
                                                 controller: model.getAgeField,
                                                 validator: model.validateEmpty,
+                                                cursorColor: Colors.blue,
+                                                decoration:
+                                                    const InputDecoration(
+                                                  focusedBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: Colors.blue),
+                                                  ),
+                                                ),
                                               ),
                                             )
                                           ],

@@ -76,9 +76,14 @@ class LoginPageState extends State<LoginPage> {
       keyboardType: TextInputType.visiblePassword,
       controller: controller,
       style: const TextStyle(color: Colors.white, fontSize: 22),
+      cursorColor: Colors.blue,
       decoration: InputDecoration(
-          labelText: title,
-          labelStyle: const TextStyle(color: Colors.grey, fontSize: 19)),
+        labelText: title,
+        labelStyle: const TextStyle(color: Colors.grey, fontSize: 19),
+        focusedBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.blue),
+        ),
+      ),
     );
   }
 
@@ -94,9 +99,14 @@ class LoginPageState extends State<LoginPage> {
       enableSuggestions: false,
       autocorrect: false,
       style: const TextStyle(color: Colors.white, fontSize: 22),
+      cursorColor: Colors.blue,
       decoration: InputDecoration(
-          labelText: title,
-          labelStyle: const TextStyle(color: Colors.grey, fontSize: 19)),
+        labelText: title,
+        labelStyle: const TextStyle(color: Colors.grey, fontSize: 19),
+        focusedBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.blue),
+        ),
+      ),
     );
   }
 

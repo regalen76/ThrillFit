@@ -413,7 +413,7 @@ class WorkoutMoveSelectionView extends StatelessWidget {
                     children: [
                       TextFormField(
                         controller: vm.repetitionController,
-                        cursorColor: Colors.white,
+                        cursorColor: Colors.blue,
                         maxLength: 2,
                         decoration: const InputDecoration(
                             labelText: 'Repetition',

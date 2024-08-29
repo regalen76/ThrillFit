@@ -26,6 +26,8 @@ class MyApp extends StatelessWidget {
         progressIndicatorTheme: const ProgressIndicatorThemeData(
           color: Color(0XFFe0fe0e),
         ),
+        textSelectionTheme:
+            const TextSelectionThemeData(selectionHandleColor: Colors.blue),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
@@ -35,6 +37,8 @@ class MyApp extends StatelessWidget {
         progressIndicatorTheme: const ProgressIndicatorThemeData(
           color: Color(0XFFe0fe0e),
         ),
+        textSelectionTheme:
+            const TextSelectionThemeData(selectionHandleColor: Colors.blue),
       ),
       themeMode: ThemeMode.dark,
       debugShowCheckedModeBanner: false,

@@ -305,6 +305,18 @@ class ProfileDataView extends StatelessWidget {
                                                               .validateEmpty,
                                                           controller: model
                                                               .getNameField,
+                                                          cursorColor:
+                                                              Colors.blue,
+                                                          decoration:
+                                                              const InputDecoration(
+                                                            focusedBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                      color: Colors
+                                                                          .blue),
+                                                            ),
+                                                          ),
                                                         ),
                                                       )
                                                     : Text(data.name,
@@ -390,6 +402,18 @@ class ProfileDataView extends StatelessWidget {
                                                               .validateEmpty,
                                                           controller: model
                                                               .getPhoneField,
+                                                          cursorColor:
+                                                              Colors.blue,
+                                                          decoration:
+                                                              const InputDecoration(
+                                                            focusedBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                      color: Colors
+                                                                          .blue),
+                                                            ),
+                                                          ),
                                                         ),
                                                       )
                                                     : Text(data.phone,
@@ -433,6 +457,13 @@ class ProfileDataView extends StatelessWidget {
                                                                     .symmetric(
                                                                         vertical:
                                                                             16),
+                                                            focusedBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                      color: Colors
+                                                                          .blue),
+                                                            ),
                                                           ),
                                                           hint: const Text(
                                                             'Select Your Gender',
@@ -564,6 +595,18 @@ class ProfileDataView extends StatelessWidget {
                                                               .validateEmpty,
                                                           controller: model
                                                               .getHeightField,
+                                                          cursorColor:
+                                                              Colors.blue,
+                                                          decoration:
+                                                              const InputDecoration(
+                                                            focusedBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                      color: Colors
+                                                                          .blue),
+                                                            ),
+                                                          ),
                                                         ),
                                                       )
                                                     : Text('${data.height}',
@@ -618,6 +661,18 @@ class ProfileDataView extends StatelessWidget {
                                                               .getWeightField,
                                                           validator: model
                                                               .validateEmpty,
+                                                          cursorColor:
+                                                              Colors.blue,
+                                                          decoration:
+                                                              const InputDecoration(
+                                                            focusedBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                      color: Colors
+                                                                          .blue),
+                                                            ),
+                                                          ),
                                                         ),
                                                       )
                                                     : Text('${data.weight}',
@@ -672,6 +727,18 @@ class ProfileDataView extends StatelessWidget {
                                                               model.getAgeField,
                                                           validator: model
                                                               .validateEmpty,
+                                                          cursorColor:
+                                                              Colors.blue,
+                                                          decoration:
+                                                              const InputDecoration(
+                                                            focusedBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                      color: Colors
+                                                                          .blue),
+                                                            ),
+                                                          ),
                                                         ),
                                                       )
                                                     : Text('${data.age}',

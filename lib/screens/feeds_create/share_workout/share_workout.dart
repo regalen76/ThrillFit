@@ -99,6 +99,7 @@ class ShareWorkoutView extends StatelessWidget {
             style: const TextStyle(fontSize: 18),
             validator: model.validateEmpty,
             controller: model.getCommentFieldController,
+            cursorColor: Colors.blue,
             decoration: const InputDecoration(
                 hintText: 'Comments something...', border: InputBorder.none),
           ),

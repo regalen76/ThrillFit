@@ -151,6 +151,7 @@ class CommentModalView extends StatelessWidget {
                     padding: const EdgeInsets.all(20),
                     child: TextField(
                       controller: model.commentField,
+                      cursorColor: Colors.blue,
                       decoration: InputDecoration(
                         hintText: 'Add comment',
                         hintStyle: const TextStyle(
@@ -159,6 +160,10 @@ class CommentModalView extends StatelessWidget {
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(color: Colors.blue),
                         ),
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 15),
