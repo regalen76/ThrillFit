@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thrill_fit/screens/profile/profile_create/profile_create_model.dart';
@@ -127,6 +128,9 @@ class ProfileCreateView extends StatelessWidget {
                                                 textAlign: TextAlign.end,
                                                 keyboardType:
                                                     TextInputType.number,
+                                                inputFormatters: [
+                                                  FilteringTextInputFormatter.digitsOnly
+                                                ],
                                                 style: const TextStyle(
                                                     fontSize: 18,
                                                     fontWeight:
@@ -262,6 +266,10 @@ class ProfileCreateView extends StatelessWidget {
                                                 textAlign: TextAlign.end,
                                                 keyboardType:
                                                     TextInputType.number,
+                                                inputFormatters: [
+                                                  FilteringTextInputFormatter
+                                                      .digitsOnly
+                                                ],
                                                 style: const TextStyle(
                                                     fontSize: 18,
                                                     fontWeight:
@@ -303,6 +311,10 @@ class ProfileCreateView extends StatelessWidget {
                                                 textAlign: TextAlign.end,
                                                 keyboardType:
                                                     TextInputType.number,
+                                                inputFormatters: [
+                                                  FilteringTextInputFormatter
+                                                      .digitsOnly
+                                                ],
                                                 style: const TextStyle(
                                                     fontSize: 18,
                                                     fontWeight:
@@ -344,6 +356,10 @@ class ProfileCreateView extends StatelessWidget {
                                                 textAlign: TextAlign.end,
                                                 keyboardType:
                                                     TextInputType.number,
+                                                inputFormatters: [
+                                                  FilteringTextInputFormatter
+                                                      .digitsOnly
+                                                ],
                                                 style: const TextStyle(
                                                     fontSize: 18,
                                                     fontWeight:

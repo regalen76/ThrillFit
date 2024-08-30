@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/services.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
@@ -393,6 +394,9 @@ class ProfileDataView extends StatelessWidget {
                                                           keyboardType:
                                                               TextInputType
                                                                   .number,
+                                                          inputFormatters: [
+                                                            FilteringTextInputFormatter.digitsOnly
+                                                          ],
                                                           style: const TextStyle(
                                                               fontSize: 18,
                                                               fontWeight:
@@ -586,6 +590,10 @@ class ProfileDataView extends StatelessWidget {
                                                           keyboardType:
                                                               TextInputType
                                                                   .number,
+                                                          inputFormatters: [
+                                                            FilteringTextInputFormatter
+                                                                .digitsOnly
+                                                          ],
                                                           style: const TextStyle(
                                                               fontSize: 18,
                                                               fontWeight:
@@ -652,6 +660,10 @@ class ProfileDataView extends StatelessWidget {
                                                           keyboardType:
                                                               TextInputType
                                                                   .number,
+                                                          inputFormatters: [
+                                                            FilteringTextInputFormatter
+                                                                .digitsOnly
+                                                          ],
                                                           style: const TextStyle(
                                                               fontSize: 18,
                                                               fontWeight:
@@ -718,6 +730,10 @@ class ProfileDataView extends StatelessWidget {
                                                           keyboardType:
                                                               TextInputType
                                                                   .number,
+                                                          inputFormatters: [
+                                                            FilteringTextInputFormatter
+                                                                .digitsOnly
+                                                          ],
                                                           style: const TextStyle(
                                                               fontSize: 18,
                                                               fontWeight:
