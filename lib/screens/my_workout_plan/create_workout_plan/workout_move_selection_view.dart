@@ -38,31 +38,72 @@ class WorkoutMoveSelectionView extends StatelessWidget {
                         context: context,
                         builder: (BuildContext ctx) {
                           return AlertDialog(
-                            backgroundColor: background,
-                            title: const Text('Cancel Confirmation'),
-                            content: const Text(
-                                'Are you sure you want to cancel the workout plan creation?'),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text('Close'),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
+                            insetPadding: EdgeInsets.zero,
+                            contentPadding: EdgeInsets.zero,
+                            content: SizedBox(
+                              height: 200,
+                              width: 100,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const SizedBox(
+                                    height: 100,
+                                    child: Center(
+                                      child: Text(
+                                        'Cancel this workout plan creation?',
+                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 50,
+                                    decoration: const BoxDecoration(
+                                      border: Border(
+                                        top: BorderSide(color: Color.fromARGB(31, 158, 158, 158), width: 1),
+                                      ),
+                                    ),
+                                    width: MediaQuery.of(context).size.width,
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).pop();
 
-                                  Navigator.of(context).pop();
-                                  Navigator.of(context).pop();
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text(
-                                  'Confirm',
-                                  style: TextStyle(color: Colors.red),
-                                ),
+                                        Navigator.of(context).pop();
+                                        Navigator.of(context).pop();
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Center(
+                                        child: Text(
+                                          'Cancel',
+                                          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 50,
+                                    decoration: const BoxDecoration(
+                                      border: Border(
+                                        top: BorderSide(color: Color.fromARGB(31, 158, 158, 158), width: 1),
+                                      ),
+                                    ),
+                                    width: MediaQuery.of(context).size.width,
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Center(
+                                        child: Text(
+                                          'Close',
+                                          style: TextStyle(fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
-                            ],
+                            )
                           );
                         });
                   },
@@ -210,43 +251,85 @@ class WorkoutMoveSelectionView extends StatelessWidget {
                                                                       (BuildContext
                                                                           ctx) {
                                                                     return AlertDialog(
-                                                                      backgroundColor:
-                                                                          background,
-                                                                      title: const Text(
-                                                                          'Delete Confirmation'),
+                                                                      insetPadding:
+                                                                          EdgeInsets
+                                                                              .zero,
+                                                                      contentPadding:
+                                                                          EdgeInsets
+                                                                              .zero,
                                                                       content:
-                                                                          const Text(
-                                                                              'Are you sure want to delete this move?'),
-                                                                      actions: [
-                                                                        TextButton(
-                                                                          onPressed:
-                                                                              () {
-                                                                            Navigator.of(context).pop();
-                                                                          },
-                                                                          child:
-                                                                              const Text('Close'),
-                                                                        ),
-                                                                        TextButton(
-                                                                          onPressed:
-                                                                              () {
-                                                                            var isSuccess =
-                                                                                vm.deleteMoves(i);
-                                                                            Navigator.of(context).pop();
+                                                                          SizedBox(
+                                                                        height:
+                                                                            200,
+                                                                        width:
+                                                                            100,
+                                                                        child:
+                                                                            Column(
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.center,
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            const SizedBox(
+                                                                              height: 100,
+                                                                              child: Center(
+                                                                                child: Text(
+                                                                                  'Delete this move?',
+                                                                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                                                                                  textAlign: TextAlign.center,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                            Container(
+                                                                              height: 50,
+                                                                              decoration: const BoxDecoration(
+                                                                                border: Border(
+                                                                                  top: BorderSide(color: Color.fromARGB(31, 158, 158, 158), width: 1),
+                                                                                ),
+                                                                              ),
+                                                                              width: MediaQuery.of(context).size.width,
+                                                                              child: InkWell(
+                                                                                onTap: () {
+                                                                                  var isSuccess = vm.deleteMoves(i);
+                                                                                  Navigator.of(context).pop();
 
-                                                                            if (isSuccess) {
-                                                                              Util().flashMessageSuccess(context, "Success delete workout move.");
-                                                                            } else {
-                                                                              Util().flashMessageError(context, "Failed to delete workout move.");
-                                                                            }
-                                                                          },
-                                                                          child:
-                                                                              const Text(
-                                                                            'Delete',
-                                                                            style:
-                                                                                TextStyle(color: Colors.red),
-                                                                          ),
+                                                                                  if (isSuccess) {
+                                                                                    Util().flashMessageSuccess(context, "Success delete workout move.");
+                                                                                  } else {
+                                                                                    Util().flashMessageError(context, "Failed to delete workout move.");
+                                                                                  }
+                                                                                },
+                                                                                child: const Center(
+                                                                                  child: Text(
+                                                                                    'Delete',
+                                                                                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                            Container(
+                                                                              height: 50,
+                                                                              decoration: const BoxDecoration(
+                                                                                border: Border(
+                                                                                  top: BorderSide(color: Color.fromARGB(31, 158, 158, 158), width: 1),
+                                                                                ),
+                                                                              ),
+                                                                              width: MediaQuery.of(context).size.width,
+                                                                              child: InkWell(
+                                                                                onTap: () {
+                                                                                  Navigator.pop(context);
+                                                                                },
+                                                                                child: const Center(
+                                                                                  child: Text(
+                                                                                    'Cancel',
+                                                                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            )
+                                                                          ],
                                                                         ),
-                                                                      ],
+                                                                      ),
                                                                     );
                                                                   });
                                                             },
@@ -344,21 +427,80 @@ class WorkoutMoveSelectionView extends StatelessWidget {
                                               context: context,
                                               builder: (BuildContext ctx) {
                                                 return AlertDialog(
-                                                  backgroundColor: background,
-                                                  title: const Text(
-                                                      'Error Validation'),
-                                                  content: const Text(
-                                                      'Please select at least one workout move.'),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                      child:
-                                                          const Text('Close'),
+                                                  insetPadding: EdgeInsets.zero,
+                                                  contentPadding:
+                                                      EdgeInsets.zero,
+                                                  title: const Center(
+                                                    child: Text(
+                                                        'Error Validation'),
+                                                  ),
+                                                  content: SizedBox(
+                                                    height: 200,
+                                                    width: 100,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Container(
+                                                          margin:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 20,
+                                                                  right: 20),
+                                                          height: 100,
+                                                          child: const Center(
+                                                            child: Text(
+                                                              'Please select at least one workout move.',
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 20),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          height: 50,
+                                                          decoration:
+                                                              const BoxDecoration(
+                                                            border: Border(
+                                                              top: BorderSide(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          31,
+                                                                          158,
+                                                                          158,
+                                                                          158),
+                                                                  width: 1),
+                                                            ),
+                                                          ),
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
+                                                          child: InkWell(
+                                                            onTap: () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                            child: const Center(
+                                                              child: Text(
+                                                                'Close',
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        )
+                                                      ],
                                                     ),
-                                                  ],
+                                                  ),
                                                 );
                                               });
                                         }

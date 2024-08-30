@@ -38,43 +38,99 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                                   context: context,
                                   builder: (BuildContext ctx) {
                                     return AlertDialog(
-                                      backgroundColor: background,
-                                      title: const Text('Delete Confirmation'),
-                                      content: const Text(
-                                          'Are you sure want to delete this workout plan?'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: const Text('Close'),
-                                        ),
-                                        TextButton(
-                                          onPressed: () async {
-                                            Navigator.of(context).pop();
+                                      insetPadding: EdgeInsets.zero,
+                                      contentPadding: EdgeInsets.zero,
+                                      content: SizedBox(
+                                        height: 200,
+                                        width: 100,
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            const SizedBox(
+                                                height: 100,
+                                                child: Center(
+                                                  child: Text(
+                                                    'Delete this workout plan?',
+                                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ),
+                                              ),
+                                            Container(
+                                              height: 50,
+                                              decoration: const BoxDecoration(
+                                                border: Border(
+                                                  top: BorderSide(
+                                                      color: Color.fromARGB(
+                                                          31, 158, 158, 158),
+                                                      width: 1),
+                                                ),
+                                              ),
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              child: InkWell(
+                                                onTap: () async {
+                                                  Navigator.of(context).pop();
 
-                                            var isSuccess =
-                                                await vm.deleteWorkoutPlan(
+                                                  var isSuccess = 
+                                                  await vm.deleteWorkoutPlan(
                                                     vm.workoutPlanData.id);
 
-                                            if (isSuccess) {
-                                              Util().flashMessageSuccess(
-                                                  context,
-                                                  "Success delete Workout Plan.");
-                                              Navigator.of(context).pop();
-                                            } else {
-                                              Util().flashMessageError(context,
-                                                  "Failed to delete Workout Plan.");
-                                            }
-                                          },
-                                          child: const Text(
-                                            'Delete',
-                                            style: TextStyle(color: Colors.red),
-                                          ),
+                                                  if (isSuccess) {
+                                                    Util().flashMessageSuccess(
+                                                        context,
+                                                        "Success delete Workout Plan.");
+                                                    Navigator.of(context).pop();
+                                                  } else {
+                                                    Util().flashMessageError(context,
+                                                        "Failed to delete Workout Plan.");
+                                                  }
+                                                },
+                                                child: const Center(
+                                                  child: Text(
+                                                    'Delete',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.red),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              height: 50,
+                                              decoration: const BoxDecoration(
+                                                border: Border(
+                                                  top: BorderSide(
+                                                      color: Color.fromARGB(
+                                                          31, 158, 158, 158),
+                                                      width: 1),
+                                                ),
+                                              ),
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              child: InkWell(
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Center(
+                                                  child: Text(
+                                                    'Cancel',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                      ],
+                                      ),
                                     );
-                                  });
+                                });
                             },
                             child: Row(
                               children: [
@@ -90,41 +146,93 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                                   context: context,
                                   builder: (BuildContext ctx) {
                                     return AlertDialog(
-                                      backgroundColor: background,
-                                      title: const Text('Reset Confirmation'),
-                                      content: const Text(
-                                          'Are you sure want to reset workout plan repetition?'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: const Text('Close'),
-                                        ),
-                                        TextButton(
-                                          onPressed: () async {
-                                            Navigator.of(context).pop();
+                                      insetPadding: EdgeInsets.zero,
+                                      contentPadding: EdgeInsets.zero,
+                                      content: SizedBox(
+                                        height: 200,
+                                        width: 100,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment
+                                                  .center,
+                                          children: [
+                                            const SizedBox(
+                                                height: 100,
+                                                child: Center(
+                                                  child: Text(
+                                                    'Reset this workout plan repetition?',
+                                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ),
+                                              ),
+                                            Container(
+                                              height: 50,
+                                              decoration: const BoxDecoration(
+                                                border: Border(
+                                                  top: BorderSide(color: Color.fromARGB(31, 158, 158, 158), width: 1),
+                                                ),
+                                              ),
+                                              width: MediaQuery.of(context).size.width,
+                                              child: InkWell(
+                                                onTap: () async {
+                                                  Navigator.of(context).pop();
 
-                                            var isSuccess = await vm
-                                                .resetWorkoutPlanRepetition(
-                                                    vm.workoutPlanData);
+                                                  var isSuccess = await vm
+                                                      .resetWorkoutPlanRepetition(
+                                                          vm.workoutPlanData);
 
-                                            if (isSuccess) {
-                                              Util().flashMessageSuccess(
-                                                  context,
-                                                  "Success reset Workout Plan repetition.");
-                                              Navigator.of(context).pop();
-                                            } else {
-                                              Util().flashMessageError(context,
-                                                  "Failed to reset Workout Plan repetition.");
-                                            }
-                                          },
-                                          child: const Text(
-                                            'Reset',
-                                            style: TextStyle(color: Colors.red),
-                                          ),
+                                                  if (isSuccess) {
+                                                    Util().flashMessageSuccess(
+                                                        context,
+                                                        "Success reset Workout Plan repetition.");
+                                                    Navigator.of(context).pop();
+                                                  } else {
+                                                    Util().flashMessageError(context,
+                                                        "Failed to reset Workout Plan repetition.");
+                                                  }
+                                                },
+                                                child: const Center(
+                                                  child: Text(
+                                                    'Reset',
+                                                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              height: 50,
+                                              decoration: const BoxDecoration(
+                                                border: Border(
+                                                  top: BorderSide(
+                                                      color: Color.fromARGB(
+                                                          31, 158, 158, 158),
+                                                      width: 1),
+                                                ),
+                                              ),
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              child: InkWell(
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Center(
+                                                  child: Text(
+                                                    'Cancel',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                      ],
+                                      ),
                                     );
                                   });
                             },
@@ -391,47 +499,85 @@ class MyWorkoutPlanDetailView extends StatelessWidget {
                                               context: context,
                                               builder: (BuildContext ctx) {
                                                 return AlertDialog(
-                                                  backgroundColor: background,
-                                                  title: const Text(
-                                                      'Confirmation'),
-                                                  content: const Text(
-                                                      'Ready to start workouts?'),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                      child:
-                                                          const Text('Close'),
-                                                    ),
-                                                    TextButton(
-                                                      onPressed: () async {
-                                                        final player =
-                                                            AudioPlayer();
-                                                        await player.play(
-                                                            AssetSource(
-                                                                'sounds/start_workout.mp3'));
+                                                  insetPadding: EdgeInsets.zero,
+                                                  contentPadding:
+                                                      EdgeInsets.zero,
+                                                  content: SizedBox(
+                                                    height: 200,
+                                                    width: 100,
+                                                    child: Column(
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                                      children: [
+                                                        const SizedBox(
+                                                          height: 100,
+                                                          child: Center(
+                                                            child: Text(
+                                                              'Ready to start workouts?',
+                                                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                                                              textAlign: TextAlign.center,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                        height: 50,
+                                                        decoration: const BoxDecoration(
+                                                          border: Border(
+                                                            top: BorderSide(color: Color.fromARGB(31, 158, 158, 158), width: 1),
+                                                          ),
+                                                        ),
+                                                        width: MediaQuery.of(context).size.width,
+                                                        child: InkWell(
+                                                          onTap: () async {
+                                                            final player =
+                                                                AudioPlayer();
+                                                            await player.play(
+                                                                AssetSource(
+                                                                    'sounds/start_workout.mp3'));
 
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder: (BuildContext
-                                                                        context) =>
-                                                                    StartWorkoutView(
-                                                                      workoutPlanDetail:
-                                                                          vm.workoutPlanData,
-                                                                    )));
-                                                      },
-                                                      child: const Text(
-                                                        'Lets go',
-                                                        style: TextStyle(
-                                                            color: Colors.blue),
+                                                            Navigator.of(context)
+                                                                .pop();
+                                                            Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder: (BuildContext
+                                                                            context) =>
+                                                                        StartWorkoutView(
+                                                                          workoutPlanDetail:
+                                                                              vm.workoutPlanData,
+                                                                        )));
+                                                          },
+                                                          child: const Center(
+                                                            child: Text(
+                                                              'Lets go',
+                                                              style: TextStyle(fontWeight: FontWeight.bold),
+                                                            ),
+                                                          ),
+                                                        ),
                                                       ),
+                                                      Container(
+                                                        height: 50,
+                                                        decoration: const BoxDecoration(
+                                                          border: Border(
+                                                            top: BorderSide(color: Color.fromARGB(31, 158, 158, 158), width: 1),
+                                                          ),
+                                                        ),
+                                                        width: MediaQuery.of(context).size.width,
+                                                        child: InkWell(
+                                                          onTap: () {
+                                                            Navigator.pop(context);
+                                                          },
+                                                          child: const Center(
+                                                            child: Text(
+                                                              'Cancel',
+                                                              style: TextStyle(fontWeight: FontWeight.bold),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                      ],
                                                     ),
-                                                  ],
+                                                  )
                                                 );
                                               });
                                         },

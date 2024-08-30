@@ -212,6 +212,7 @@ class FeedsTimelineView extends StatelessWidget {
                                                                                                               child: Text(
                                                                                                                 'Delete this post?',
                                                                                                                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                                                                                                                textAlign: TextAlign.center,
                                                                                                               ),
                                                                                                             ),
                                                                                                           ),
@@ -817,6 +818,9 @@ class FeedsTimelineView extends StatelessWidget {
                                                                       FontWeight
                                                                           .bold,
                                                                   fontSize: 20),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
                                                             ),
                                                           ),
                                                         ),
