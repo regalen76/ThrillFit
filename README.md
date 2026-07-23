@@ -1,16 +1,34 @@
-# thrill_fit
+# ThrillFit
 
-Excercise App with Fun Challenges
+Exercise app with fun challenges, built with Flutter.
+
+## Features
+
+- Authentication
+- Feeds (create and browse workout feeds)
+- Custom workout plans
+- User profile
+
+## Project Structure
+
+```
+lib/
+├── components/    # Reusable UI widgets
+├── models/        # Data models
+├── repository/    # Data access layer
+├── screens/        # App screens (authentication, feeds, my_workout_plan, profile, startup)
+├── services/       # Business logic / API services
+└── shared/         # Shared utilities and constants
+```
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Install [Flutter](https://docs.flutter.dev/get-started/install).
+2. Install dependencies:
+   ```bash
+   flutter pub get
+   ```
+3. Run the app:
+   ```bash
+   flutter run
+   ```
